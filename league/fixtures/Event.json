@@ -1,0 +1,40 @@
+[
+{
+    "model": "league.event",
+    "pk": 1,
+    "fields": {
+        "title": "Elite Dodgeball South Round 1 - 2018",
+        "header": "events/6a46cb1c-3566-11e8-bac5-acbc32987c13.jpg",
+        "datetime": "2018-03-24T10:00:00Z",
+        "location": "Grace King High School, 4301 Grace King Pl, Metairie, LA 70002",
+        "description": "<p>Welcome to Round One of the South Region Series. This will be a one-day tournament.&nbsp;<br /><br />South Round One will feature the Open 8.5 Division, Women&rsquo;s Division, and Open No sting Division. We will play a round robin and double elimination for all divisions. The Open 8.5 Division will run first. Women&rsquo;s Division and Open No Sting will run second at the same time.&nbsp;<br /><br />The Top 4 teams at the end of the Open 8.5 Series will automatically be ranked within the top seeds for the year-end Open 8.5 Division National Championship.<br /><br />The most current Elite Dodgeball Rules, Refereeing, and Regulations can be found on our pinned post on our main facebook page.&nbsp;<a href=\"https://www.facebook.com/Elitedodgeball\">https://www.facebook.com/Elitedodgeball</a>&nbsp;<br /><br />The first round of Showdown will be coordinated after the completion of the Open 8.5 Division. It is first come, first serve to the first 32 participants. It will cost $5 cash only to enter.<br /><br />There will be 3 courts total. The cap for the Open 8.5 Division will be 10 teams maximum. The cap for the Women&rsquo;s Division will be 6 teams of 4 maximum. The cap for the Open No Sting Division will be 8 teams maximum.<br /><br />The top four teams from the previous Open 8.5 series will automatically have their spots reserved for registration. The remaining spots will be a first come, first serve basis.&nbsp;<br /><br />Teams must submit registration in full by the deadline date provided. All team captains must submit their full division payment, team name, roster, and their two designated referees per division. The registration fee will be $240 per team, per division. Women's division will be $180. Additionally, every player registered to play in Elite Dodgeball must register as a member of USA Dodgeball by donating a one-time minimum fee of $25 to&nbsp;<a href=\"https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.gofundme.com%2Fusadodgeball&amp;h=ATMWa0RPAHoiB4t_lbkfBYNkvxlN9aWTv8kYCVkCCblst9oKs1V6roF2PX0fb79qAtvv61ma3Mi1rPp5ptLuhfChJAZt5DMdGh45SUqacmWp22l-gXFS9NfgDczM71QvRYpCJsvQLAcKqLs_c0AjpKhFtx8dPQDpCsztoXLADauBgvEnXamtpQOwnXNXBg&amp;s=1\">https://www.gofundme.com/usadodgeball</a>. Once all requirements are met, teams will be considered fully registered for the Elite Dodgeball Round.&nbsp;<br /><br />Registration will open on Friday the 16th of February.</p>",
+        "season": 2,
+        "registration_open": "2018-02-16T18:00:00Z",
+        "registration_close": "2018-03-21T23:00:00Z",
+        "calendar_background": "#FF9300",
+        "stream_link": null,
+        "state": 2,
+        "date_created": "2018-04-01T04:37:42.079Z",
+        "date_updated": "2018-04-01T04:37:42.079Z"
+    }
+},
+{
+    "model": "league.event",
+    "pk": 2,
+    "fields": {
+        "title": "Elite Dodgeball National Championships - 2017",
+        "header": "events/e6fa6a5c-3567-11e8-8daf-acbc32987c13.jpg",
+        "datetime": "2018-08-18T19:00:00Z",
+        "location": "Boston University Rec Center, 915 Commonwealth Avenue, Boston, MA 02215",
+        "description": "<p>ALL TEAMS ARE INVITED TO COMPETE IN BOSTON\r\nThe championship will be held in Boston. It will feature three full days of dodgeball that will showcase the best teams across the nation competing in 8.5 rubber ball, as well as Rubber No Sting</p>\r\n\r\n<p>Any and all teams are invited to come compete. Each division will feature a round robin and each division will also have a double elimination for playoffs.</p>\r\n\r\n<p>DIVISIONS:</p>\r\n\r\nChampionship Division (Open 8.5)</p>\r\nCoed Division (8.5)</p>\r\nWomens Division (No Sting)</p>\r\nCoed Division (No Sting)</p>\r\nPinch Division (8.5)</p>\r\n\r\n<p>REGISTRATION:\r\nEach Division is $180 per TEAM not per player.\r\nTeams: We play 6v6 dodgeball. Teams will be allowed to have up to two subs on their team. \r\nFor Co-ed there needs to be a minimum of 2 girls on the court, and coed teams may have as many as 9 players on their roster as long as 3 are female.</p>\r\n\r\n<p>Registration will open July 1st</p>\r\n\r\n<p>SCHEDULE (Times are tentative. They will be finalized once registration is closed)</p>\r\n\r\n<p>Friday:</p>\r\n8:30am Check in and Warm up</p>\r\n8:45am Captains Meeting</p>\r\n8:55am National Anthem</p>\r\n9:00am Open 8.5 Round Robin and Women\u2019s No Sting Round Robin</p>\r\n2:30pm Womens Showdown</p>\r\n3:00pm Coed 8.5 Round Robin</p>\r\n9:00pm Finish of Day 1</p>\r\n11:00 Party Location to be Determined </p>\r\n\r\n<p>Saturday:</p>\r\n8:30am Warm up</p>\r\n9:00am Open 8.5 Elimination and Women\u2019s No Sting Elimination</p>\r\n12:00pm Men\u2019s Showdown Final</p>\r\n1:00pm Coed 8.5 Elimination</p>\r\n4:00pm Coed No Sting Round Robin</p>\r\n9:00 Finish of Day 2</p>\r\n11:00 Awards and Elite party</p>\r\n\r\n<p>Sunday:</p>\r\n8:30am Warm up</p>\r\n9:00am Coed No Sting Elimination</p>\r\n12:00pm Pinch Round Robin</p>\r\n4:00pm Pinch Elimination</p>\r\n7:00pm End of Day 3</p>\r\n8:00pm Party</p>",
+        "season": 2,
+        "registration_open": "2018-01-01T16:30:00Z",
+        "registration_close": "2018-12-31T16:30:00Z",
+        "calendar_background": "#000000",
+        "stream_link": "",
+        "state": 0,
+        "date_created": "2018-04-01T04:48:20.798Z",
+        "date_updated": "2018-04-04T20:05:19.478Z"
+    }
+}
+]

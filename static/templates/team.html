@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ team.name }} - {% endblock %}
+{% block meta_description %}Team {{ team.name }} from {{ team.location }}. Players: {{ players|join:", " }}.{% endblock %}
+
+{% block container_class %}team{% endblock %}
+
+{% block twitter_title %}Team {{ team.name }}{% endblock %}
+{% block twitter_image %}{{ team.logo.url }}{% endblock %}
+{% block twitter_description %}Elite Dodgeball team {{ team.name }} from {{ team.location }}. Players: {{ players|join:", " }}.{% endblock %}
+
+{% block og_title %}Team {{ team.name }}{% endblock %}
+{% block og_image %}{{ team.logo.url }}{% endblock %}
+{% block og_description %}Elite Dodgeball team {{ team.name }} from {{ team.location }}. Players: {{ players|join:", " }}.{% endblock %}
+
+{% block container %}
+		<img src="{{ team.cover.url }}" class="team-cover" />
+
+		<div class="team-side">
+			<img src="{{ team.logo.url }}" class="team-logo" />
+
+			<ul class="team-links">
+				{% if team.website %}<li><a href="{{ team.website }}" class="team-website">{{ team.website }}</a></li>{% endif %}
+				{% if team.twitter %}<li><a href="{{ team.twitter }}" class="team-twitter">{{ team.twitter }}</a></li>{% endif %}
+				{% if team.instagram %}<li><a href="{{ team.instagram }}" class="team-instagram">{{ team.instagram }}</a></li>{% endif %}
+				{% if team.youtube %}<li><a href="{{ team.youtube }}" class="team-youtube">{{ team.youtube }}</a></li>{% endif %}
+				{% if team.facebook %}<li><a href="{{ team.facebook }}" class="team-facebook">{{ team.facebook }}</a></li>{% endif %}
+			</ul>
+
+			<select id="division-select">
+				{% for division_id, division_datum in players.items %}
+				<option value="{{ division_datum.division.name }}">
+					{{ division_datum.division.name }} Division
+				</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="team-head">
+			<h1 class="team-name">{{ team.name }}</h1>
+			<span class="team-location">{{ team.location }}</span>
+
+			{% for division_id, division_datum in players.items %}
+			<ul class="players" data-division-name="{{ division_datum.division.name }}">
+				{% for player in division_datum.players %}
+				<li class="player" style="background-image: url({{ player.headshot.url }});" tabindex="0">
+					<div class="player-mask">
+						<h2>{{ player.name }}</h2>
+						<h3>{{ player.number }}</h3>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endfor %}
+		</div>
+{% endblock %}

@@ -1,0 +1,146 @@
+[
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 1,
+    "fields": {
+        "player": 6,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 2,
+    "fields": {
+        "player": 5,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 3,
+    "fields": {
+        "player": 2,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 4,
+    "fields": {
+        "player": 1,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 5,
+    "fields": {
+        "player": 8,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 6,
+    "fields": {
+        "player": 7,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 7,
+    "fields": {
+        "player": 3,
+        "season_division_team": 1
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 8,
+    "fields": {
+        "player": 6,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 9,
+    "fields": {
+        "player": 5,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 10,
+    "fields": {
+        "player": 2,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 11,
+    "fields": {
+        "player": 1,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 12,
+    "fields": {
+        "player": 8,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 13,
+    "fields": {
+        "player": 7,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 14,
+    "fields": {
+        "player": 4,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 15,
+    "fields": {
+        "player": 3,
+        "season_division_team": 4
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 16,
+    "fields": {
+        "player": 2,
+        "season_division_team": 31
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 17,
+    "fields": {
+        "player": 8,
+        "season_division_team": 31
+    }
+},
+{
+    "model": "league.seasondivisionteamplayer",
+    "pk": 18,
+    "fields": {
+        "player": 6,
+        "season_division_team": 31
+    }
+}
+]

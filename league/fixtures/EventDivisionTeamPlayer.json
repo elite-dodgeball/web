@@ -1,0 +1,52 @@
+[
+{
+    "model": "league.eventdivisionteamplayer",
+    "pk": 1,
+    "fields": {
+        "event_division_team": 6,
+        "season_division_team_player": 4,
+        "is_captain": true,
+        "is_referee": true
+    }
+},
+{
+    "model": "league.eventdivisionteamplayer",
+    "pk": 2,
+    "fields": {
+        "event_division_team": 6,
+        "season_division_team_player": 7,
+        "is_captain": false,
+        "is_referee": true
+    }
+},
+{
+    "model": "league.eventdivisionteamplayer",
+    "pk": 3,
+    "fields": {
+        "event_division_team": 6,
+        "season_division_team_player": 2,
+        "is_captain": false,
+        "is_referee": false
+    }
+},
+{
+    "model": "league.eventdivisionteamplayer",
+    "pk": 9,
+    "fields": {
+        "event_division_team": 9,
+        "season_division_team_player": 16,
+        "is_captain": true,
+        "is_referee": true
+    }
+},
+{
+    "model": "league.eventdivisionteamplayer",
+    "pk": 10,
+    "fields": {
+        "event_division_team": 9,
+        "season_division_team_player": 18,
+        "is_captain": false,
+        "is_referee": true
+    }
+}
+]

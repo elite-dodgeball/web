@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ LEADERSHIP_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ LEADERSHIP_DESCRIPTION|safe }} {{ leaders|join:", " }}{% endblock %}
+
+{% block container_class %}leadership{% endblock %}
+
+{% block twitter_title %}{{ LEADERSHIP_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ LEADERSHIP_DESCRIPTION|safe }} {{ leaders|join:", " }}{% endblock %}
+
+{% block og_title %}{{ LEADERSHIP_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ LEADERSHIP_DESCRIPTION|safe }} {{ leaders|join:", " }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Leadership</h1>
+
+		{% for leader in leaders %}
+		<div class="leader {% if forloop.counter0|divisibleby:2 %}left{% else %}right{% endif %}">
+			<img src="{{ leader.image.url }}" />
+			<h2>{{ leader.name }}</h2>
+			<h3>{{ leader.title }}</h3>
+			<a href="mailto:{{ leader.email_address }}">{{ leader.email_address }}</a>
+		</div>
+		{% endfor %}
+{% endblock %}

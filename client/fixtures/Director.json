@@ -1,0 +1,46 @@
+[
+{
+    "model": "client.director",
+    "pk": 1,
+    "fields": {
+        "name": "Tim Poon",
+        "title": "South Regional Director",
+        "email_address": "tim@elite-dodgeball.com",
+        "image": "directors/0ffb5e3a-3565-11e8-98c7-acbc32987c13.png",
+        "info": "Tim Poon is the south regional director of Elite."
+    }
+},
+{
+    "model": "client.director",
+    "pk": 2,
+    "fields": {
+        "name": "Glen Spejcher",
+        "title": "North Regional Director",
+        "email_address": "glen@elite-dodgeball.com",
+        "image": "directors/26d809a2-3565-11e8-97da-acbc32987c13.png",
+        "info": "Glen is the north regional director of Elite."
+    }
+},
+{
+    "model": "client.director",
+    "pk": 3,
+    "fields": {
+        "name": "Vince Marchbanks",
+        "title": "West Regional Director",
+        "email_address": "vince@elite-dodgeball.com",
+        "image": "directors/34d11292-3565-11e8-82f1-acbc32987c13.png",
+        "info": "Vince is the west regional director of Elite."
+    }
+},
+{
+    "model": "client.director",
+    "pk": 4,
+    "fields": {
+        "name": "Mark Acomb",
+        "title": "Executive Director",
+        "email_address": "mark@elite-dodgeball.com",
+        "image": "directors/42774a54-3565-11e8-8d63-acbc32987c13.png",
+        "info": "Mark is the executive director of Elite."
+    }
+}
+]

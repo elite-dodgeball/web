@@ -1,0 +1,19 @@
+{% load humanize %}
+
+<p>Hi, {{ team.name }}!</p>
+
+<p>This email serves as your confirmation for registering for <strong>{{ event.title }}</strong> with the team <strong>{{ team.name }}</strong>.</p>
+
+{% for form_division in form_data.divisions %}
+<h3>{{ form_division.name }} Roster</h3>
+
+<ul>
+	{% for player in form_division.players %}
+	<li>{{ player.name }}{% if player.isCaptain %} (C){% endif %}{% if player.isReferee %} (R){% endif %}</li>
+	{% endfor %}
+</ul>
+{% endfor %}
+
+<p><strong>Registration total</strong>: ${{ total_cost|floatformat:2|intcomma }}</p>
+
+<p>We'll see you on <strong>{{ event.datetime|date:"F jS, Y" }}</strong>!</p>

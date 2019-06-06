@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ video.title }} - {% endblock %}
+{% block meta_description %}{{ video.description|join:" "|striptags }}{% endblock %}
+
+{% block container_class %}video{% endblock %}
+
+{% block twitter_card %}player{% endblock %}
+{% block twitter_title %}{{ video.title }}{% endblock %}
+{% block twitter_image %}{{ video.thumbnail }}{% endblock %}
+{% block twitter_description %}{{ video.description|join:" "|striptags }}{% endblock %}
+{% block twitter_other %}
+	<meta name="twitter:player" content="https://www.youtube.com/embed/{{ video.youtube_id }}">
+	<meta name="twitter:player:width" content="1280">
+	<meta name="twitter:player:height" content="720">
+{% endblock %}
+
+{% block og_type %}video{% endblock %}
+{% block og_title %}{{ video.title }}{% endblock %}
+{% block og_image %}{{ video.thumbnail }}{% endblock %}
+{% block og_description %}{{ video.description|join:" " }}{% endblock %}
+{% block og_other %}
+	<meta property="og:video:url" content="https://www.youtube.com/v/{{ video.youtube_id }}?version=3&amp;autohide=1">
+	<meta property="og:video:secure_url" content="https://www.youtube.com/v/{{ video.youtube_id }}?version=3&amp;autohide=1">
+	<meta property="og:video:type" content="application/x-shockwave-flash">
+	<meta property="og:video:width" content="1280">
+	<meta property="og:video:height" content="720">
+	<meta property="og:video:tag" content="dodgeball">
+	<meta property="og:video:tag" content="professional dodgeball">
+{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">{{ video.title }}</h1>
+
+		<div class="embed-container">
+			<iframe src="https://www.youtube.com/embed/{{ video.youtube_id }}?showinfo=0" frameborder="0" width="960" height="540"></iframe>
+		</div>
+
+		<div class="video-info">
+			<div class="video-description">
+				{% for line in video.description %}
+				<p>{% if line != '' %}{{ line|safe }}{% else %}&nbsp;{% endif %}</p>
+				{% endfor %}
+			</div>
+
+			<ul class="video-details">
+				<li class="video-date">{{ video.published_at|date:"F jS, Y" }}</li>
+				{% if video.event_id %}
+				<li class="video-event"><a href="/events/{{ video.event_id.id }}/">{{ video.event_id }}</li>
+				{% endif %}
+				<li class="video-link"><a href="https://www.youtube.com/watch?v={{ video.youtube_id }}">View on YouTube</a></li>
+			</ul>
+		</div>
+{% endblock %}

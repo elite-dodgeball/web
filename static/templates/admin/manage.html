@@ -1,0 +1,395 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html lang="en-us" ng-app="ManageApp" ng-cloak>
+<head>
+	<!-- Site stuff -->
+
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Page stuff -->
+
+	<title>Event Manager - {{ event }}</title>
+
+	<!-- Style stuff -->
+
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
+	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css" />
+	<link href="{% static "css/manage.css" %}" rel="stylesheet" type="text/css" />
+</head>
+<body ng-controller="ManageCtrl">
+	<md-content class="content">
+		<h1>{{ event.title }}</h1>
+
+		<!-- Event controls -->
+
+		<div layout="row" layout-align="space-between center" ng-show="didInitialize === true">
+			<md-input-container>
+				<label>Select division</label>
+				<md-select ng-model="selectedDivision" ng-change="onDivisionChange()" ng-model-options="{trackBy: '$value.event_division.id'}">
+					<md-option ng-value="divisionDatum" ng-repeat="(eventDivisionId, divisionDatum) in eventDivisionHash">[[ divisionDatum.division.name ]]</md-option>
+				</md-select>
+			</md-input-container>
+
+			<form ng-submit="theEvent.save()" name="eventForm">
+				<md-input-container>
+					<label>Event State</label>
+					<md-select ng-model="event.state" ng-disabled="theEvent.isSaving">
+						<md-option ng-value="eventState.id" ng-repeat="eventState in eventStates">[[ eventState.name ]]</md-option>
+					</md-select>
+				</md-input-container>
+
+				<md-input-container>
+					<label>Stream link</label>
+					<input ng-model="event.stream_link" ng-disabled="theEvent.isSaving" placeholder="e.g., https://youtube.com/watch?v=..." type="url" />
+				</md-input-container>
+
+				<md-button ng-disabled="eventForm.$pristine || theEvent.isSaving" type="submit" class="md-raised md-primary">Save</md-button>
+			</form>
+		</div>
+
+		<md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex" ng-show="didInitialize === true" class="md-primary">
+			<!-- Check-in controls -->
+
+			<md-tab label="Check-in">
+				<md-content class="md-padding">
+					<form ng-disabled="!scanner.isEnabled" name="checkinForm" layout="row" layout-align="space-between center" layout-wrap>
+						<md-input-container>
+							<label>Select camera</label>
+							<md-select ng-model="scanner.selectedDevice" ng-disabled="!scanner.isEnabled" ng-model-options="{trackBy: '$value.id'}">
+								<md-option ng-value="deviceOption" ng-repeat="deviceOption in scanner.deviceOptions">
+									[[ deviceOption.name ]]
+								</md-option>
+							</md-select>
+						</md-input-container>
+
+						<md-button ng-click="scanner.start()" ng-disabled="!scanner.isEnabled" class="md-raised md-primary">Open scanner</md-button>
+					</form>
+
+					<md-list>
+						<md-list-item ng-repeat="teamDatum in selectedDivision.teams" class="noright">
+							<img alt="[[ teamDatum.team.name ]]" ng-src="[[ teamDatum.team.logo ]]" class="md-avatar" />
+							<p>[[ teamDatum.team.name ]]</p>
+							<md-icon ng-click="checkin.viewTeamPlayers(teamDatum)" aria-label="Players" class="md-secondary">people</md-icon>
+							<md-switch ng-model="teamDatum.isCheckedIn" aria-label="Checked in" class="md-secondary"></md-switch>
+						</md-list-item>
+					</md-list>
+				</md-content>
+			</md-tab>
+
+			<!-- Round-robin controls -->
+
+			<md-tab label="Round-robin">
+				<md-content class="md-padding">
+					<md-list class="team-list">
+						<md-list-item class="md-2-line team-chip" ng-repeat="teamDatum in selectedDivision.teams | orderBy:['-points','seed'] track by $index" layout="row" layout-wrap>
+							<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
+								<h4>
+									[[ $index+1 ]]. [[ teamDatum.team.name ]] ([[ teamDatum.points | number : 2 ]])
+								</h4>
+							</div>
+						</md-list-item>
+					</md-list>
+
+					<form ng-submit="robin.generate()" ng-disabled="robin.isLocked" name="robinForm" layout="row" layout-align="end center" layout-wrap>
+						<md-input-container flex="100">
+							<label>Number of courts</label>
+							<input ng-model="robin.courtTotal" type="number" min="1" md-no-asterisk required />
+						</md-input-container>
+
+						<md-input-container flex="100">
+							<label>Teams to referee each round</label>
+							<input ng-model="robin.refereeCount" type="number" min="1" md-no-asterisk required />
+						</md-input-container>
+
+						<md-button ng-click="robin.shuffleTeams()" ng-disabled="robin.isLocked" class="md-raised md-accent">Shuffle Teams</md-button>
+						<md-button ng-disabled="robinForm.$invalid || robin.isLocked" type="submit" class="md-raised md-primary">Generate Rounds</md-button>
+					</form>
+
+					<md-switch ng-model="robin.isLocked" ng-disabled="!selectedDivision.rounds" class="robin-lock">Lock</md-switch>
+
+					<div class="div-round" ng-repeat="round in selectedDivision.rounds track by $index">
+						<h2>Round [[ $index + 1 ]]</h2>
+
+						<md-list class="team-list">
+							<md-list-item class="md-2-line team-chip title-chip" layout="row" layout-wrap>
+								<h3>Referees</h3>
+							</md-list-item>
+
+							<div class="chip-list">
+								<md-list-item class="md-2-line team-chip ref-chip" ng-repeat="teamDatum in round.referees track by $index" layout="row" layout-wrap>
+									<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
+										<span>[[ teamDatum.team.name ]]</span>
+									</div>
+								</md-list-item>
+							</div>
+						</md-list>
+
+						<div class="div-court" ng-repeat="game in round.courts track by $index">
+							<md-list class="team-list">
+								<md-list-item class="md-2-line team-chip title-chip" layout="row" layout-wrap>
+									<h3>Court [[ $index + 1 ]]</h3>
+								</md-list-item>
+
+								<div class="chip-list">
+									<md-list-item class="md-2-line team-chip input-chip" layout="row" layout-wrap>
+										<div ng-click="robin.crankWins($event, game, WIN_TYPE.TOP_TEAM)" class="md-item-text md-whiteframe-z1" style="background-image: url([[ game.top_team.team.logo ]])" flex>
+											<md-input-container md-no-float class="md-block">
+												<input required disabled ng-model="game.top_wins" name="courts" type="number" min="0" placeholder="Wins" ng-change="robin.updateWins(game)" ng-model-options="modelOptions">
+											</md-input-container>
+											<span>[[ game.top_team.team.name ]]</span>
+										</div>
+									</md-list-item>
+
+									<md-list-item class="md-2-line team-chip input-chip" layout="row" layout-wrap>
+										<div ng-click="robin.crankWins($event, game, WIN_TYPE.BOTTOM_TEAM)" class="md-item-text md-whiteframe-z1" style="background-image: url([[ game.bottom_team.team.logo ]])" flex>
+											<md-input-container md-no-float class="md-block">
+												<input required disabled ng-model="game.bottom_wins" name="courts" type="number" min="0" placeholder="Wins" ng-change="robin.updateWins(game)" ng-model-options="modelOptions">
+											</md-input-container>
+											<span>[[ game.bottom_team.team.name ]]</span>
+										</div>
+									</md-list-item>
+								</div>
+							</md-list>
+						</div>
+					</div>
+				</md-content>
+			</md-tab>
+
+			<!-- Bracket controls -->
+
+			<md-tab label="Bracket">
+				<md-content class="md-padding">
+					<form ng-submit="bracket.generate()" ng-disabled="bracket.isLocked || !selectedDivision.rounds" name="bracketForm" layout="row" layout-align="end center" layout-wrap>
+						<md-input-container flex="100">
+							<label>Tournament type</label>
+							<md-select ng-disabled="bracket.isLocked" ng-model="selectedDivision.event_division.tournament_type">
+								<md-option ng-value="tournamentType.id" ng-repeat="tournamentType in tournamentTypes">[[ tournamentType.name ]]</md-option>
+							</md-select>
+						</md-input-container>
+
+						<md-button ng-disabled="bracketForm.$invalid || bracket.isLocked || !selectedDivision.rounds" type="submit" class="md-raised md-primary">
+							Generate Bracket
+						</md-button>
+					</form>
+
+					<md-switch ng-model="bracket.isLocked" ng-disabled="!selectedDivision.brackets.winners" class="robin-lock">Lock</md-switch>
+
+					<h2 ng-if="selectedDivision.brackets.winners">[[ selectedDivision.brackets.losers ? 'Winners' : 'Bracket']]</h2>
+
+					<div class="bracket" ng-if="selectedDivision.brackets.winners">
+						<ol class="bracket-round" ng-repeat="bracketRound in selectedDivision.brackets.winners">
+							<li class="bracket-game bracket-game-status-[[ roundGame.state ]]" data-game-id="[[ roundGame.id ]]" ng-repeat="roundGame in bracketRound track by $index" ng-class="bracket.makeGameClass(roundGame)">
+								<form ng-if="roundGame !== null" class="bracket-matchup">
+									<div ng-click="bracket.crankWins($event, roundGame, WIN_TYPE.TOP_TEAM)" class="bracket-team">
+										<span class="bracket-team-name" style="background-image: url([[ roundGame.top_team.team.logo ]])">[[ roundGame.top_team.team.name ]]</span>
+										<input required disabled ng-model="roundGame.top_wins" name="top_wins" type="number" min="0" placeholder="Wins" ng-change="bracket.updateGame(roundGame)" ng-model-options="modelOptions" class="bracket-team-wins">
+									</div>
+
+									<div ng-click="bracket.crankWins($event, roundGame, WIN_TYPE.BOTTOM_TEAM)" class="bracket-team">
+										<span class="bracket-team-name" style="background-image: url([[ roundGame.bottom_team.team.logo ]])">[[ roundGame.bottom_team.team.name ]]</span>
+										<input required disabled ng-model="roundGame.bottom_wins" name="bottom_wins" type="number" min="0" placeholder="Wins" ng-change="bracket.updateGame(roundGame)" ng-model-options="modelOptions" class="bracket-team-wins">
+									</div>
+
+									<md-input-container class="bracket-game-state">
+										<md-select aria-label="Select state" ng-model="roundGame.state" ng-change="bracket.updateGame(roundGame)">
+											<md-option ng-value="gameState.id" ng-repeat="gameState in gameStates">[[ gameState.name ]]</md-option>
+										</md-select>
+									</md-input-container>
+								</form>
+							</li>
+						</ol>
+					</div>
+
+					<h2 ng-if="selectedDivision.brackets.losers">Losers</h2>
+
+					<div class="bracket" ng-if="selectedDivision.brackets.losers">
+						<ol class="bracket-round" ng-repeat="bracketRound in selectedDivision.brackets.losers">
+							<li class="bracket-game bracket-game-status-[[ roundGame.state ]]" data-game-id="[[ roundGame.id ]]" ng-repeat="roundGame in bracketRound track by $index" ng-class="bracket.makeGameClass(roundGame, bracketRound)">
+								<form ng-if="roundGame !== null" class="bracket-matchup">
+									<div ng-click="bracket.crankWins($event, roundGame, WIN_TYPE.TOP_TEAM)" class="bracket-team">
+										<span class="bracket-team-name" style="background-image: url([[ roundGame.top_team.team.logo ]])">[[ roundGame.top_team.team.name ]]</span>
+										<input required disabled ng-model="roundGame.top_wins" name="top_wins" type="number" min="0" placeholder="Wins" ng-change="bracket.updateGame(roundGame)" ng-model-options="modelOptions" class="bracket-team-wins">
+									</div>
+
+									<div ng-click="bracket.crankWins($event, roundGame, WIN_TYPE.BOTTOM_TEAM)" class="bracket-team">
+										<span class="bracket-team-name" style="background-image: url([[ roundGame.bottom_team.team.logo ]])">[[ roundGame.bottom_team.team.name ]]</span>
+										<input required disabled ng-model="roundGame.bottom_wins" name="bottom_wins" type="number" min="0" placeholder="Wins" ng-change="bracket.updateGame(roundGame)" ng-model-options="modelOptions" class="bracket-team-wins">
+									</div>
+
+									<md-input-container class="bracket-game-state">
+										<md-select aria-label="Select state" ng-model="roundGame.state" ng-change="bracket.updateGame(roundGame)">
+											<md-option ng-value="gameState.id" ng-repeat="gameState in gameStates">[[ gameState.name ]]</md-option>
+										</md-select>
+									</md-input-container>
+								</form>
+							</li>
+						</ol>
+					</div>
+
+					<h2 ng-if="selectedDivision.brackets.finals">Finals</h2>
+
+					<div class="bracket" ng-if="selectedDivision.brackets.finals">
+						<ol class="bracket-round" ng-repeat="bracketRound in selectedDivision.brackets.finals" ng-if="selectedDivision.brackets.finals">
+							<li class="bracket-game bracket-game-status-[[ roundGame.state ]] bracket-game-direct" data-game-id="[[ roundGame.id ]]" ng-repeat="roundGame in bracketRound track by $index">
+								<form class="bracket-matchup">
+									<div ng-click="bracket.crankWins($event, roundGame, WIN_TYPE.TOP_TEAM)" class="bracket-team">
+										<span class="bracket-team-name" style="background-image: url([[ roundGame.top_team.team.logo ]])">[[ roundGame.top_team.team.name ]]</span>
+										<input required disabled ng-model="roundGame.top_wins" name="top_wins" type="number" min="0" placeholder="Wins" ng-change="bracket.updateGame(roundGame)" ng-model-options="modelOptions" class="bracket-team-wins">
+									</div>
+
+									<div ng-click="bracket.crankWins($event, roundGame, WIN_TYPE.BOTTOM_TEAM)" class="bracket-team">
+										<span class="bracket-team-name" style="background-image: url([[ roundGame.bottom_team.team.logo ]])">[[ roundGame.bottom_team.team.name ]]</span>
+										<input required disabled ng-model="roundGame.bottom_wins" name="bottom_wins" type="number" min="0" placeholder="Wins" ng-change="bracket.updateGame(roundGame)" ng-model-options="modelOptions" class="bracket-team-wins">
+									</div>
+
+									<md-input-container class="bracket-game-state">
+										<md-select aria-label="Select state" ng-model="roundGame.state" ng-change="bracket.updateGame(roundGame)">
+											<md-option ng-value="gameState.id" ng-repeat="gameState in gameStates">[[ gameState.name ]]</md-option>
+										</md-select>
+									</md-input-container>
+								</form>
+							</li>
+						</ol>
+					</div>
+				</md-content>
+			</md-tab>
+
+			<!-- Overlay controls -->
+
+			<md-tab label="Overlay" ng-disabled="event.state !== eventStates[1].id">
+				<md-content class="md-padding">
+					<md-input-container>
+						<label>Select game</label>
+						<md-select ng-model="overlay.selectedGame" ng-change="overlay.onGameChange()" ng-model-options="{trackBy: '$value.id'}">
+							<md-optgroup ng-repeat="round in selectedDivision.rounds track by $index" label="Round-robin [[ $index + 1 ]]">
+								<md-option ng-value="game" ng-repeat="game in round.courts track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
+							</md-optgroup>
+							<md-optgroup ng-repeat="round in selectedDivision.brackets.winners track by $index" label="Winners [[ $index + 1 ]]">
+								<md-option ng-value="game" ng-repeat="game in round track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
+							</md-optgroup>
+							<md-optgroup ng-repeat="round in selectedDivision.brackets.losers track by $index" label="Losers [[ $index + 1 ]]">
+								<md-option ng-value="game" ng-repeat="game in round track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
+							</md-optgroup>
+							<md-optgroup ng-repeat="round in selectedDivision.brackets.finals track by $index" label="Finals [[ $index + 1 ]]">
+								<md-option ng-value="game" ng-repeat="game in round track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
+							</md-optgroup>
+						</md-select>
+					</md-input-container>
+
+					<form ng-submit="overlay.update()" name="overlayForm" layout="row" layout-align="end start" layout-wrap>
+						<md-list class="overlay-player-list">
+							<md-subheader class="md-no-sticky">[[ overlay.selectedGame.top_team.team.name ]]</md-subheader>
+							<md-list-item ng-repeat="playerDatum in overlay.selectedGame.top_team.players track by playerDatum.event_division_team_player.id">
+								<md-checkbox ng-model="playerDatum.isPlaying" ng-change="overlay.onPlayerChange(playerDatum)"></md-checkbox>
+								<p><span class="overlay-player-number">[[ playerDatum.player.number ]]</span> [[ playerDatum.player.name ]]</p>
+								<md-switch ng-model="playerDatum.isIn" ng-disabled="playerDatum.isPlaying !== true" class="md-secondary"></md-switch>
+							</md-list-item>
+						</md-list>
+
+						<md-list class="overlay-player-list">
+							<md-subheader class="md-no-sticky">[[ overlay.selectedGame.bottom_team.team.name ]]</md-subheader>
+							<md-list-item ng-repeat="playerDatum in overlay.selectedGame.bottom_team.players track by playerDatum.event_division_team_player.id">
+								<md-checkbox ng-model="playerDatum.isPlaying" ng-change="overlay.onPlayerChange(playerDatum)"></md-checkbox>
+								<p><span class="overlay-player-number">[[ playerDatum.player.number ]]</span> [[ playerDatum.player.name ]]</p>
+								<md-switch ng-model="playerDatum.isIn" ng-disabled="playerDatum.isPlaying !== true" class="md-secondary"></md-switch>
+							</md-list-item>
+						</md-list>
+
+						<md-button ng-disabled="overlayForm.$invalid" type="submit" class="md-raised md-primary">Update</md-button>
+					</form>
+
+					<md-button ng-click="overlay.reset()" class="md-raised md-secondary robin-lock">Clear</md-button>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+
+		<!-- Check-in player list -->
+
+		<md-sidenav class="md-sidenav-right" md-is-open="checkin.showTeamPlayers">
+			<md-toolbar>
+				<h3 class="md-toolbar-tools">[[ checkin.activeTeamDatum.team.name ]]</h3>
+			</md-toolbar>
+
+			<md-content layout-padding>
+				<md-list>
+					<md-list-item ng-repeat="playerDatum in checkin.activeTeamDatum.players" class="noright">
+						<p>[[ playerDatum.player.name ]]</p>
+						<md-icon ng-if="playerDatum.event_division_team_player.is_captain" aria-label="Captain" class="md-secondary">star</md-icon>
+						<md-icon ng-if="playerDatum.event_division_team_player.is_referee" aria-label="Referee" class="md-secondary">assignment_ind</md-icon>
+						<md-switch ng-model="playerDatum.isCheckedIn" ng-change="checkin.checkPlayers()" aria-label="Checked in" class="md-secondary"></md-switch>
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</md-sidenav>
+
+		<md-progress-circular class="event-thumper" md-mode="indeterminate" md-diameter="150" ng-if="didInitialize !== true"></md-progress-circular>
+	</md-content>
+
+	<!-- Check-in scanner -->
+
+	<div ng-show="scanner.isShowing" class="scanner-container">
+		<form ng-show="scanner.isShowing" name="scannerForm" class="scanner-form">
+			<video id="scanner-camera" class="scanner-preview"></video>
+
+			<div ng-if="scanner.foundPlayer" class="scanner-results">
+				<img src="[[ scanner.foundPlayer.player.headshot ]]" class="scanner-results-headshot" />
+
+				<div class="scanner-results-body">
+					<h6 class="scanner-results-body-name">[[ scanner.foundPlayer.player.name ]] ([[ scanner.foundPlayer.player.number ]])</h6>
+
+					<p>
+						[[ scanner.foundPlayer.player.usad_id ]]
+					</p>
+
+					<p ng-if="scanner.foundPlayer.event_division_team_player.is_captain">
+						<md-icon>star</md-icon>
+						Captain
+					</p>
+
+					<p ng-if="scanner.foundPlayer.event_division_team_player.is_referee">
+						<md-icon>assignment_ind</md-icon>
+						Referee
+					</p>
+
+					<p ng-if="!scanner.foundPlayer.event_division_team_player.is_referee">
+						<md-icon>[[ scanner.foundPlayer.player.can_referee ? 'check' : 'close' ]]</md-icon>
+						[[ scanner.foundPlayer.player.can_referee ? 'Can' : 'Cannot' ]] referee
+					</p>
+				</div>
+
+				<md-button ng-click="scanner.clear()" class="scanner-results-button md-raised md-accent">
+					Keep scanning
+				</md-button>
+
+				<md-button ng-click="scanner.checkin()" class="scanner-results-button md-raised md-primary">
+					Check in player
+				</md-button>
+			</div>
+
+			<p ng-if="scanner.foundPlayer === false" class="scanner-results-message">
+				No player found with ID [[ scanner.foundContent ]]
+			</p>
+
+			<md-button ng-click="scanner.stop()" class="scanner-close md-raised">
+				Close
+			</md-button>
+		</form>
+	</div>
+
+	<!-- JavaScript stuff -->
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+	<script src="{% static "js/instascan.min.js" %}"></script>
+	<script src="{% static "js/polyfills.js" %}"></script>
+	<script src="{% static "js/manage.js" %}"></script>
+</body>
+</html>

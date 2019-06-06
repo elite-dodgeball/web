@@ -1,0 +1,139 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html lang="en-us">
+<head>
+	<!-- Site stuff -->
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Page stuff -->
+	<title>{% block title %}{% endblock %}Elite Dodgeball - {{ DEFAULT_TITLE|safe }}</title>
+	<meta name="description" content="Elite Dodgeball - {% block meta_description %}{{ DEFAULT_DESCRIPTION|safe }}{% endblock %}" />
+	{% with uri=request.build_absolute_uri %}<link rel="canonical" href="{{ uri }}{% if uri|slice:"-1:" != "/" %}/{% endif %}" />{% endwith %}
+
+	<!-- Twitter stuff -->
+	<meta name="twitter:site" content="@elitedodgeball" />
+	<meta name="twitter:url" content="{{ request.build_absolute_uri }}" />
+	<meta name="twitter:card" content="{% block twitter_card %}summary{% endblock %}" />
+	<meta name="twitter:title" content="{% block twitter_title %}{{ DEFAULT_TITLE|safe }}{% endblock %}" />
+	<meta name="twitter:image" content="{% block twitter_image %}{% static "img/logo.png" %}{% endblock %}" />
+	<meta name="twitter:description" content="{% block twitter_description %}{{ DEFAULT_DESCRIPTION|safe }}{% endblock %}" />{% block twitter_other %}{% endblock %}
+
+	<!-- Facebook stuff -->
+	<meta property="og:site_name" content="Elite Dodgeball" />
+	<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+	<meta property="og:type" content="{% block og_type %}object{% endblock %}" />
+	<meta property="og:title" content="{% block og_title %}{{ DEFAULT_TITLE|safe }}{% endblock %}" />
+	<meta property="og:image" content="{% block og_image %}{% static "img/logo.png" %}{% endblock %}" />
+	<meta property="og:description" content="{% block og_description %}{{ DEFAULT_DESCRIPTION|safe }}{% endblock %}" />{% block og_other %}{% endblock %}
+
+	<!-- Style stuff -->
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css">
+	{% block styles %}{% endblock %}
+</head>
+<body>
+<div class="content-wrapper">
+	<header id="header">
+		<div class="wrapper">
+			<a href="/"><img class="logo" src="{% static "img/logo.png" %}" /></a>
+			<h2 class="tagline">{{ DEFAULT_TITLE|safe }}</h2>
+
+			<ul class="social">
+				<li class="search">
+					<form action="/search/" type="GET" id="search">
+						<input type="text" name="q" placeholder="Search" />
+						<input type="submit" value="Search" />
+					</form>
+				</li>
+				<li><a href="https://twitter.com/elitedodgeball/" target="_blank"><img src="{% static "img/social/twitter.png" %}" /></a></li>
+				<li><a href="https://www.facebook.com/Elitedodgeball/" target="_blank"><img src="{% static "img/social/facebook.png" %}" /></a></li>
+				<li><a href="https://www.youtube.com/elitedodgeball/" target="_blank"><img src="{% static "img/social/youtube.png" %}" /></a></li>
+				<li><a href="https://www.instagram.com/elite_dodgeball/" target="_blank"><img src="{% static "img/social/instagram.png" %}" /></a></li>
+			</ul>
+
+			<nav id="nav">
+				<a class="menu mobile-only">Menu</a>
+				<ul>
+					<li><a href="/teams/">Teams</a></li>
+					<li><a href="/events/">Events</a></li>
+					<li><a href="/episodes/">Episodes</a></li>
+					<li><a href="/schedule/">Schedule</a></li>
+					<li><a href="/gallery/">Gallery</a></li>
+					<li><a href="/champions/">Champs</a></li>
+					<li class="search mobile-only">
+						<form action="/search/" type="GET">
+							<input type="text" name="q" placeholder="Search" />
+							<input type="submit" value="Search" />
+						</form>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div id="container" class="{% block container_class %}index{% endblock %}">
+		{% block container %}{% endblock %}
+	</div>
+
+	{% include "adsense.html" %}
+</div>
+
+	<footer id="footer">
+		<div id="footer-wrapper">
+			<img class="logo float-left" src="{% static "img/logo.png" %}" />
+			<div class="copyright float-left">
+				<p>Elite Dodgeball is a nonprofit organization aimed at building and elevating the sport of dodgeball by first building and elevating the community around it.</p>
+				<p>Copyright &copy; 2018 Elite Dodgeball, Inc.</p>
+			</div>
+
+			<ul class="links float-left">
+				<li><h3>About Us</h3></li>
+				<li><a href="/about/">Our Mission</a></li>
+				<li><a href="/about/history/">Our History</a></li>
+				<li><a href="/about/leadership/">Leadership</a></li>
+				<li><a href="/rules/">Rules</a></li>
+				<li><a href="/press/">Press</a></li>
+				<li><a href="/contact/">Contact</a></li>
+			</ul>
+			<ul class="links float-left">
+				<li><h3>See Us</h3></li>
+				<li><a href="/gallery/">Gallery</a></li>
+				<li><a href="/episodes/">Episodes</a></li>
+				<li><a href="/events/">Events</a></li>
+				<li><a href="/schedule/">Schedule</a></li>
+				<li><a href="/store/">Store</a></li>
+			</ul>
+			<ul class="links float-left">
+				<li><h3>Like Us</h3></li>
+				<li><a href="https://twitter.com/elitedodgeball/">Twitter</a></li>
+				<li><a href="https://www.facebook.com/Elitedodgeball/">Facebook</a></li>
+				<li><a href="https://www.youtube.com/elitedodgeball/">YouTube</a></li>
+				<li><a href="https://www.instagram.com/elite_dodgeball/">Instagram</a></li>
+			</ul>
+		</div>
+	</footer>
+
+	<script src="{% static "js/rotator.js" %}"></script>
+	<script src="{% static "js/player.js" %}"></script>
+	<script src="{% static "js/main.js" %}"></script>
+	{% block scripts %}{% endblock %}
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+		(function () {
+			window.adsbygoogle = [];
+			for (var i = 0, l = document.querySelectorAll('.adsbygoogle').length; i < l; i++) {
+				adsbygoogle.push({});
+			}
+		})();
+	</script>
+	{% if not debug %}
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-44407718-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	{% endif %}
+</body>
+</html>

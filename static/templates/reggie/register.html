@@ -1,0 +1,169 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html lang="en-us" ng-app="ReggieApp" ng-cloak>
+<head>
+	<!-- Site stuff -->
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Page stuff -->
+	<title>{{ event.title }} - Event Registration - Elite Dodgeball</title>
+
+	<!-- Style stuff -->
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css">
+	<link href="{% static "reggie/css/main.css" %}" rel="stylesheet" type="text/css">
+</head>
+<body ng-controller="ReggieCtrl">
+	<md-content id="content">
+		<h1>{{ event.title }}</h1>
+
+		<img src="{{ event.header.url }}" class="event-header" />
+
+		{% if empty_invite %}
+		<h2 class="warning">You need an invitation to register!</h2>
+
+		<p>If you'd like to request an invitation, head over to our <a href="/contact/">contact</a> page and shoot us an email.</p>
+
+		<p>If you have a code already, enter it here and let's get on with it.</p>
+
+		<form name="inviteForm" ng-submit="inviteRedirect()">
+			<md-input-container class="md-block">
+				<label>Registration Code</label>
+				<input type="text" ng-model="redirectId" required />
+			</md-input-container>
+
+			<md-button type="submit" ng-disabled="inviteForm.$invalid === true" class="md-raised md-accent">
+				Let's go!
+			</md-button>
+		</form>
+		{% elif invalid_invite %}
+		<h2 class="warning">That invitation is invalid!</h2>
+
+		<p>Double-check your registration code and let's give it another whirl.</p>
+
+		<p>If you think there's something else wrong, head over to our <a href="/contact/">contact</a> page and shoot us an email.</p>
+
+		<form name="inviteForm" ng-submit="inviteRedirect()">
+			<md-input-container class="md-block">
+				<label>Registration Code</label>
+				<input type="text" ng-model="redirectId" placeholder="{{ invalid_invite }}" required />
+			</md-input-container>
+
+			<md-button type="submit" ng-disabled="inviteForm.$invalid === true" class="md-raised md-accent">
+				Let's go!
+			</md-button>
+		</form>
+		{% elif now < event.registration_open %}
+		<h2 class="warning">Registration hasn't opened yet!</h2>
+		<p>Check back again on {{ event.registration_open|date:"F jS, Y" }}!</p>
+		{% elif now >= event.registration_close %}
+		<h2 class="warning">Registration is closed!</h2>
+		<p>If you want to plead your case for not looking at a calendar, head over to our <a href="/contact/">contact</a> page and shoot us an email.</p>
+		{% else %}
+		<form name="regForm" ng-show="didSucceed !== true" ng-submit="getToken()" ng-disabled="isSubmitting">
+			<md-toolbar><h2 class="md-toolbar-tools">Select Divisions</h2></md-toolbar>
+
+			<md-list>
+				<md-list-item ng-repeat="division in divisions track by $index" ng-class="{'sold-out': division.is_open !== true}">
+					<md-checkbox ng-model="division.isSelected" ng-disabled="division.is_open !== true" ng-change="checkValid()" aria-label="Select division"></md-checkbox>
+					<span>[[ division.name ]]</span>
+					<span class="md-secondary" ng-if="division.is_open !== true">Sold out</span>
+					<span class="md-secondary" ng-if="division.is_open === true && division.cost !== 0">[[ division.cost | currency ]]</span>
+					<span class="md-secondary" ng-if="division.is_open === true && division.cost === 0">Free</span>
+					<md-tooltip md-direction="left">
+						[[ division.team_count ]]
+						<ng-pluralize count="division.team_count"
+							when="{'1': 'team','other': 'teams'}">
+						</ng-pluralize>
+						registered
+					</md-tooltip>
+				</md-list-item>
+			</md-list>
+
+			<md-toolbar><h2 class="md-toolbar-tools">Team Information</h2></md-toolbar>
+
+			<md-input-container class="md-block">
+				<label>Team Name</label>
+				<input type="text" ng-model="team.name" required disabled />
+			</md-input-container>
+
+			<md-input-container class="md-block">
+				<label>Email</label>
+				<input type="email" ng-model="team.email_address" required disabled />
+			</md-input-container>
+
+			<div layout="row" layout-align="center start" layout-wrap>
+				<div ng-repeat="division in divisions | filter : {isSelected: true} track by $index" layout="column" flex="auto" class="roster-block">
+					<h3>[[ division.name ]] Roster</h3>
+					<roster-list ng-model="division.players" on-change="checkValid()"></roster-list>
+				</div>
+			</div>
+
+			<md-toolbar layout="row" layout-align="space-between center" class="md-toolbar-tools">
+				<h2>Check Out</h2>
+
+				<span layout="row" layout-align="start center">
+					Total: [[ form.totalCost + form.serviceFee | currency ]]
+
+					<md-icon ng-if="form.serviceFee > 0" class="info-icon">
+						info
+						<md-tooltip md-direction="bottom">Service fee of [[ form.serviceFee | currency ]]</md-tooltip>
+					</md-icon>
+				</span>
+			</md-toolbar>
+
+			<p>You're about to register for <strong>{{ event.title }}</strong>.</p>
+
+			<p>Take this opportunity to verify all of the above information is correct.</p>
+
+			<md-checkbox name="acceptTerms" ng-model="form.hasAccepted" ng-change="checkValid()">
+				You've read and accept our <a href="/terms/" target="_blank">terms of service</a>
+			</md-checkbox>
+
+			<div layout="row" layout-align="space-between center">
+				<p class="error">[[ errorMessage ]]</p>
+				<md-button type="submit" ng-disabled="regForm.$invalid === true || isValid === false" class="md-raised md-accent">
+					Proceed to payment
+				</md-button>
+			</div>
+		</form>
+		<div ng-if="didSucceed === true">
+			<h2 class="md-padding">Yay, you did it!</h2>
+			<p>You're all registered for <strong>{{ event.title }}</strong>.</p>
+			<p>Be sure to keep an eye out for that registration confirmation email sent to <strong>[[ team.email_address ]]</strong>.</p>
+
+			<ul class="md-padding">
+				<li ng-repeat="division in divisions | filter : {isSelected: true} track by $index" layout="row" layout-align="space-between center" flex="100">
+					<strong>[[ division.name ]]</strong>
+					<span>[[ division.players.length ]] players</span>
+				</li>
+			</ul>
+
+			<p>We'll see you on <strong>{{ event.datetime|date:"F jS, Y" }}</strong>!</p>
+		</div>
+		<md-progress-circular ng-if="isSubmitting" md-mode="indeterminate" md-diameter="150" class="thumper md-accent"></md-progress-circular>
+		{% endif %}
+	</md-content>
+
+	<script src="https://checkout.stripe.com/checkout.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+	<script src="{% static "reggie/js/app.js" %}"></script>
+
+	<script>
+		var DATA = {{ json|safe }};
+
+		const STRIPE_PUBLIC_KEY = '{{ STRIPE_PUBLIC_KEY }}';
+		const STRIPE_SERVICE_FEE = parseFloat({{ STRIPE_SERVICE_FEE }});
+		const STRIPE_SERVICE_PERCENT = parseFloat({{ STRIPE_SERVICE_PERCENT }});
+	</script>
+</body>
+</html>

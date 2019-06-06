@@ -1,0 +1,881 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ RULES_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ RULES_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}rules{% endblock %}
+
+{% block twitter_title %}{{ RULES_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ RULES_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ RULES_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ RULES_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Rules</h1>
+
+		<p>For refereeing guidelines, head over to the <a href="/rules/referee/">referee page</a>.</p>
+		<p>For other regulations and requirements, head over to the <a href="/rules/regulations/">regulations page</a>.</p>
+
+		<h2 id="section-1">Equipment <a href="#section-1" class="float-right">I</a></h2>
+		<ol>
+			<li>
+				Balls
+				<ol>
+					<li>Six 8.5-inch rubber balls free from foreign substances and contaminants.</li>
+					<li>Five of the same color and one off-color to represent the Burden Ball.</li>
+				</ol>
+			</li>
+			<li>
+				Tape
+				<ol>
+					<li>200 feet of tape for one court.</li>
+					<li>Tape is used for court lines and Ball Placement Markers.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-2">Court <a href="#section-2" class="float-right">II</a></h2>
+		<ol>
+			<li>
+				Dimensions
+				<ol>
+					<li>50 feet by 25 feet.</li>
+				</ol>
+			</li>
+			<li>
+				Neutral Zone
+				<ol>
+					<li>Extends five feet from the length of the Center Line towards either end.</li>
+					<li>These Neutral Zone-demarcating lines are also called the Attack Lines.</li>
+				</ol>
+			</li>
+			<li>
+				Ball Placement Markers
+				<ol>
+					<li>Placed five feet from the sideline along the Center Line.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<img src="{% static "img/rules/court-diagram.png" %}" />
+
+		<h2 id="section-3">Players <a href="#section-3" class="float-right">III</a></h2>
+		<ol>
+			<li>
+				Team Capacity
+				<ol>
+					<li>Eight players maximum per team roster.</li>
+					<li>
+						Minimum of four players to start a game and a maximum of six.
+						<ol>
+							<li>Failure to provide the minimum will result in a forfeiture of each game.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Enforcement
+				<ol>
+					<li>Players that do not start a game are not eligible to enter the game through catches.</li>
+					<li>Substitutions may only take place between games or in case of injury.</li>
+					<li>All teams must designate a captain or coach for referee communication purposes.</li>
+				</ol>
+			</li>
+			<li>
+				Apparel
+				<ol>
+					<li>
+						Players may not wear gloves.
+						<ol>
+							<li>Athletic tape is permitted with the adhesive side closed.</li>
+						</ol>
+					</li>
+					<li>Players must wear non-hazard uniforms.</li>
+					<li>Players may wear knee pads and/or elbow pads.</li>
+					<li>Players must wear athletic footwear (i.e., no spiked shoes or bare feet).</li>
+					<li>Players may wear sweatbands and/or hats.</li>
+					<li>Players must wear contacts or "rec specs" if needed. No glasses are allowed.</li>
+					<li>
+						Players may not apply any substance to their hands that may transfer to the equipment or court.
+						<ol>
+							<li>Chalk used to dry hands must be fully absorbed before the game begins.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-4">Game Objective <a href="#section-4" class="float-right">IV</a></h2>
+		<ol>
+			<li>
+				Winning a Game
+				<ol>
+					<li>A team wins a game by eliminating the entire opposing team.</li>
+					<li>Games have no time limit and gameplay will continue until a team is eliminated.</li>
+				</ol>
+			</li>
+			<li>
+				Winning a Match
+				<ol>
+					<li>Most matches consist of three discrete games.</li>
+					<li>The first team to take majority games will win the match (e.g., first to two wins out of three games).</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-5">Opening Rush <a href="#section-5" class="float-right">V</a></h2>
+		<ol>
+			<li>
+				Ball Placement
+				<ol>
+					<li>A total of six balls will be placed along the Center Line.</li>
+					<li>Three will be placed within each Ball Placement Marker.</li>
+					<li>One side of the court will perpetuate the burden throughout the match.</li>
+				</ol>
+			</li>
+			<li>
+				Pre-Signal
+				<ol>
+					<li>No part of any player may touch inside the court including feet and hands.</li>
+					<li>Players may not initiate a running start to gain momentum.</li>
+					<li>A referee will signal to each team to check players before initiating the game.</li>
+				</ol>
+			</li>
+			<li>
+				Post-Signal
+				<ol>
+					<li>Players may only grab the three balls assigned to their side (i.e., to their relative right).</li>
+					<li>
+						A team may only attempt to retrieve its opponent's balls if the team has first successfully retrieved all three of its own.
+						<ol>
+							<li>The opponent's Nonactive balls must be brought behind the team's own Attack Line before becoming Active.</li>
+						</ol>
+					</li>
+					<li>
+						If a team interferes with an opponent's set of balls before clearing its own set of balls, that team will forfeit all balls to the opposing team.
+						<ol>
+							<li>Both teams will reset to their End Lines and the game will resume at the Head Referee's signal with no Opening Rush.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Attack Line
+				<ol>
+					<li>Players must bring their set of balls behind their respective Attack Line to make them Active.</li>
+					<li>Both feet must be secured behind the Attack Line with ball in hand to make it Active.</li>
+					<li>
+						Players may step over the Center Line during the Opening Rush while retrieving their team's set of balls.
+						<ol>
+							<li>Stepping over the sideline will still result in an out.</li>
+						</ol>
+					</li>
+					<li>
+						If a Nonactive ball is thrown, the throwing player is out and the ball is immediately Dead.
+						<ol>
+							<li>The Nonactive ball must still be made Active by clearing the Attack Line of the team that recovers the Nonactive ball.</li>
+						</ol>
+					</li>
+					<li>Once a team has successfully made a ball Active from their set of balls, that team may advance up to the opponent's Attack Line.</li>
+				</ol>
+			</li>
+			<li>
+				False Starts
+				<ol>
+					<li>A False Start is a player on either team making contact within the court boundaries before the Head Referee's signal.</li>
+					<li>The first False Start against a team will result in a halt of play and reset for a new Opening Rush.</li>
+					<li>The second False Start against a team will result in the offending team replacing the designated Opening Rush players with other starting players.</li>
+					<li>
+						The third False Start against a team will result in the offending team forfeiting all balls to the opposing team.
+						<ol>
+							<li>Both teams will reset to their End Lines and the game will resume at the Head Referee's signal with no Opening Rush.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-6">Burden <a href="#section-6" class="float-right">VI</a></h2>
+		<ol>
+			<li>
+				Enforcement
+				<ol>
+					<li>Burden determines which team must throw.</li>
+					<li>
+						Burden is determined by which team has the majority of the balls.
+						<ol>
+							<li>If each team possesses an equal number of balls, Burden will be determined by possession of the off-color Burden Ball.</li>
+						</ol>
+					</li>
+					<li>Burden is not at all determined by the number of players remaining in play.</li>
+				</ol>
+			</li>
+			<li>
+				Initial Burden
+				<ol>
+					<li>In round-robin matches, Burden will initiate based on captain or coach consensus or a coin flip.</li>
+					<li>In elimination matches, Burden will initiate based on the decision of the captain of the team with the higher seed.</li>
+					<li>Teams switch sides of the court between games to swap each game's initial Burden.</li>
+				</ol>
+			</li>
+			<li>
+				Throw Clock
+				<ol>
+					<li>The team with Burden must completely eliminate Burden within 10 seconds of play.</li>
+					<li>The Burden Countdown is determined by the Burden Referee's discretion.</li>
+					<li>The Burden Countdown is initiated once the balls of the team with Burden are in play and on the court.</li>
+				</ol>
+			</li>
+			<li>
+				Throw Clock Reset
+				<ol>
+					<li>
+						The Burden Countdown will reset once the original Burden is cleared.
+						<ol>
+							<li>For instance, if a team has all six balls, it must clear three balls—one of which is the Burden Ball—to relieve Burden.</li>
+							<li>If one of the three balls is not the Burden Ball, that team continues to have Burden.</li>
+							<li>Throwing a single ball will not relieve Burden.</li>
+						</ol>
+					</li>
+					<li>
+						The team with Burden must make an attempt to throw at the opponent or roll any ball towards the opposing End Line to reset the Burden Countdown.
+						<ol>
+							<li>
+								Teams may not intentionally place motionless balls on or across the Center Line or otherwise manipulate the opposing team in order to clear Burden.
+								<ol>
+									<li>In this case, the Head Referee will halt play and award the motionless ball to the opposing team.</li>
+									<li>Additional offenses within the same match will result in a forfeiture of all balls to the opposing team.</li>
+								</ol>
+							</li>
+						</ol>
+					</li>
+					<li>An opposing team throwing or rolling additional balls to the team with Burden will not reset the Throw Clock.</li>
+				</ol>
+			</li>
+			<li>
+				Stoppage of Play
+				<ol>
+					<li>The Head Referee or Burden Referee will halt all play including the Burden Countdown if necessary to place the Burden Ball back into play.</li>
+					<li>
+						Stoppage of Play will not result in a reset of the Burden Countdown.
+						<ol>
+							<li>If Stoppage of Play occurs with the Throw Clock at four seconds or less, it will reset to five seconds once the Head Referee reinitiates play.</li>
+						</ol>
+					</li>
+					<li>Balls in motion will be Dead upon Stoppage of Play and reset to the throwing team upon resuming play.</li>
+					<li>Timeouts are not permitted by either team.</li>
+				</ol>
+			</li>
+			<li>
+				Throw Clock Violations
+				<ol>
+					<li>The Throw Clock ends when it reaches zero seconds.</li>
+					<li>Failure to relieve Burden when the Throw Clock ends will result in the Burdened team forfeiting all balls to the opposing team.</li>
+					<li>A team with Burden will not be penalized if more balls are thrown or rolled to them during the original Burden Countdown.</li>
+				</ol>
+			</li>
+			<li>
+				Retrieved Balls
+				<ol>
+					<li>
+						Any retrieved ball placed on the Center Line by a referee is neutral.
+						<ol>
+							<li>If the Burden Ball is neutral, the team with the majority of the balls acquires Burden.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Delay of Game
+				<ol>
+					<li>
+						Delay of Game occurs when a player intentionally throws a ball out of play with no attempt to throw towards the opposing team.
+						<ol>
+							<li>The Head Referee will halt play, award the opposing team with the out-of-play ball, and reset both teams to their End Lines before resuming play.</li>
+							<li>Additional offenses by the same team within the same game will result in a forfeiture of all balls to the opposing team.</li>
+						</ol>
+					</li>
+					<li>
+						If Team A rolls a ball to Team B to relieve Burden and Team B immediately rolls a ball back to relieve Burden again, Team A must attempt to throw a ball at Team B.
+						<ol>
+							<li>If Team A does not make an attempt to throw at Team B, Team A will receive a Yellow Card.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-7">Ball States <a href="#section-7" class="float-right">VII</a></h2>
+		<ol>
+			<li>
+				Active/Nonactive Balls
+				<ol>
+					<li>A ball becomes Active when it is secured with at least one hand by an active player and has been activated from the Opening Rush.</li>
+					<li>A ball becomes Nonactive when it is rolling on the court, becomes a Dead ball, or has not been activated from the Opening Rush.</li>
+					<li>Players may not place balls inside their jerseys.</li>
+				</ol>
+			</li>
+			<li>
+				Live Balls
+				<ol>
+					<li>A ball becomes Live by a player throwing an Active ball.</li>
+					<li>A ball remains Live until it is Dead.</li>
+					<li>Two-handed throws are valid throws and result in Live balls.</li>
+					<li>Throwing two balls at once (with one ball in each hand) results in two valid throws and two Live balls.</li>
+				</ol>
+			</li>
+			<li>
+				Dead Balls
+				<ol>
+					<li>A Live ball becomes Dead after it touches the floor, any other Dead or Nonactive ball, a wall surface, any referee or nonactive player or spectator, the ceiling, or any other Live ball.</li>
+					<li>Slapping, spiking, and punching are not valid throws and result in a Dead ball.</li>
+					<li>Kicking is not a valid throw and will result in a Dead ball.</li>
+				</ol>
+			</li>
+			<li>
+				Sequence of Play
+				<ol>
+					<li>Defined as the point from which a ball is thrown and becomes Live to when it becomes Dead or is caught.</li>
+				</ol>
+			</li>
+			<li>
+				Popped Balls
+				<ol>
+					<li>Any ball is immediately Dead and Nonactive upon popping.</li>
+					<li>The Head Referee will halt play and the popped ball will be replaced before resuming play at the Head Referee's signal.</li>
+					<li>
+						Blocks that result in a popped ball are valid but the popped ball is Dead immediately following the block.
+						<ol>
+							<li>Dropping the blocking ball will still result in an out against the blocker.</li>
+						</ol>
+					</li>
+					<li>Balls that pop mid-flight are immediately Dead and cannot be caught or considered a valid hit against an opposing player.</li>
+					<li>Hits against an opposing player that result in a popped ball are still valid but Dead immediately following contact.</li>
+				</ol>
+			</li>
+			<li>
+				Contaminated Balls
+				<ol>
+					<li>Any ball that contains blood or other foreign substances is considered contaminated.</li>
+					<li>The Head Referee will halt play and replace the contaminated ball before resuming play.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-8">Kills <a href="#section-8" class="float-right">VIII</a></h2>
+		<ol>
+			<li>
+				Single Ball Contact
+				<ol>
+					<li>An opposing player hit by a Live thrown ball is out.</li>
+					<li>Any subsequent opposing player hit by the same Live ball is also out.</li>
+					<li>A blocking player that drops his blocking ball against a Live ball is out.</li>
+					<li>Any teammate hit by a blocked Live ball is out, whether or not the blocking ball is dropped.</li>
+					<li>A player blocking a Live ball into himself is out.</li>
+					<li>
+						Simultaneous throws yield independent results.
+						<ol>
+							<li>If both players are hit, they are both out.</li>
+							<li>If only one player is hit, then only that player is out.</li>
+							<li>It is the referees' discretion to determine if any particular Sequence of Play precedes or supersedes another.</li>
+						</ol>
+					</li>
+					<li>Any Live ball ricocheting from a hit opposing player is Dead upon contact with any player of the throwing team and the hit opposing player is out.</li>
+					<li>Live balls making simultaneous contact with the floor and an active player are called traps and result in valid hits where the ball is immediately Dead and the trapping player is out.</li>
+					<li>Headshots are valid hits.</li>
+					<li>Hits on clothing or hair or accessories are valid hits.</li>
+				</ol>
+			</li>
+			<li>
+				Multiple Ball Contact
+				<ol>
+					<li>
+						Any active player on the team of a hit player may make a play on the ricocheting Live ball.
+						<ol>
+							<li>Players hit by the ricocheting ball may not throw Active balls at the opposing team until the Sequence of Play is resolved.</li>
+							<li>
+								Any subsequent Live thrown balls may hit the players while the first ball is still Live and begin separate, parallel Sequences of Play.
+								<ol>
+									<li>If any subsequent Live ball hits and becomes Dead while any preceding ball is still Live, players hit by the Dead ball are out but the Live balls remain Live.</li>
+									<li>Catches by active players on subsequent Live balls after any preceding Live balls become Dead are valid catches, but any players ruled out through coinciding Sequences of Play are still out.</li>
+									<li>If every subsequent Live ball is caught, they are all valid catches (i.e., the opposing throwing players are out and corresponding players on the catching team are eligible for reentry).</li>
+									<li>Sequences of Play that conclude in a catch and before other Sequences of Play that result in the hit players as out are valid catches first and then the hit players go out.</li>
+								</ol>
+							</li>
+						</ol>
+					</li>
+					<li>
+						Sequences of Play are determined by the referees.
+						<ol>
+							<li>If the hit player or any teammate are not in position to make a play on the Live ball, then the Sequence of Play is concluded.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				One-on-One
+				<ol>
+					<li>Simultaneous throws' hits are determined by the order of completion of the two Sequences of Play.</li>
+					<li>
+						Indeterminate timings of simultaneous hits may result in the referees choosing to reset the play.
+						<ol>
+							<li>Both players will reset to their End Lines with the current Burden and resume play at the Head Referee's signal.</li>
+						</ol>
+					</li>
+					<li>
+						Persistent stalemates will result in the referees enforcing a Stoppage of Play and removing two non-Burden Balls from the game.
+						<ol>
+							<li>The Stoppage of Play can only be enforced during moments of inaction and equal ball counts.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-9">Catches <a href="#section-9" class="float-right">IX</a></h2>
+		<ol>
+			<li>
+				Valid Catches
+				<ol>
+					<li>One formerly active player in the game may reenter the game if a teammate catches a Live ball thrown by an opposing player, additionally resulting in that opposing player as out.</li>
+					<li>
+						Minimum two points of body contact must be made within court bounds with at least one hand on the caught ball to secure a valid catch.
+						<ol>
+							<li>Insufficient contact or control (e.g., one foot in bounds and another foot Out of Bounds) is not a valid catch and results in the attempting catcher as out.</li>
+						</ol>
+					</li>
+					<li>Sliding Out of Bounds can result in a valid catch if control is gained before any part of the catching player's body goes Out of Bounds.</li>
+					<li>
+						Catches with the legs require the ball to be transferred to the catching player's hands while still in bounds to be valid.
+						<ol>
+							<li>If the caught ball is still between the catching player's legs as his minimum valid points of contact transition to Out of Bounds, the attempting catcher is out.</li>
+							<li>If the caught ball is still between the catching player's legs with his minimum valid points of contact and is hit by another Live thrown ball by an opposing player, the order of resolution of the Sequence of Play is at the referees' discretion.</li>
+						</ol>
+					</li>
+					<li>
+						Player jerseys may not be used to catch a Live ball.
+						<ol>
+							<li>The catching player is out and the catch does not count.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Player Entry
+				<ol>
+					<li>
+						One catch from a Live ball brings in a teammate in the order in which the players were eliminated in the game.
+						<ol>
+							<li>A player entering the game out of order will result in restoration to the Queue, the correct player refused entry, and the throwing opposing player as out.</li>
+							<li>Subsequent offenses will result in forfeiture of that game.</li>
+							<li>A player reentering the game has five seconds to make contact with the court by entering through his team's End Line.</li>
+							<li>Reentering players are active as soon as contact is made with the court.</li>
+						</ol>
+					</li>
+					<li>If the maximum number of players is already playing for the catching team, no other player may come into the game.</li>
+					<li>Only the starting players or legal substitutes from the beginning of the game may reenter from a catch.</li>
+					<li>Players must be nonactive and fully in the Queue to be eligible for reentry.</li>
+				</ol>
+			</li>
+			<li>
+				Catching Scenarios
+				<ol>
+					<li>A ricocheting Live ball from a hit off an active player may be caught by a teammate and results in the hit player and the catching player remaining in and the throwing opposing player going out.</li>
+					<li>Multiple simultaneous valid catches by a single active player results in the throwing opposing players as out and the corresponding number of teammates eligible to reenter the game.</li>
+					<li>
+						Simultaneous throws and catches between two players results in both players out and each team allowed one player reentry.
+						<ol>
+							<li>Bobbles perpetuate Sequences of Play and their order of resolution are at the sole discretion of the referees.</li>
+						</ol>
+					</li>
+					<li>A ricocheting Live ball from a hit off an active player may be caught by an opposing player from the throwing team and will result in no player reentry and the hit active player going out.</li>
+				</ol>
+			</li>
+			<li>
+				Momentum Catch
+				<ol>
+					<li>Catches that force a catching player Out of Bounds after securing the Live ball with minimum points of valid contact are considered Momentum Catches and are valid.</li>
+					<li>
+						After a successful Momentum Catch, the catching player is pending-active and may not make any valid plays.
+						<ol>
+							<li>Hits on the catching player while pending-active are still valid and the Live balls making those hits are immediately Dead.</li>
+							<li>The catching player is out if attempting to catch or successfully catches Live thrown balls by the opposing team while pending-active.</li>
+							<li>Any pending-active players from a Momentum Catch may not throw any ball.</li>
+						</ol>
+					</li>
+					<li>To become active again, the catching player must immediately reenter the court and make at least two points of contact within the court boundaries.</li>
+					<li>Bobbled catches and validity through points of contact are at the sole discretion of the referees.</li>
+					<li>Players hit by Live thrown balls from the opposing team while falling Out of Bounds but not yet pending-active are out for being Out of Bounds but the thrown ball remains Live for the catching player's teammates.</li>
+				</ol>
+			</li>
+			<li>
+				Blocked Catches
+				<ol>
+					<li>
+						Ricocheting Live balls from a successful block can be caught and result in the throwing player going out and a nonactive teammate on the catching team eligible for reentry.
+						<ol>
+							<li>The blocking player may drop his blocking ball to catch the ricocheting Live ball if control of the blocking ball is established.</li>
+							<li>Any active teammate of the blocking player may also catch the ricocheting Live ball.</li>
+						</ol>
+					</li>
+					<li>
+						The blocking player is out if the blocking ball is loosed from his control and becomes Dead.
+						<ol>
+							<li>A dropping or bobbled blocking ball is Live only to the blocking player.</li>
+							<li>If the blocking player catches the ricocheting Live ball but fails to maintain control of the blocking ball, the catch does not count and no teammate is eligible for reentry and the throwing opposing player is safe.</li>
+							<li>Any other active teammate may catch the ricocheting Live ball and result in a valid catch but the blocking player is still out.</li>
+						</ol>
+					</li>
+					<li>
+						In the case the ricocheting Live ball returns to the thrower of that same Live ball and is caught, the blocking player is safe but a nonactive player is eligible for reentry on the throwing team.
+						<ol>
+							<li>The blocking player may throw his ball at the thrower.</li>
+							<li>The ricocheting Live ball is still Live on the throwing team's side of the court and can result in multiple hits and outs.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Catch and Out
+				<ol>
+					<li>
+						Multiple thrown balls making simultaneously contact with a player can result in any combination of catches and hits, in which case they are all valid.
+						<ol>
+							<li>Caught balls will result in the throwing players going out and the corresponding number of players eligible for reentry on the catching team.</li>
+							<li>The catching player is still out if hit.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-10">Blocking <a href="#section-10" class="float-right">X</a></h2>
+		<ol>
+			<li>A player may use a ball to block a Live ball and not be out.</li>
+			<li>Blocking a Live ball results in a Live ball and can either be secured with a catch or made Dead through means listed in Section VII Article II Item A.</li>
+			<li>
+				Dropping a blocking ball as a result of contact with the Live thrown ball results in an out against the blocking player.
+				<ol>
+					<li>The dropped blocking ball is Live from the point of being dropped to becoming Dead only for the blocking player and is Dead upon contact with any other player.</li>
+					<li>If the player regains control while it is Live, then he is safe.</li>
+				</ol>
+			</li>
+			<li>Balls held between the legs are eligible to be blocking balls.</li>
+			<li>Fingers and hands are not considered part of the blocking ball and will result in an out if hit by a Live ball.</li>
+		</ol>
+
+		<h2 id="section-11">Pinching <a href="#section-11" class="float-right">XI</a></h2>
+		<ol>
+			<li>
+				At no point during blocking or throwing are players allowed to hold any ball such that rubber-on-rubber contact is created.
+				<ol>
+					<li>Players may only throw openhanded or with a clamp grip, though rubber-on-rubber contact is still possible and prohibited with these grips.</li>
+				</ol>
+			</li>
+			<li>Prohibited pinching will result in a warning upon first offense at the referees' discretion.</li>
+			<li>Repeat offenses of prohibited pinching will result in the pinching player going out.</li>
+		</ol>
+
+		<img src="{% static "img/rules/pinch-diagram.png" %}" />
+
+		<h2 id="section-12">Out of Bounds <a href="#section-12" class="float-right">XII</a></h2>
+		<ol>
+			<li>
+				Any body part, piece of clothing, hair, or accessory of an active player that makes contact with any non-court entity beyond the conjoined vertical bounds of his team's sidelines, End Lines, and opponent's Attack Line will result in an out against that player.
+				<ol>
+					<li>Contact within any of these boundary-defining lines is safe.</li>
+					<li>Active players may only go Out of Bounds during Stoppage of Play.</li>
+				</ol>
+			</li>
+			<li>
+				Using a ball as an intermediate between an active player and any out-of-bounds entity is prohibited and results in an out against that player.
+				<ol>
+					<li>An active player using a ball to stop himself from falling Out of Bounds by touching it to any part of the floor or any wall beyond the boundary-defining lines, for example, is prohibited and results in an out against that player.</li>
+				</ol>
+			</li>
+			<li>Active players may reach over any boundary-defining line to retrieve a ball.</li>
+		</ol>
+
+		<h2 id="section-13">Retrieving Stray Balls <a href="#section-13" class="float-right">XIII</a></h2>
+		<ol>
+			<li>
+				Enforcement
+				<ol>
+					<li>Active players may not go Out of Bounds to retrieve a stray ball at any time.</li>
+					<li>
+						Balls are eligible for retrieval only after they have completely left the boundaries of the court.
+						<ol>
+							<li>Designated Ball Retrievers or nonactive players that make contact with any Nonactive ball still on the court will result in that ball being awarded to the opposing team.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Designated Ball Retrievers
+				<ol>
+					<li>
+						Designated Ball Retrievers or nonactive players off the court are permitted to retrieve stray balls.
+						<ol>
+							<li>Players transitioning between active and on the court to nonactive and off the court are not permitted to make contact with any stray ball or otherwise Nonactive ball.</li>
+						</ol>
+					</li>
+					<li>
+						Retrieved balls must reenter the court immediately through either court's End Lines.
+						<ol>
+							<li>Retrieved balls may also enter through the sidelines but must be placed on the court at the point it left or rolled towards a team's End Line.</li>
+						</ol>
+					</li>
+					<li>Designated Ball Retrievers and nonactive players are not permitted to hoard balls or otherwise stand Out of Bounds with a ball in an attempt to assist a teammate.</li>
+					<li>Designated Ball Retrievers and nonactive players may not cross the extended Center Line into the opposing team's half of the court.</li>
+					<li>Designated Ball Retrievers and nonactive players may not enter the court to retrieve stray balls.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-14">Flight Kills <a href="#section-14" class="float-right">XIV</a></h2>
+		<ol>
+			<li>
+				Successful Flight Kill
+				<ol>
+					<li>A successful Flight Kill is the aerial act of an active player jumping over an opponent's Attack Line and hitting an opponent with an Active ball before making contact with any part of the opposing team's portion of the court.</li>
+					<li>
+						However many balls the attempting player is holding at the point of jumping is how many successful hits and subsequent outs that player must achieve to remain in.
+						<ol>
+							<li>Any missed throw will result in an out against the attempting player.</li>
+							<li>Any ricocheting ball from an attempted Flight Kill is still Live before becoming Dead through means listed in Section VII Article II Item A.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Pending-Active Player
+				<ol>
+					<li>After a successful Flight Kill is made, the flight player is immediately pending-active and may not make any valid plays.</li>
+					<li>The pending-active player must secure himself within the Neutral Zone to become active again.</li>
+					<li>Any pending-active player that intentionally makes contact with any ball is out.</li>
+				</ol>
+			</li>
+			<li>
+				Flight Kill Scenarios
+				<ol>
+					<li>An attempted Flight Kill ball is still eligible to be caught and subject to Section IX.</li>
+					<li>Successful Flight Kill players that become pending-active are out if they step Out of Bounds.</li>
+					<li>Both the opposing player and the attempting player are out if the opposing player steps Out of Bounds before the attempting player can hit the opposing player with an Active ball.</li>
+					<li>Opposing players may throw at a pending-active player until that attempting player is deemed out.</li>
+					<li>Catches by the pending-active player are invalid and result in an out against the pending-active player.</li>
+					<li>
+						Players attempting a Flight Kill are still considered active while in the air from the initial jump to landing across the opponent's Attack Line.
+						<ol>
+							<li>Any throw by an attempting player after being hit by a Live ball is invalid and the attempting player is out upon landing.</li>
+							<li>Catches by the attempting player's team from any ricocheting Live ball off that attempting player is valid and results in an out against the attempting player and the throwing opposing player and one player on the catching team is eligible for reentry.</li>
+							<li>The attempting player may not catch the ricocheting Live ball of his own throw against an opposing player.</li>
+							<li>The ricocheting Live ball of the attempting player's throw can be blocked back into the attempting player and caught by the attempting player's team and results in an out against the attempting player and one player on the catching team is eligible for reentry.</li>
+						</ol>
+					</li>
+					<li>Live balls thrown by the opposing team at a pending-active player are Dead upon impact and result in an immediate out against the pending-active player.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-15">Interference <a href="#section-15" class="float-right">XV</a></h2>
+		<ol>
+			<li>
+				Enforcement
+				<ol>
+					<li>
+						Active players deemed out may not interfere with the game, other active players, or any balls.
+						<ol>
+							<li>Players that interfere with any ball results in that ball being awarded to the opposing team.</li>
+							<li>Active players deemed out must exit the court and head to their team's Queue immediately.</li>
+						</ol>
+					</li>
+					<li>Players holding a ball at the time of being deemed out may pass the held ball to another active teammate.</li>
+					<li>Reversed calls by a referee do not penalize a player as Out of Bounds for exiting the court and will result in a reset of current play.</li>
+					<li>Nonactive players and spectators may not interfere with the game at any point.</li>
+				</ol>
+			</li>
+			<li>
+				Player Collision
+				<ol>
+					<li>All players must make an attempt to avoid physical contact with opposing players whether inside the Neutral Zone or during Flight Kill attempts.</li>
+					<li>
+						Intentional contact will result in an out and a Yellow Card against the infringing active player.
+						<ol>
+							<li>Any opposing player intentionally moving towards an attempting Flight Kill player in an attempt to create contact will result in an out against the opposing player and the attempting Flight Kill player as safe.</li>
+							<li>Any attempting Flight Kill player that cannot control his direction of movement and makes contact with an opposing player results in an out against the attempting Flight Kill player and the opposing player as safe.</li>
+						</ol>
+					</li>
+					<li>
+						Collision intent is at the sole discretion of the referees.
+						<ol>
+							<li>Any collision will result in a Stoppage of Play by the referees to enforce any subsequent calls and reset all remaining active players to their respective End Lines before resuming play with the current Burden.</li>
+						</ol>
+					</li>
+					<li>Repeating collision offenders in the same match will be given a Red Card.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-16">Queue <a href="#section-16" class="float-right">XVI</a></h2>
+		<ol>
+			<li>
+				Valid Queues
+				<ol>
+					<li>Valid Queues are located along the sidelines of the court.</li>
+					<li>Each team's designated Queues are located on their respective side of the court.</li>
+				</ol>
+			</li>
+			<li>
+				Enforcement
+				<ol>
+					<li>A nonactive player must be fully within his team's Queue to be eligible for reentry.</li>
+					<li>Reentering players that do not enter within the designated time are denied entry and forced to the back of the Queue.</li>
+					<li>
+						Nonactive players in the Queue are permitted to retrieve stray balls as detailed in Section XIII.
+						<ol>
+							<li>Nonactive players that exit the Queue do not alter the order of reentry and are not afforded accommodating reentry time.</li>
+							<li>Nonactive players that have retrieved stray balls may enter with the retrieved balls through their team's End Line if they are bound for reentry.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-17">Injuries <a href="#section-17" class="float-right">XVII</a></h2>
+		<ol>
+			<li>
+				The referees must halt play immediately if there are any injuries on the court.
+				<ol>
+					<li>The amount of Stoppage of Play is at the discretion of the referees and any event coordinators.</li>
+				</ol>
+			</li>
+			<li>Players deemed fit for play following a Stoppage of Play will result in a reset of all active players to their respective End Lines with the current Burden.</li>
+			<li>
+				Players not deemed for play following a Stoppage of Play can be replaced with a substitution player that has not played in the current game.
+				<ol>
+					<li>If no substitutions are available, the next player in the team's Queue may take the place of the injured player.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-18">Other Divisions <a href="#section-18" class="float-right">XVIII</a></h2>
+		<ol>
+			<li>
+				Coed Division
+				<ol>
+					<li>
+						Abides all preceding rules and regulations but is superseded by the following.
+						<ol>
+							<li>
+								Coed Division rosters may have a maximum of nine players but are then required to have a minimum of three players of each gender.
+								<ol>
+									<li>Rosters of eight or less players are required to only have at least two players of each gender.</li>
+								</ol>
+							</li>
+							<li>A minimum of two players of each gender must start each game.</li>
+							<li>If only one player of one gender is available to start, only three of the other gender may start.</li>
+							<li>Failure to provide the coed requirement will result in forfeiture of each game.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Women's Division
+				<ol>
+					<li>
+						Abides all preceding rules and regulations but is superseded by the following.
+						<ol>
+							<li>A Women's Division roster may only contain female players.</li>
+							<li>The roster may have a maximum of eight players.</li>
+							<li>
+								A minimum of four players and a maximum of six players may start for any game.
+								<ol>
+									<li>Failure to provide the minimum number of players will result in a forfeiture of each game.</li>
+								</ol>
+							</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Pinch Division
+				<ol>
+					<li>Abides all preceding rules and regulations but is superseded by the following.</li>
+					<li>
+						Court modifications are as follows.
+						<ol>
+							<li>
+								There are no Neutral Zones and players can only go up to the Center Line to throw or attempt Flight Kills.
+								<ol>
+									<li>The Opening Rush and ball activation are still subject Section V Article IV.</li>
+									<li>Neutral Zone line markings may be modified by the referees or event coordinator to facilitate differentiation.</li>
+								</ol>
+							</li>
+						</ol>
+					</li>
+					<li>
+						Gameplay modifications are as follows.
+						<ol>
+							<li>
+								Players are allowed to pinch balls during blocking and throwing, fully disregarding Section XI.
+							</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Showdown
+				<ol>
+					<li>Abides all preceding rules and regulations but is superseded by the following.</li>
+					<li>
+						Court modifications are as follows.
+						<ol>
+							<li>Court dimensions are 50 feet by eight feet.</li>
+							<li>The Neutral Zone is 20 feet total, extending 10 feet from the length of the Center Line towards either End Line.</li>
+							<li>Ball Placement Markers are removed.</li>
+						</ol>
+					</li>
+					<li>
+						Gameplay modifications are as follows.
+						<ol>
+							<li>Each game is only ever one player against one other player.</li>
+							<li>Each player is given one ball prior to the Opening Rush that is immediately active upon start of play.</li>
+							<li>
+								There is only one ball placed at the Center Line for the Opening Rush and is immediately active upon start of play.
+								<ol>
+									<li>Sliding into and across the Center Line in an attempt to secure the ball is not permitted.</li>
+								</ol>
+							</li>
+							<li>Flight Kills are not permitted.</li>
+							<li>Any given ball may only be thrown once before becoming ineligible for valid play.</li>
+							<li>Once a ball is dropped after previously being secured in at least one hand by any player and becomes Dead, it is ineligible for valid play.</li>
+							<li>The center ball becomes ineligible for valid play if it leaves the court before either player can secure it.</li>
+							<li>
+								If one player throws first, the opposing player is given a 10-second Throw Clock.
+								<ol>
+									<li>The Throw Clock resets once a throw by that opposing player has been made.</li>
+									<li>Failure to throw before the Throw Clock ends will result in forfeiture of any held balls by the opposing player to the original throwing player and a reset of player positions to their respective End Lines before the Head Referee resumes play.</li>
+								</ol>
+							</li>
+							<li>Once all three balls have been thrown or otherwise been made ineligible for valid play and no player is deemed out, the game is fully reset.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-19">Undocumented Rules <a href="#section-19" class="float-right">XIX</a></h2>
+		<ol>
+			<li>An Undocumented Rule occurs when a play or situation arises that has no record of ruling.</li>
+			<li>
+				Attending referees must come to an agreement before play may resume.
+				<ol>
+					<li>If an agreement cannot be reached, the game is reset to prior to the Undocumented Rule incident.</li>
+				</ol>
+			</li>
+			<li>Continuance of play will not be affected by an Undocumented Rule and reset of play results in all active players returning to behind their respective End Lines with the current Burden and resumes at the Head Referee's signal.</li>
+			<li>All Undocumented Rule occurrences must be reported to event coordinators.</li>
+		</ol>
+{% endblock %}

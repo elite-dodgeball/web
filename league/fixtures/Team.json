@@ -1,0 +1,268 @@
+[
+{
+    "model": "league.team",
+    "pk": 1,
+    "fields": {
+        "name": "Adrenaline Rush",
+        "logo": "teams/b066d434-3561-11e8-9cfa-acbc32987c13.jpg",
+        "cover": "teams/b06887a2-3561-11e8-9add-acbc32987c13.jpg",
+        "location": "Dallas, TX",
+        "information": "We are friends.",
+        "email_address": "mockenoff@yahoo.com",
+        "website": "http://arushdball.com/",
+        "twitter": "https://twitter.com/arushdball",
+        "instagram": "https://www.instagram.com/arushdball/",
+        "youtube": "https://www.youtube.com/user/arushdball",
+        "facebook": "https://www.facebook.com/arushdball",
+        "region": 2,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 2,
+    "fields": {
+        "name": "Dodgetronic",
+        "logo": "teams/4be4efc2-3562-11e8-8db8-acbc32987c13.jpg",
+        "cover": "teams/4be500d4-3562-11e8-b3ef-acbc32987c13.jpg",
+        "location": "Memphis, TN",
+        "information": "They are friends.",
+        "email_address": "contact@dodgetronic.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "",
+        "region": 2,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 3,
+    "fields": {
+        "name": "Hitmen",
+        "logo": "teams/6c14ed88-3562-11e8-8a08-acbc32987c13.png",
+        "cover": "teams/6c14ffee-3562-11e8-9922-acbc32987c13.jpg",
+        "location": "San Antonio, TX",
+        "information": "More friends.",
+        "email_address": "contact@hitmen.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "",
+        "region": 2,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 4,
+    "fields": {
+        "name": "Gridlock",
+        "logo": "teams/77918448-3579-11e8-b136-acbc32987c13.png",
+        "cover": "teams/77933310-3579-11e8-a04b-acbc32987c13.jpg",
+        "location": "Los Angeles, CA",
+        "information": "<whisper>sports</whisper>",
+        "email_address": "contact@gridlock.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/LosAngelesGridlock",
+        "region": 4,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 5,
+    "fields": {
+        "name": "Rise of Brutality",
+        "logo": "teams/97efbde8-3579-11e8-b6dc-acbc32987c13.jpg",
+        "cover": "teams/97efd212-3579-11e8-a572-acbc32987c13.jpg",
+        "location": "San Diego, CA",
+        "information": "Chill.",
+        "email_address": "contact@riseofbrutality.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/people/Riseof-Brutality/100002131393225",
+        "region": 4,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 6,
+    "fields": {
+        "name": "Doom",
+        "logo": "teams/b9405f18-3579-11e8-966c-acbc32987c13.jpg",
+        "cover": "teams/b9407336-3579-11e8-8574-acbc32987c13.jpg",
+        "location": "Los Angeles, CA",
+        "information": "Fuck these guys.",
+        "email_address": "contact@doom.com",
+        "website": "http://doomdodgeball.com/",
+        "twitter": "",
+        "instagram": "http://instagram.com/DOOM_DODGEBALL",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/pages/Team-DOOM/488498514518713",
+        "region": 4,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 7,
+    "fields": {
+        "name": "Dynasty",
+        "logo": "teams/fe7dfb92-3579-11e8-ac67-acbc32987c13.jpg",
+        "cover": "teams/fe7e0f26-3579-11e8-bcb1-acbc32987c13.jpg",
+        "location": "Grand Rapids, MI",
+        "information": "These guys fuck.",
+        "email_address": "contact@dynasty.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/grdynasty/",
+        "region": 1,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 8,
+    "fields": {
+        "name": "TC Boosh",
+        "logo": "teams/1bfedadc-357a-11e8-a6f9-acbc32987c13.jpg",
+        "cover": "teams/1bfeec78-357a-11e8-b46f-acbc32987c13.jpg",
+        "location": "Minneapolis, MN",
+        "information": "Whatever.",
+        "email_address": "contact@tcboosh.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/twincitiesdodgeball",
+        "region": 1,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 9,
+    "fields": {
+        "name": "Team Awesome",
+        "logo": "teams/528da450-357a-11e8-b5e5-acbc32987c13.jpg",
+        "cover": "teams/528de382-357a-11e8-ae36-acbc32987c13.jpg",
+        "location": "Philadelphia, PA",
+        "information": "Something.",
+        "email_address": "contact@teamawesomedodgeball.org",
+        "website": "http://www.teamawesomedodgeball.org/",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/TeamAwesomeDodgeball",
+        "region": 3,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 10,
+    "fields": {
+        "name": "Davis Dodgeball",
+        "logo": "teams/7e06cf3a-357a-11e8-a985-acbc32987c13.jpg",
+        "cover": "teams/7e06e112-357a-11e8-a585-acbc32987c13.jpg",
+        "location": "Boston, MA",
+        "information": "Fuck Billy.",
+        "email_address": "contact@davisdodgeball.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/DavisDodgeball",
+        "region": 3,
+        "is_active": false
+    }
+},
+{
+    "model": "league.team",
+    "pk": 11,
+    "fields": {
+        "name": "Alamo Defenders",
+        "logo": "teams/ec00fa8a-359b-11e8-b46f-acbc32987c13.jpg",
+        "cover": "teams/ec028050-359b-11e8-b8a3-acbc32987c13.jpg",
+        "location": "San Antonio, TX",
+        "information": "RIP.",
+        "email_address": "contact@alamodefenders.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/sadefenders",
+        "region": 2,
+        "is_active": false
+    }
+},
+{
+    "model": "league.team",
+    "pk": 12,
+    "fields": {
+        "name": "Impulse",
+        "logo": "teams/22c86d14-359c-11e8-8ada-acbc32987c13.png",
+        "cover": "teams/22c88b12-359c-11e8-bb29-acbc32987c13.png",
+        "location": "Dallas, TX",
+        "information": "Fuck 'em.",
+        "email_address": "contact@impulse.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "",
+        "region": 2,
+        "is_active": false
+    }
+},
+{
+    "model": "league.team",
+    "pk": 13,
+    "fields": {
+        "name": "Task Force",
+        "logo": "teams/660edfb8-359c-11e8-b418-acbc32987c13.jpg",
+        "cover": "teams/660eff3e-359c-11e8-87be-acbc32987c13.jpg",
+        "location": "Chicago, IL",
+        "information": "Fuck these guys especially.",
+        "email_address": "contact@taskforce.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "http://www.facebook.com/ChicagoTaskForce",
+        "region": 1,
+        "is_active": true
+    }
+},
+{
+    "model": "league.team",
+    "pk": 14,
+    "fields": {
+        "name": "Reign Bros",
+        "logo": "teams/9c9cc218-359c-11e8-9dc8-acbc32987c13.jpeg",
+        "cover": "teams/9c9cdfc8-359c-11e8-8a1e-acbc32987c13.jpg",
+        "location": "Seattle, WA",
+        "information": "Cool dudes.",
+        "email_address": "contact@reignbros.com",
+        "website": "",
+        "twitter": "",
+        "instagram": "",
+        "youtube": "",
+        "facebook": "https://www.facebook.com/ReignBros/",
+        "region": 4,
+        "is_active": true
+    }
+}
+]

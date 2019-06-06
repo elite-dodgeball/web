@@ -1,0 +1,455 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html lang="en-us" ng-app="DashboardApp" ng-cloak>
+<head>
+	<!-- Site stuff -->
+
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Page stuff -->
+
+	<title>Dashboard</title>
+
+	<!-- Style stuff -->
+
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
+	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css" />
+	<link href="{% static "dashboard/css/main.css" %}" rel="stylesheet" type="text/css" />
+</head>
+<body ng-controller="DashboardCtrl">
+	<nav layout="row" layout-wrap class="top-navigation">
+		<md-input-container flex="100">
+			<label>Select view</label>
+
+			<md-select ng-model="view.selectedView" ng-change="view.onChange()">
+				<md-option ng-value="viewOption" ng-repeat="viewOption in view.viewOptions" ng-disabled="viewOption.isDisabled">
+					[[ viewOption.name ]]
+				</md-option>
+			</md-select>
+		</md-input-container>
+	</nav>
+
+	<!-- season stuff -->
+
+	<md-content ng-if="view.selectedView === view.viewOptions[0]" layout="row" layout-wrap class="content">
+		<md-input-container flex="100">
+			<label>Select season</label>
+
+			<md-select ng-model="season.selectedSeason" ng-change="season.onChange()">
+				<md-option ng-value="seasonOption" ng-repeat="seasonOption in season.seasonOptions">
+					[[ seasonOption.year ]]
+				</md-option>
+			</md-select>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Select division</label>
+
+			<md-select ng-model="season.selectedDivision" ng-change="season.onChange()">
+				<md-option ng-value="division" ng-repeat="division in divisions">
+					[[ division.name ]]
+
+					<span ng-if="division.is_active !== true" class="option-subtext">
+						(Inactive)
+					</span>
+				</md-option>
+			</md-select>
+		</md-input-container>
+
+		<!-- teams stuff -->
+
+		<div class="half-list" flex="50">
+			<md-toolbar layout="row" class="md-hue-3">
+				<div class="md-toolbar-tools">
+					<span>Available ([[ teams.length - season.seasonDivisionTeams.length ]])</span>
+				</div>
+			</md-toolbar>
+
+			<md-list flex>
+				<md-list-item ng-repeat="team in teams" ng-if="season.seasonDivisionTeamHash[team.id] === undefined" class="md-2-line secondary-button-padding">
+					<img ng-src="[[ team.logo ]]" class="md-avatar" />
+
+					<div layout="column" class="md-list-item-text">
+						<h3>
+							[[ team.name ]]
+
+							<span ng-if="team.is_active !== true" class="header-subtext">
+								(Inactive)
+							</span>
+						</h3>
+
+						<h4>[[ team.location ]]</h4>
+					</div>
+
+					<md-button ng-click="season.addTeam(team)" class="md-secondary md-accent md-raised">
+						Add
+					</md-button>
+				</md-list-item>
+			</md-list>
+		</div>
+
+		<div class="half-list" flex="50">
+			<md-toolbar layout="row" class="md-hue-3">
+				<div class="md-toolbar-tools">
+					<span>Assigned ([[ season.seasonDivisionTeams.length ]])</span>
+				</div>
+			</md-toolbar>
+
+			<md-list flex>
+				<md-list-item ng-repeat="seasonDivisionTeam in season.seasonDivisionTeams" class="md-2-line secondary-button-padding">
+					<img ng-src="[[ teamHash[seasonDivisionTeam.team_id].logo ]]" class="md-avatar" />
+
+					<div layout="column" class="md-list-item-text">
+						<h3>[[ teamHash[seasonDivisionTeam.team_id].name ]]</h3>
+						<h4>[[ teamHash[seasonDivisionTeam.team_id].location ]]</h4>
+					</div>
+
+					<md-button ng-click="season.removeTeam(seasonDivisionTeam)" class="md-secondary md-warn">
+						Remove
+					</md-button>
+
+					<md-button ng-click="season.viewSeasonDivisionTeamPlayers(seasonDivisionTeam)" class="md-secondary md-primary md-raised">
+						Roster
+					</md-button>
+				</md-list-item>
+			</md-list>
+		</div>
+
+		<!-- modal-container stuff -->
+
+		<div ng-if="season.activeSeasonDivisionTeam" class="modal-container">
+			<form layout="row" layout-wrap class="modal-content">
+				<h2 class="modal-header" flex="100">
+					[[ teamHash[season.activeSeasonDivisionTeam.team_id].name ]] Roster
+				</h2>
+
+				<div layout="row">
+					<div class="half-list" flex="50">
+						<md-toolbar layout="row" class="md-hue-3">
+							<div class="md-toolbar-tools">
+								<span>Available ([[ players.length - season.activeSeasonDivisionTeamPlayers.length ]])</span>
+							</div>
+						</md-toolbar>
+
+						<md-list flex>
+							<md-list-item ng-repeat="player in players | filter : season.activePlayerFilter track by player.id" ng-if="season.activeSeasonDivisionTeamPlayerHash[player.id] === undefined" class="md-2-line secondary-button-padding">
+								<img ng-src="[[ player.headshot ]]" class="md-avatar" />
+
+								<div layout="column" class="md-list-item-text">
+									<h3>
+										[[ player.name ]] #[[ player.number ]]
+
+										<span ng-if="player.is_active !== true" class="header-subtext">
+											(Inactive)
+										</span>
+									</h3>
+
+									<h4>[[ player.email_address ]]</h4>
+								</div>
+
+								<md-button ng-click="season.addPlayer(player)" class="md-secondary md-accent md-raised">
+									Add
+								</md-button>
+							</md-list-item>
+						</md-list>
+					</div>
+
+					<div class="half-list" flex="50">
+						<md-toolbar layout="row" class="md-hue-3">
+							<div class="md-toolbar-tools">
+								<span>Assigned ([[ season.activeSeasonDivisionTeamPlayers.length ]])</span>
+							</div>
+						</md-toolbar>
+
+						<md-list flex>
+							<md-list-item ng-repeat="seasonDivisionTeamPlayer in season.activeSeasonDivisionTeamPlayers" ng-if="season.activeSeasonDivisionTeamPlayerHash[player.id] === undefined" class="md-2-line secondary-button-padding">
+								<img ng-src="[[ playerHash[seasonDivisionTeamPlayer.player_id].headshot ]]" class="md-avatar" />
+
+								<div layout="column" class="md-list-item-text">
+									<h3>
+										[[ playerHash[seasonDivisionTeamPlayer.player_id].name ]] #[[ playerHash[seasonDivisionTeamPlayer.player_id].number ]]
+
+										<span ng-if="playerHash[seasonDivisionTeamPlayer.player_id].is_active !== true" class="header-subtext">
+											(Inactive)
+										</span>
+									</h3>
+
+									<h4>[[ playerHash[seasonDivisionTeamPlayer.player_id].email_address ]]</h4>
+								</div>
+
+								<md-button ng-click="season.removePlayer(seasonDivisionTeamPlayer)" class="md-secondary md-warn">
+									Remove
+								</md-button>
+							</md-list-item>
+						</md-list>
+					</div>
+				</div>
+
+				<div layout="row" layout-align="space-between center" flex="100" class="md-secondary-container">
+					<md-input-container flex>
+						<label>Filter available players</label>
+						<input ng-model="season.activePlayerFilter" ng-keydown="season.onKeydown($event)" type="text" />
+					</md-input-container>
+				</div>
+			</form>
+
+			<md-button ng-click="season.clearSeasonDivisionTeamPlayers()" class="modal-close md-raised">
+				Close
+			</md-button>
+		</div>
+
+		<div class="control-row" flex="100">
+			<md-button ng-click="season.newSeason()">
+				New Season
+			</md-button>
+		</div>
+	</md-content>
+
+	<!-- event stuff -->
+
+	<md-content ng-if="view.selectedView === view.viewOptions[1]" layout="row" layout-wrap class="content">
+		<md-input-container flex="100">
+			<label>Select event</label>
+
+			<md-select ng-model="event.selectedEvent" ng-change="event.onEventChange()">
+				<md-option ng-value="eventOption" ng-repeat="eventOption in event.eventOptions">
+					[[ eventOption.title ]]
+				</md-option>
+			</md-select>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Select division</label>
+
+			<md-select ng-model="event.selectedEventDivision" ng-change="event.onEventDivisionChange()">
+				<md-option ng-value="eventDivision" ng-repeat="eventDivision in event.eventDivisions">
+					[[ divisionHash[eventDivision.division_id].name ]]
+
+					<span class="option-subtext">
+						([[ eventDivision.team_count ]] registered)
+					</span>
+				</md-option>
+			</md-select>
+		</md-input-container>
+
+		<!-- teams stuff -->
+
+		<div class="half-list" flex="50">
+			<md-toolbar layout="row" class="md-hue-3">
+				<div class="md-toolbar-tools">
+					<span>Available ([[ event.seasonDivisionTeams.length - event.eventDivisionTeams.length ]])</span>
+				</div>
+			</md-toolbar>
+
+			<md-list flex>
+				<md-list-item ng-repeat="seasonDivisionTeam in event.seasonDivisionTeams" ng-if="event.eventDivisionTeamHash[seasonDivisionTeam.id] === undefined" class="md-2-line secondary-button-padding">
+					<img ng-src="[[ teamHash[seasonDivisionTeam.team_id].logo ]]" class="md-avatar" />
+
+					<div layout="column" class="md-list-item-text">
+						<h3>
+							[[ teamHash[seasonDivisionTeam.team_id].name ]]
+
+							<span ng-if="teamHash[seasonDivisionTeam.team_id].is_active !== true" class="header-subtext">
+								(Inactive)
+							</span>
+						</h3>
+
+						<h4>[[ teamHash[seasonDivisionTeam.team_id].location ]]</h4>
+					</div>
+
+					<md-button ng-click="event.addTeam(seasonDivisionTeam)" class="md-secondary">
+						Add
+					</md-button>
+
+					<md-button ng-click="event.viewSeasonDivisionTeamInvites(seasonDivisionTeam)" class="md-secondary md-accent md-raised">
+						View invites
+					</md-button>
+				</md-list-item>
+			</md-list>
+		</div>
+
+		<div class="half-list" flex="50">
+			<md-toolbar layout="row" class="md-hue-3">
+				<div class="md-toolbar-tools">
+					<span>Registered ([[ event.eventDivisionTeams.length ]])</span>
+				</div>
+			</md-toolbar>
+
+			<md-list flex>
+				<md-list-item ng-repeat="eventDivisionTeam in event.eventDivisionTeams" class="md-2-line secondary-button-padding">
+					<img ng-src="[[ teamHash[event.seasonDivisionTeamHash[eventDivisionTeam.season_division_team_id].team_id].logo ]]" class="md-avatar" />
+
+					<div layout="column" class="md-list-item-text">
+						<h3>[[ teamHash[event.seasonDivisionTeamHash[eventDivisionTeam.season_division_team_id].team_id].name ]]</h3>
+						<h4>[[ teamHash[event.seasonDivisionTeamHash[eventDivisionTeam.season_division_team_id].team_id].location ]]</h4>
+					</div>
+
+					<md-button ng-click="event.removeTeam(eventDivisionTeam)" class="md-secondary md-warn">
+						Remove
+					</md-button>
+
+					<md-button ng-click="event.viewEventDivisionTeamPlayers(eventDivisionTeam)" class="md-secondary md-primary md-raised">
+						Roster
+					</md-button>
+				</md-list-item>
+			</md-list>
+		</div>
+
+		<!-- modal-container stuff -->
+
+		<div ng-if="event.activeSeasonDivisionTeam" class="modal-container">
+			<form layout="row" layout-wrap class="modal-content">
+				<h2 class="modal-header" flex="100">
+					[[ teamHash[event.activeSeasonDivisionTeam.team_id].name ]]'s [[ event.selectedEvent.title ]] Invites
+				</h2>
+
+				<div layout="row">
+					<div class="half-list" flex="50">
+						<md-toolbar layout="row" class="md-hue-3">
+							<div class="md-toolbar-tools">
+								<span>Available ([[ event.activeDivisions.length - event.inviteHash[event.activeSeasonDivisionTeam.team_id].division_invites.length ]])</span>
+							</div>
+						</md-toolbar>
+
+						<md-list flex>
+							<md-list-item ng-repeat="activeDivision in event.activeDivisions" ng-if="event.inviteHash[event.activeSeasonDivisionTeam.team_id].divisionInviteHash[activeDivision.id] === undefined" class="md-2-line secondary-button-padding">
+								<div layout="column" class="md-list-item-text">
+									<h3>
+										[[ activeDivision.name ]]
+
+										<span ng-if="activeDivision.is_active !== true" class="header-subtext">
+											(Inactive)
+										</span>
+
+										<span ng-if="activeDivision.is_primary === true" class="header-subtext">
+											(Primary)
+										</span>
+									</h3>
+
+									<h4>[[ event.eventDivisionHash[activeDivision.id].cost | currency ]]</h4>
+								</div>
+
+								<md-input-container class="md-secondary">
+									<label>Discount</label>
+									<input ng-model="event.eventDivisionHash[activeDivision.id].discount" type="number" min="0" ng-attr-max="[[ event.eventDivisionHash[activeDivision.id].cost ]]" />
+								</md-input-container>
+
+								<md-button ng-click="event.inviteTeam(activeDivision)" class="md-secondary md-accent md-raised">
+									Add
+								</md-button>
+							</md-list-item>
+						</md-list>
+					</div>
+
+					<div class="half-list" flex="50">
+						<md-toolbar layout="row" class="md-hue-3">
+							<div class="md-toolbar-tools">
+								<span>Assigned ([[ event.inviteHash[event.activeSeasonDivisionTeam.team_id].division_invites.length ]])</span>
+							</div>
+						</md-toolbar>
+
+						<md-list flex>
+							<md-list-item ng-repeat="divisionInvite in event.inviteHash[event.activeSeasonDivisionTeam.team_id].division_invites" ng-if="season.activeSeasonDivisionTeamPlayerHash[player.id] === undefined" class="md-2-line secondary-button-padding">
+								<div layout="column" class="md-list-item-text">
+									<h3>
+										[[ divisionHash[divisionInvite.division_id].name ]]
+
+										<span ng-if="divisionHash[divisionInvite.division_id].is_active !== true" class="header-subtext">
+											(Inactive)
+										</span>
+
+										<span ng-if="divisionHash[divisionInvite.division_id].is_primary === true" class="header-subtext">
+											(Primary)
+										</span>
+									</h3>
+
+									<h4 ng-if="divisionInvite.discount === 0">
+										[[ event.eventDivisionHash[divisionInvite.division_id].cost | currency ]]
+									</h4>
+
+									<h4 ng-if="divisionInvite.discount > 0">
+										<strike>[[ event.eventDivisionHash[divisionInvite.division_id].cost | currency ]]</strike>
+										[[ event.eventDivisionHash[divisionInvite.division_id].cost - divisionInvite.discount | currency ]]
+									</h4>
+								</div>
+
+								<md-button ng-click="event.uninviteTeam(divisionHash[divisionInvite.division_id])" class="md-secondary md-warn">
+									Remove
+								</md-button>
+							</md-list-item>
+						</md-list>
+					</div>
+				</div>
+
+				<div ng-show="event.inviteHash[event.activeSeasonDivisionTeam.team_id] !== undefined" layout="row" layout-align="space-between center" flex="100" class="md-secondary-container">
+					<md-input-container flex>
+						<label>Email Address</label>
+						<input ng-model="event.activeEmailAddress" type="email" />
+					</md-input-container>
+
+					<md-button ng-click="event.sendEmail()" ng-disabled="!event.activeEmailAddress" class="md-primary md-raised">
+						Send invite email
+					</md-button>
+				</div>
+			</form>
+
+			<md-button ng-click="event.clearSeasonDivisionTeamInvites()" class="modal-close md-raised">
+				Close
+			</md-button>
+		</div>
+
+		<!-- modal-container stuff -->
+
+		<div ng-if="event.activeEventDivisionTeam" class="modal-container">
+			<form layout="row" layout-wrap class="modal-content">
+				<h2 class="modal-header" flex="100">
+					[[ teamHash[event.seasonDivisionTeamHash[event.activeEventDivisionTeam.season_division_team_id].team_id].name ]] [[ divisionHash[event.selectedEventDivision.division_id].name ]] Roster ([[ event.activeSeasonDivisionTeamPlayers.length ]])
+				</h2>
+
+				<md-list flex="100">
+					<md-list-item ng-repeat="activeSeasonDivisionTeamPlayer in event.activeSeasonDivisionTeamPlayers" class="md-2-line">
+						<img ng-src="[[ playerHash[activeSeasonDivisionTeamPlayer.player_id].headshot ]]" class="md-avatar" />
+
+						<div layout="column" class="md-list-item-text">
+							<h3>
+								[[ playerHash[activeSeasonDivisionTeamPlayer.player_id].name ]]
+
+								<span ng-if="activeSeasonDivisionTeamPlayer.event_division_team_player.is_captain === true" class="header-subtext">
+									(Captain)
+								</span>
+
+								<span ng-if="activeSeasonDivisionTeamPlayer.event_division_team_player.is_referee === true" class="header-subtext">
+									(Referee)
+								</span>
+							</h3>
+
+							<h4>[[ playerHash[activeSeasonDivisionTeamPlayer.player_id].email_address ]]</h4>
+						</div>
+					</md-list-item>
+				</md-list>
+			</form>
+
+			<md-button ng-click="event.clearEventDivisionTeamPlayers()" class="modal-close md-raised">
+				Close
+			</md-button>
+		</div>
+	</md-content>
+
+	<md-progress-linear ng-if="activeRequests > 0" md-mode="indeterminate" class="thumper md-accent"></md-progress-linear>
+
+	<!-- JavaScript stuff -->
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+	<script src="{% static "js/polyfills.js" %}"></script>
+	<script src="{% static "dashboard/js/main.js" %}"></script>
+</body>
+</html>

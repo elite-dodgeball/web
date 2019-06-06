@@ -1,0 +1,80 @@
+[
+{
+    "model": "league.eventdivision",
+    "pk": 1,
+    "fields": {
+        "event": 1,
+        "division": 1,
+        "cost": "240.00",
+        "max_teams": 0,
+        "team_count": 0,
+        "open_invites": 0,
+        "tournament_type": 0
+    }
+},
+{
+    "model": "league.eventdivision",
+    "pk": 2,
+    "fields": {
+        "event": 1,
+        "division": 4,
+        "cost": "240.00",
+        "max_teams": 0,
+        "team_count": 0,
+        "open_invites": 0,
+        "tournament_type": 0
+    }
+},
+{
+    "model": "league.eventdivision",
+    "pk": 3,
+    "fields": {
+        "event": 2,
+        "division": 3,
+        "cost": "240.00",
+        "max_teams": 0,
+        "team_count": 0,
+        "open_invites": 0,
+        "tournament_type": 0
+    }
+},
+{
+    "model": "league.eventdivision",
+    "pk": 4,
+    "fields": {
+        "event": 2,
+        "division": 1,
+        "cost": "240.00",
+        "max_teams": 0,
+        "team_count": 1,
+        "open_invites": 0,
+        "tournament_type": 0
+    }
+},
+{
+    "model": "league.eventdivision",
+    "pk": 5,
+    "fields": {
+        "event": 2,
+        "division": 2,
+        "cost": "180.00",
+        "max_teams": 0,
+        "team_count": 0,
+        "open_invites": 0,
+        "tournament_type": 0
+    }
+},
+{
+    "model": "league.eventdivision",
+    "pk": 6,
+    "fields": {
+        "event": 2,
+        "division": 4,
+        "cost": "0.00",
+        "max_teams": 0,
+        "team_count": 1,
+        "open_invites": 0,
+        "tournament_type": 0
+    }
+}
+]

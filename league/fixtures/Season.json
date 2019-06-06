@@ -1,0 +1,16 @@
+[
+{
+    "model": "league.season",
+    "pk": 2,
+    "fields": {
+        "year": 2018
+    }
+},
+{
+    "model": "league.season",
+    "pk": 3,
+    "fields": {
+        "year": 2017
+    }
+}
+]

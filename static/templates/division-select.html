@@ -1,0 +1,7 @@
+<select id="division-select">
+	{% for division_id, division_datum in division_hash.items %}
+	<option value="{{ division_datum.division.name }}">
+		{{ division_datum.division.name }} Division
+	</option>
+	{% endfor %}
+</select>

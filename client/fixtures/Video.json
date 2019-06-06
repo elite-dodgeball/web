@@ -1,0 +1,54 @@
+[
+{
+    "model": "client.video",
+    "pk": 1,
+    "fields": {
+        "title": "Elite Dodgeball - East Region Showdown 2015",
+        "event": null,
+        "youtube_id": "qALeH48zrZM",
+        "description": "Highlights and championship match of Elite Dodgeball's 2015 East Region Showdown.",
+        "published_at": "2015-08-17T19:50:03Z",
+        "thumbnail": "https://i.ytimg.com/vi/qALeH48zrZM/maxresdefault.jpg",
+        "duration": "4:12"
+    }
+},
+{
+    "model": "client.video",
+    "pk": 2,
+    "fields": {
+        "title": "Elite Dodgeball - South Region Showdown 2015",
+        "event": null,
+        "youtube_id": "2ZQ0W6dVPbg",
+        "description": "Highlights and championship match of Elite Dodgeball's 2015 South Region Showdown.",
+        "published_at": "2015-08-18T17:20:26Z",
+        "thumbnail": "https://i.ytimg.com/vi/2ZQ0W6dVPbg/maxresdefault.jpg",
+        "duration": "3:46"
+    }
+},
+{
+    "model": "client.video",
+    "pk": 3,
+    "fields": {
+        "title": "Elite Dodgeball - North Region Showdown 2015",
+        "event": null,
+        "youtube_id": "6nUfCM9VnLk",
+        "description": "Highlights and championship match of Elite Dodgeball's 2015 North Region Showdown.",
+        "published_at": "2015-08-19T17:29:29Z",
+        "thumbnail": "https://i.ytimg.com/vi/6nUfCM9VnLk/maxresdefault.jpg",
+        "duration": "3:06"
+    }
+},
+{
+    "model": "client.video",
+    "pk": 4,
+    "fields": {
+        "title": "Elite Dodgeball - West Region Showdown 2015",
+        "event": null,
+        "youtube_id": "hM6dDY9BUWQ",
+        "description": "Highlights and championship match of Elite Dodgeball's 2015 West Region Showdown.",
+        "published_at": "2015-08-20T18:56:19Z",
+        "thumbnail": "https://i.ytimg.com/vi/hM6dDY9BUWQ/maxresdefault.jpg",
+        "duration": "3:48"
+    }
+}
+]

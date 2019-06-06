@@ -1,0 +1,134 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools-items %}
+	<li>
+		<a href="{% url 'admin:league_event_manage' original.pk %}" class="historylink">Event manager</a>
+	</li>
+	{{ block.super }}
+{% endblock %}
+
+{% block content %}
+	{{ block.super }}
+
+	{% if change %}{% if not is_popup %}
+		<div class="registered-block">
+			<h2>Registered Teams</h2>
+
+			<div id="registered"></div>
+
+			<style>
+				.registered-block {
+					clear: both;
+					padding-top: 10px;
+				}
+				.registered-division h3 {
+					border-bottom: 1px solid #DDD;
+					padding-bottom: 2px;
+					margin-bottom: 8px;
+				}
+				.registered-team {
+					margin-bottom: 16px;
+				}
+					.registered-team h4 {
+						margin: 0 0 4px 0;
+					}
+					.registered-team h5 {
+						margin-top: 0;
+						padding-left: 20px;
+						text-transform: none;
+					}
+				.registered-roster {
+					padding-left: 35px;
+				}
+				#registered {
+					border: 1px solid #CCC;
+					padding: 8px 12px;
+				}
+			</style>
+
+			<script type="text/javascript">
+				(function () {
+					var regElem = document.querySelector('#registered');
+
+					function makeDivisionElement(divisionDatum) {
+						var divisionElem = document.createElement('div'),
+							teamCount = divisionDatum.teams ? divisionDatum.teams.length : 0;
+
+						divisionElem.innerHTML = `
+							<h3>${divisionDatum.division.name} Division (${teamCount} team${teamCount === 1 ? '' : 's'})</h3>
+						`;
+						divisionElem.className = 'registered-division';
+
+						return divisionElem;
+					}
+
+					function makeTeamElement(teamDatum) {
+						var teamElem = document.createElement('div'),
+							playerCount = teamDatum.players.length,
+							captainPlayer = null;
+
+						for (var i = 0; i < playerCount; i++) {
+							if (teamDatum.players[i].event_division_team_player.is_captain === true) {
+								captainPlayer = teamDatum.players[i];
+								break;
+							}
+						}
+
+						teamElem.innerHTML = `
+							<h4>${teamDatum.team.name} (${playerCount} player${playerCount === 1 ? '' : 's'})</h4>
+							<h5>${captainPlayer ? captainPlayer.player.name : 'N/A'} - <a href="mailto:${teamDatum.team.email_address}">${teamDatum.team.email_address}</a></h5>
+						`;
+						teamElem.className = 'registered-team';
+
+						return teamElem;
+					}
+
+					function makeRosterElem(playerData) {
+						var rosterElem = document.createElement('ul');
+
+						for (var i = 0, l = playerData.length; i < l; i++) {
+							rosterElem.appendChild(makePlayerElem(playerData[i]));
+						}
+						rosterElem.className = 'registered-roster';
+
+						return rosterElem;
+					}
+
+					function makePlayerElem(playerDatum) {
+						var playerElem = document.createElement('li');
+
+						playerElem.innerHTML = `
+							${playerDatum.player.name} ${playerDatum.event_division_team_player.is_referee ? '(R)' : ''}
+						`;
+						playerElem.className = 'registered-player';
+
+						return playerElem;
+					}
+
+					django.jQuery.get('/admin/league/event/{{ original.pk }}/registered/', function (data) {
+						for (var eventDivisionId in data.data) {
+							var divisionDatum = data.data[eventDivisionId],
+								divisionElem = makeDivisionElement(divisionDatum);
+
+							if (divisionDatum.teams) {
+								for (var i = 0, l = divisionDatum.teams.length; i < l; i++) {
+									var teamDatum = divisionDatum.teams[i],
+										teamElem = makeTeamElement(teamDatum);
+
+									teamElem.appendChild(makeRosterElem(teamDatum.players));
+									divisionElem.appendChild(teamElem);
+								}
+							}
+
+							regElem.appendChild(divisionElem);
+						}
+					}, 'json').fail(function (response) {
+						regElem.innerHTML = response.responseText;
+					}).always(function () {
+						//
+					});
+				})();
+			</script>
+		</div>
+	{% endif %}{% endif %}
+{% endblock %}

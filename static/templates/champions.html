@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ CHAMPIONS_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ CHAMPIONS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}champions{% endblock %}
+
+{% block twitter_title %}{{ CHAMPIONS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ CHAMPIONS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ CHAMPIONS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ CHAMPIONS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Champions</h1>
+
+		{% for season_id, season_datum in season_division_hash.items %}
+		<div class="year">
+			<h2>{{ season_datum.season.year }}</h2>
+
+			{% for division_id, division_datum in season_datum.division_team_hash.items %}
+			<section class="year-division">
+				<h3>{{ division_datum.division.name }}</h3>
+
+				<ul class="year-teams">
+					{% for team_datum in division_datum.teams %}
+					<li class="year-team year-team-{{ forloop.counter }}" {% if forloop.counter < 4 %}style="background: linear-gradient(to right, rgba(51, 51, 51, 0.75), rgba(51, 51, 51, 0.75)), url({{ team_datum.team.cover.url }}) no-repeat center; background-size: cover;"{% endif %}>
+						<h4 class="year-place">{{ forloop.counter }}</h4>
+						<span class="year-team-name">{{ team_datum.team.name }}</span>
+						<span class="year-team-record">({{ team_datum.season_division_team.wins }}-{{ team_datum.season_division_team.losses }})</span>
+					</li>
+					{% endfor %}
+				</ul>
+			</section>
+			{% endfor %}
+		</div>
+		{% endfor %}
+{% endblock %}

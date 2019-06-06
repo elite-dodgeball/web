@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ gallery.title }} photos - {% endblock %}
+{% block meta_description %}{{ gallery.event_id }} {{ gallery.title }} photo gallery{% endblock %}
+
+{% block container_class %}gallery{% endblock %}
+
+{% block twitter_card %}gallery{% endblock %}
+{% block twitter_title %}{{ gallery.title }}{% endblock %}
+{% block twitter_description %}{{ gallery.event_id }} {{ gallery.title }} photo gallery{% endblock %}
+{% block twitter_other %}{% for image in images|slice:":4" %}
+	<meta name="twitter:image{{ forloop.counter0 }}" content="{{ image.path.url }}" />{% endfor %}{% endblock %}
+
+{% block og_title %}{{ gallery.title }}{% endblock %}
+{% block og_description %}{{ gallery.event_id }} {{ gallery.title }} photo gallery{% endblock %}
+{% if images|length > 0 %}{% block og_image %}{% with image=images.0 %}{{ image.path.url }}{% endwith %}{% endblock %}{% endif %}
+
+{% block container %}
+		<h1 class="main-header">{{ gallery.title }}</h1>
+
+		<ul class="image-list">
+			{% for image in images %}
+			<li>
+				<a href="{{ image.path.url }}" data-index="{{ forloop.counter0 }}" data-path="{{ image.path.url }}" data-src="{{ image.path.url }}" id="image{{ image.id }}">
+					{{ image.path.url }}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static "js/blazy.min.js" %}"></script>
+	<script src="{% static "js/gallery.js" %}"></script>
+{% endblock %}

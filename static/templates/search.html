@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Search results - {{ query }} - {% endblock %}
+
+{% block container_class %}search{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Search results</h1>
+
+		{% if not query %}
+		<h2>Come on, guy, you know how this works.</h2>
+		<p>You need to enter a search query. Are you trying to trick me? That's kind of mean. I thought we were friends.</p>
+		<p>I thought I could trust you.</p>
+		{% elif results|length < 1 %}
+		<h2>Sorry, chief, but we got nothin' for ya.</h2>
+		<p>Maybe try harder, or we'll try harder, or <a href="/contact/">drop us a line</a> and we'll figure it out. Together.</p>
+		<p>It's not you, it's me. (Also I'm a website. Also it might be you.)</p>
+		{% else %}
+		<h2>{{ query }}</h2>
+		{% for result in results %}
+		{% if result.type == 'post' %}
+		<div class="events-item">
+			<h2>
+				<span style="background-image: url({{ result.object.header.url }});"></span>
+				<a href="/posts/{{ result.object.pk }}/">{{ result.object.title }}</a>
+			</h2>
+
+			<div class="events-datetime events-detail">{{ result.object.date_created|date:"F jS, Y" }}</div>
+			<div class="events-detail events-blurb">{{ result.object.blurb }}</div>
+		</div>
+		{% elif result.type == 'event' %}
+		<div class="events-item">
+			<h2>
+				<span style="background-image: url({{ result.object.header.url }});"></span>
+				<a href="/events/{{ result.object.pk }}/">{{ result.object.title }}</a>
+			</h2>
+
+			<div class="events-datetime events-detail">{{ result.object.datetime|date:"F jS, Y" }}</div>
+			<div class="events-location events-detail">{{ result.object.location }}</div>
+		</div>
+		{% elif result.type == 'video' %}
+		<div class="events-item">
+			<h2>
+				<span style="background-image: url({{ result.object.thumbnail }});"></span>
+				<a href="/episodes/{{ result.object.pk }}/">{{ result.object.title }}</a>
+			</h2>
+
+			<div class="events-datetime events-detail">{{ result.object.published_at|date:"F jS, Y" }}</div>
+			<div class="events-detail events-video">{{ result.object.description }}</div>
+		</div>
+		{% endif %}
+		{% endfor %}
+		{% endif %}
+{% endblock %}

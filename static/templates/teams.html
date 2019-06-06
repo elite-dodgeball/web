@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{% if regions|length > 0 %}{{ TEAMS_TITLE|safe }}{% else %}No teams found{% endif %} - {% endblock %}
+{% block meta_description %}{{ TEAMS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}teams{% endblock %}
+
+{% block twitter_title %}{{ TEAMS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ TEAMS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ TEAMS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ TEAMS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Teams</h1>
+
+		<select id="division-select">
+			{% for division_id, division_datum in division_hash.items %}
+			<option value="{{ division_datum.division.name }}">
+				{{ division_datum.division.name }} Division
+			</option>
+			{% endfor %}
+		</select>
+
+		{% for division_id, division_datum in division_hash.items %}
+			{% for region_id, region_team_datum in division_datum.region_team_hash.items %}
+			<section class="region" data-division-name="{{ division_datum.division.name }}">
+				<h2 class="region-name">{{ region_team_datum.region.name }}</h2>
+				<ul class="teams-list">
+					{% for team_datum in region_team_datum.team_data %}
+					<li class="teams-item">
+						<a href="/teams/{{ team_datum.team.pk }}/">
+							<img src="{{ team_datum.team.logo.url }}" class="teams-logo" />
+						</a>
+						<h2 class="teams-name">
+							<a href="/teams/{{ team_datum.team.pk }}/">{{ team_datum.team.name }}</a>
+						</h2>
+						<span class="teams-location">
+							{{ team_datum.team.location }}
+						</span>
+						<img src="{{ team_datum.team.cover.url }}" class="teams-cover" />
+					</li>
+					{% endfor %}
+				</ul>
+			</section>
+			{% endfor %}
+		{% endfor %}
+{% endblock %}

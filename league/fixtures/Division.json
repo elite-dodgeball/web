@@ -1,0 +1,38 @@
+[
+{
+    "model": "league.division",
+    "pk": 1,
+    "fields": {
+        "name": "Open",
+        "is_active": true,
+        "is_primary": true
+    }
+},
+{
+    "model": "league.division",
+    "pk": 2,
+    "fields": {
+        "name": "Pinch",
+        "is_active": true,
+        "is_primary": false
+    }
+},
+{
+    "model": "league.division",
+    "pk": 3,
+    "fields": {
+        "name": "Co-ed",
+        "is_active": true,
+        "is_primary": true
+    }
+},
+{
+    "model": "league.division",
+    "pk": 4,
+    "fields": {
+        "name": "No-sting",
+        "is_active": false,
+        "is_primary": false
+    }
+}
+]

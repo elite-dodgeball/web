@@ -1,0 +1,33 @@
+{% load humanize %}
+
+<p>Hello!</p>
+
+<p>You've been invited to the Elite Dodgeball event <a href="https://elite-dodgeball.com/events/{{ invite.event_id }}/" target="_blank">{{ invite.event.title }}</a>!</p>
+
+<p>You can register for the following divisions:</p>
+
+<ul>
+	{% for division_invite in division_invites %}
+	<li>
+		{{ division_invite.division.name }} - 
+		{% if division_invite.event_division.discount_cost %}
+			<strike>${{ division_invite.event_division.cost|floatformat:2|intcomma }}</strike>
+			${{ division_invite.event_division.discount_cost|floatformat:2|intcomma }}
+		{% else %}
+			${{ division_invite.event_division.cost|floatformat:2|intcomma }}
+		{% endif %}
+	</li>
+	{% endfor %}
+</ul>
+
+<p>Registration opens at {{ invite.event.registration_open|time:"h:i A e" }} on {{ invite.event.registration_open|date:"F jS, Y" }} and closes at {{ invite.event.registration_close|time:"h:i A e" }} on {{ invite.event.registration_close|date:"F jS, Y" }}.</p>
+
+<p><a href="https://elite-dodgeball.com{% url 'reggie:register' invite.event_id invite.pk %}" target="_blank">Click here</a> to register or copy and paste the following into your browser's address bar.</p>
+
+<p>https://elite-dodgeball.com{% url 'reggie:register' invite.event_id invite.pk %}</p>
+
+<p>It will be held on {{ invite.event.datetime|date:"F jS, Y" }} at <a href="https://maps.google.com/?q={{ invite.event.location|iriencode }}" target="_blank">{{ invite.event.location }}</a>. We hope to see you there!</p>
+
+<p>Hugs and kisses,</p>
+
+<p>A dodgeball &lt;3</p>

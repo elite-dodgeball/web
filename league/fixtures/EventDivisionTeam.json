@@ -1,0 +1,72 @@
+[
+{
+    "model": "league.eventdivisionteam",
+    "pk": 1,
+    "fields": {
+        "event_division": 1,
+        "season_division_team": 1,
+        "transaction_id": null,
+        "place": 1
+    }
+},
+{
+    "model": "league.eventdivisionteam",
+    "pk": 2,
+    "fields": {
+        "event_division": 1,
+        "season_division_team": 2,
+        "transaction_id": null,
+        "place": 3
+    }
+},
+{
+    "model": "league.eventdivisionteam",
+    "pk": 3,
+    "fields": {
+        "event_division": 1,
+        "season_division_team": 3,
+        "transaction_id": null,
+        "place": 2
+    }
+},
+{
+    "model": "league.eventdivisionteam",
+    "pk": 4,
+    "fields": {
+        "event_division": 2,
+        "season_division_team": 6,
+        "transaction_id": null,
+        "place": null
+    }
+},
+{
+    "model": "league.eventdivisionteam",
+    "pk": 5,
+    "fields": {
+        "event_division": 2,
+        "season_division_team": 5,
+        "transaction_id": null,
+        "place": null
+    }
+},
+{
+    "model": "league.eventdivisionteam",
+    "pk": 6,
+    "fields": {
+        "event_division": 4,
+        "season_division_team": 1,
+        "transaction_id": "ch_1CD3aNCklOarmzBtZpLJHTPW",
+        "place": null
+    }
+},
+{
+    "model": "league.eventdivisionteam",
+    "pk": 9,
+    "fields": {
+        "event_division": 6,
+        "season_division_team": 31,
+        "transaction_id": null,
+        "place": null
+    }
+}
+]

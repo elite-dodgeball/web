@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ event.title }} - {% endblock %}
+{% block meta_description %}{{ event.description|striptags }}{% endblock %}
+
+{% block container_class %}event{% endblock %}
+
+{% block twitter_title %}{{ event.title }}{% endblock %}
+{% block twitter_image %}{{ event.header.url }}{% endblock %}
+{% block twitter_description %}{{ event.description|striptags }}{% endblock %}
+
+{% block og_title %}{{ event.title }}{% endblock %}
+{% block og_image %}{{ event.header.url }}{% endblock %}
+{% block og_description %}{{ event.description|striptags }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">{{ event.title }}</h1>
+
+		<img src="{{ event.header.url }}" class="event-header" />
+
+		{% if event.state == states.STATE_LIVE %}
+		<a href="{% url 'tourf:live' event.pk %}" class="event-live-alert">
+			Live now
+		</a>
+		{% endif %}
+
+		<div class="event-description">
+			{{ event.description|safe }}
+		</div>
+
+		<div class="event-details">
+			<h3 class="event-location">{{ event.location }}</h3>
+			<h3 class="event-datetime">{{ event.datetime|date:"F jS, Y" }}</h3>
+			{% include "adsense.html" %}
+		</div>
+
+		{% if event_division_hash|length > 0 %}
+		<h2 class="main-header">Divisions</h2>
+
+		<div class="event-divisions">
+			{% for division_id, division_datum in event_division_hash.items %}
+			<div class="event-division">
+				<h2>{{ division_datum.division.name }}</h2>
+				<ul class="teams-list">
+					{% if division_datum.teams|length < 1 %}
+					<li class="teams-empty">
+						No teams yet!
+					</li>
+					{% endif %}
+					{% for team_datum in division_datum.teams %}
+					<li class="teams-item">
+						<a href="/teams/{{ team_datum.team.id }}/"><img src="{{ team_datum.team.logo.url }}" class="teams-logo" /></a>
+						<h2 class="teams-name"><a href="/teams/{{ team.team_id.id }}/">{{ team_datum.team.name }}</a></h2>
+						<span class="teams-location">{{ team_datum.team.location }}</span>
+						{% if event.state == states.STATE_DONE and team_datum.season_division_team.place %}<h3 class="teams-place">{{ team_datum.event_division_team.place }}<sup>{{ team_datum.event_division_team.suffix }}</sup></h3>{% endif %}
+						<img src="{{ team_datum.team.cover.url }}" class="teams-cover" />
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+
+		{% if galleries|length > 0 %}
+		<h2 class="main-header">Photo Galleries</h2>
+		<ul class="gallery-list">
+			{% for gallery in galleries %}
+			<li style="background-image: url({{ gallery.cover.path.url }});">
+				<a href="/gallery/{{ gallery.gallery.id }}/">
+					<h2>{{ gallery.gallery.title }}</h2>
+					<h3>{{ gallery.gallery.image_count }}&nbsp;{{ gallery.gallery.image_count|pluralize:"photo,photos" }}</h3>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+
+		{% if videos|length > 2 %}
+		<h2 class="main-header"><input type="text" value="" id="video-search" class="float-left" placeholder="Filter videos…" />Videos</h2>
+
+		<ul class="video-list"></ul>
+		<ol class="video-nav"></ol>
+
+		<script type="text/template" id="video-embed">
+			<div class="embed-container">
+				<iframe src="https://www.youtube.com/embed/[[youtube_id]]?showinfo=0&autoplay=1" frameborder="0"></iframe>
+			</div>
+		</script>
+
+		<script type="text/template" id="video-item">
+			<li class="video-item">
+				<div class="video-wrap" style="background-image: url([[thumbnail]]);">
+					<a href="/episodes/[[id]]/" data-yid="[[youtube_id]]">https://www.youtube.com/watch?v=[[youtube_id]]</a>
+					<span class="video-duration">[[duration]]</span>
+				</div>
+				<h2>[[title]]</h2>
+				<div class="video-description">
+					[[description]]
+				</div>
+			</li>
+		</script>
+
+		<script type="text/template" id="video-nav">
+			<li class="nav-item [[current]]"><a href="#page=[[page_num]]">[[label]]</a></li>
+		</script>
+		{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	<script>window.videos = {{ videos|safe }};</script>
+	<script src="{% static "js/video.js" %}"></script>
+{% endblock %}

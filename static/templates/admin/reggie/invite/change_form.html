@@ -1,0 +1,74 @@
+{% extends "admin/change_form.html" %}
+{% load admin_urls %}
+
+{% block object-tools-items %}
+	<li>
+		<a href="{% url 'reggie:register' original.event_id original.pk %}" class="historylink">Registration link</a>
+	</li>
+	{{ block.super }}
+{% endblock %}
+
+{% block content %}
+	{{ block.super }}
+
+	{% if change %}{% if not is_popup %}
+		<div class="invitation-block">
+			<h2>Send Invitation Email</h2>
+
+			<form id="email-form">
+				<fieldset class="module aligned">
+					<div class="form-row field-email">
+						<div>
+							<label class="required" for="id_email">Email address:</label>
+							<input class="vTextField" id="id_email" maxlength="255" name="email_address" type="email" placeholder="user@domain.com" value="{{ original.team.email_address }}" />
+						</div>
+					</div>
+				</fieldset>
+				<div class="submit-row">
+					<input type="submit" value="Send invitation" class="default" name="_send" />
+				</div>
+			</form>
+
+			<style>
+				.invitation-block {
+					clear: both;
+					padding-top: 10px;
+				}
+			</style>
+
+			<script type="text/javascript">
+				(function () {
+					var emailForm = document.querySelector('#email-form'),
+						inputElem = emailForm.querySelector('input[type="email"]'),
+						submitBtn = emailForm.querySelector('input[type="submit"]');
+
+					emailForm.addEventListener('submit', function (ev) {
+						ev.preventDefault();
+						ev.stopPropagation();
+
+						if (inputElem.value) {
+							inputElem.setAttribute('disabled', '');
+							submitBtn.setAttribute('disabled', '');
+
+							django.jQuery.post('/admin/reggie/invite/{{ original.pk }}/sender/', {
+								emailAddress: inputElem.value,
+							}, function (data) {
+								var feedbackNode = document.createElement('p');
+								feedbackNode.innerHTML = 'Email sent to ' + inputElem.value + '!';
+								inputElem.value = '';
+								emailForm.parentElement.appendChild(feedbackNode);
+							}, 'json').fail(function (response) {
+								var feedbackNode = document.createElement('p');
+								feedbackNode.innerHTML = 'Failed to send to ' + inputElem.value + ':' + response.responseText;
+								emailForm.parentElement.appendChild(feedbackNode);
+							}).always(function () {
+								inputElem.removeAttribute('disabled');
+								submitBtn.removeAttribute('disabled');
+							});
+						}
+					});
+				})();
+			</script>
+		</div>
+	{% endif %}{% endif %}
+{% endblock %}

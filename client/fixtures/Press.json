@@ -1,0 +1,92 @@
+[
+{
+    "model": "client.press",
+    "pk": 1,
+    "fields": {
+        "title": "Elite Dodgeball Headshot Delivers Over and Over",
+        "link": "https://www.washingtonpost.com/news/early-lead/wp/2014/04/28/elite-dodgeballs-brutal-head-shot-video-delivers-over-and-over/?utm_term=.20ce9d3f0fbe",
+        "screen": "press/72437dd4-3565-11e8-ac06-acbc32987c13.png",
+        "date_created": "2018-04-01T04:30:45.980Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 2,
+    "fields": {
+        "title": "Dodgeball has come a long way since gym class",
+        "link": "https://www.bostonglobe.com/sports/2017/08/28/dodgeball-has-come-long-way-since-gym-class/tkEdvu1sTryj0LnGmgtHKP/story.html",
+        "screen": "press/7d988114-3565-11e8-b382-acbc32987c13.png",
+        "date_created": "2018-04-01T04:31:04.994Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 3,
+    "fields": {
+        "title": "Kokomo Tribune",
+        "link": "http://www.kokomotribune.com/news/team-from-chicago-wins-bona-vista-s-last-one-standing/article_af09a5ba-af0b-11e4-8efd-3f72ee341008.html",
+        "screen": "press/885d7f98-3565-11e8-bd1e-acbc32987c13.png",
+        "date_created": "2018-04-01T04:31:23.060Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 4,
+    "fields": {
+        "title": "Photographer Allison Knight",
+        "link": "https://allisonknightimages.wordpress.com/2011/12/11/elite-8-dodgeball-tournament-121011/",
+        "screen": "press/973fde28-3565-11e8-ad59-acbc32987c13.png",
+        "date_created": "2018-04-01T04:31:48.036Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 5,
+    "fields": {
+        "title": "Daily Herald",
+        "link": "http://www.dailyherald.com/article/20140104/news/701049854/",
+        "screen": "press/a2cc4e1a-3565-11e8-b850-acbc32987c13.png",
+        "date_created": "2018-04-01T04:32:07.411Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 6,
+    "fields": {
+        "title": "ESPN Olbermann",
+        "link": "https://www.facebook.com/photo.php?v=10102235234154665",
+        "screen": "press/aec578b6-3565-11e8-9047-acbc32987c13.png",
+        "date_created": "2018-04-01T04:32:27.498Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 7,
+    "fields": {
+        "title": "NCDA Dodgeball",
+        "link": "http://ncdadodgeball.com/?p=3396",
+        "screen": "press/bc4aaae2-3565-11e8-a26c-acbc32987c13.png",
+        "date_created": "2018-04-01T04:32:50.180Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 8,
+    "fields": {
+        "title": "The Washington Post",
+        "link": "http://www.washingtonpost.com/blogs/early-lead/wp/2014/04/28/elite-dodgeballs-brutal-head-shot-video-delivers-over-and-over/",
+        "screen": "press/d29827b6-3565-11e8-9341-acbc32987c13.png",
+        "date_created": "2018-04-01T04:33:27.601Z"
+    }
+},
+{
+    "model": "client.press",
+    "pk": 9,
+    "fields": {
+        "title": "LA Weekly",
+        "link": "http://www.laweekly.com/publicspectacle/2014/09/11/for-elite-dodgeball-teams-their-sport-is-far-from-childs-play",
+        "screen": "press/df3988c0-3565-11e8-9a64-acbc32987c13.png",
+        "date_created": "2018-04-01T04:33:48.791Z"
+    }
+}
+]

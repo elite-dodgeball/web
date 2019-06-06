@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ PRESS_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ PRESS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}press{% endblock %}
+
+{% block twitter_title %}{{ PRESS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ PRESS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ PRESS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ PRESS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Press</h1>
+
+		<ul class="gallery-list">
+			{% for clip in clips %}
+			<li style="background-image: url({{ clip.screen.url }});">
+				<a href="{{ clip.link }}">
+					<h2>{{ clip.title }}</h2>
+					<!--<h3>{{ clip.date_created|date:"F jS, Y" }}</h3>-->
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+{% endblock %}

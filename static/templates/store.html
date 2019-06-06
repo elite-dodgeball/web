@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ STORE_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ STORE_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}store{% endblock %}
+
+{% block twitter_title %}{{ STORE_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ STORE_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ STORE_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ STORE_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Store</h1>
+
+		<h2>Coming soon!</h2>
+
+		<p>Get those wallets ready because soon you'll be able to buy all the branded shirts, sweaters, headbands, and papayas your throbbing heart could ever desire.</p>
+		<p>Rep your team and rep the league!</p>
+{% endblock %}

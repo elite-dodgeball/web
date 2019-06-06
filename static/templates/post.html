@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {% endblock %}
+{% block meta_description %}{{ post.blurb|striptags }}{% endblock %}
+
+{% block container_class %}posts{% endblock %}
+
+{% block twitter_title %}{{ post.title }}{% endblock %}
+{% block twitter_image %}{{ post.header.url }}{% endblock %}
+{% block twitter_description %}{{ post.blurb|striptags }}{% endblock %}
+
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_image %}{{ post.header.url }}{% endblock %}
+{% block og_description %}{{ post.blurb|striptags }}{% endblock %}
+
+{% block container %}
+		<article class="post">
+			<div class="post-head">
+				<h1 class="post-title">{{ post.title|safe }}</h1>
+				<span class="post-date">{{ post.date_created }}</span>
+			</div>
+
+			<img src="{{ post.header.url }}" class="post-header" />
+
+			{% include "adsense.html" %}
+
+			{{ post.body|safe }}
+		</article>
+{% endblock %}

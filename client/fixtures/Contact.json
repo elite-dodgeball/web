@@ -1,0 +1,14 @@
+[
+{
+    "model": "client.contact",
+    "pk": 1,
+    "fields": {
+        "name": "Tim",
+        "email": "tim@elite-dodgeball.com",
+        "director": null,
+        "subject": "Testing",
+        "body": "asdf\r\n<span>qwer</span>",
+        "date_created": "2018-04-01T09:15:22.135Z"
+    }
+}
+]

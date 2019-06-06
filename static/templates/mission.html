@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ MISSION_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ MISSION_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}about{% endblock %}
+
+{% block twitter_title %}{{ MISSION_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ MISSION_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ MISSION_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ MISSION_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Our Mission</h1>
+
+		<div class="about-text">
+			<p>The Elite Dodgeball Invitational is a tournament for dodgeballers by dodgeballers. Our goal is to bring the sport into the mainstream by showcasing the best of the best. The tournaments are invite only to the most elite teams around.  We wish to provide tournaments that are organized, fun, competitive, and not for profit.</p>
+			<p>We are constantly connecting with dodgeballers all around, from worldwide tournaments to local pick-up leagues. We encourage players to form their best team to travel to compete in high-level tournaments. Feel free to <a href="/contact/">contact us</a>. We always look forward to meeting new players and teams.</p>
+			<p>Please take the time to help build the sport by Liking our <a href="https://www.facebook.com/Elitedodgeball/">Facebook page</a> and subscribing to our <a href="https://www.youtube.com/elitedodgeball/">YouTube channel</a>. We appreciate it!</p>
+		</div>
+
+		<img src="{% static "img/mission.jpg" %}" />
+{% endblock %}

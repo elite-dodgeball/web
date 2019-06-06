@@ -1,0 +1,374 @@
+[
+{
+    "model": "league.seasondivisionteam",
+    "pk": 1,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 1,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 2,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 2,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 3,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 3,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 4,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 1,
+        "wins": 3,
+        "losses": 0,
+        "points": 10
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 5,
+    "fields": {
+        "season": 2,
+        "division": 4,
+        "team": 3,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 6,
+    "fields": {
+        "season": 2,
+        "division": 4,
+        "team": 2,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 7,
+    "fields": {
+        "season": 2,
+        "division": 3,
+        "team": 2,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 8,
+    "fields": {
+        "season": 2,
+        "division": 3,
+        "team": 3,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 9,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 2,
+        "wins": 2,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 10,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 3,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 11,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 9,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 12,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 7,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 13,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 8,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 14,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 6,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 15,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 4,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 16,
+    "fields": {
+        "season": 2,
+        "division": 1,
+        "team": 5,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 17,
+    "fields": {
+        "season": 2,
+        "division": 2,
+        "team": 7,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 18,
+    "fields": {
+        "season": 2,
+        "division": 2,
+        "team": 8,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 19,
+    "fields": {
+        "season": 2,
+        "division": 2,
+        "team": 6,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 20,
+    "fields": {
+        "season": 2,
+        "division": 2,
+        "team": 4,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 21,
+    "fields": {
+        "season": 2,
+        "division": 2,
+        "team": 5,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 22,
+    "fields": {
+        "season": 2,
+        "division": 3,
+        "team": 6,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 23,
+    "fields": {
+        "season": 2,
+        "division": 3,
+        "team": 5,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 24,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 11,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 25,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 12,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 26,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 13,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 27,
+    "fields": {
+        "season": 3,
+        "division": 1,
+        "team": 14,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 28,
+    "fields": {
+        "season": 3,
+        "division": 4,
+        "team": 2,
+        "wins": 3,
+        "losses": 0,
+        "points": 5
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 29,
+    "fields": {
+        "season": 3,
+        "division": 4,
+        "team": 3,
+        "wins": 1,
+        "losses": 0,
+        "points": 3
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 30,
+    "fields": {
+        "season": 3,
+        "division": 4,
+        "team": 7,
+        "wins": 0,
+        "losses": 2,
+        "points": 1
+    }
+},
+{
+    "model": "league.seasondivisionteam",
+    "pk": 31,
+    "fields": {
+        "season": 2,
+        "division": 4,
+        "team": 1,
+        "wins": 0,
+        "losses": 0,
+        "points": 0
+    }
+}
+]

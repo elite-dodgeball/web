@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{% if posts|length > 0 %}{{ POSTS_TITLE|safe }}{% else %}No news found{% endif %} - {% endblock %}
+{% block meta_description %}{{ POSTS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}posts{% endblock %}
+
+{% block twitter_title %}{{ POSTS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ POSTS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ POSTS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ POSTS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+	{% for post in posts %}
+		<article class="post">
+			<div class="post-head">
+				<h1 class="post-title"><a href="/posts/{{ post.id }}/">{{ post.title|safe }}</a></h1>
+				<span class="post-date">{{ post.date_created }}</span>
+			</div>
+
+			<img src="{{ post.header.url }}" class="post-header" />
+
+			{{ post.body|safe }}
+		</article>
+
+		{% if not forloop.last %}
+		{% include "adsense.html" %}
+		{% endif %}
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ HISTORY_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ HISTORY_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}history{% endblock %}
+
+{% block twitter_title %}{{ HISTORY_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ HISTORY_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ HISTORY_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ HISTORY_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Our History</h1>
+
+		<img src="{% static "img/history1.jpg" %}" class="right" />
+
+		<div>
+			<p>Back in 2010, there were a few dodgeballers that wanted something different.</p>
+
+			<p>We were tired of paying huge fees to play the sport we love. We wanted the sport to be by the players and for the players. We set out to create a system where registration covered the cost of the event, and the rest went back to the players in the form of cash prizes.</p>
+
+			<p>Since day one, it has never been about the money. It has been about squeezing out every minute of playing time available to the player. It's about providing the best competition out there at an event.</p>
+		</div>
+
+		<img src="{% static "img/history2.jpg" %}" class="left" />
+
+		<div>
+			<p>We are not afraid of stacked teams; they are all stacked. We strive to allow the teams the most dodgeball we can possibly give them. From our first tournament, we have strived to show transparency: where the money goes, how rules are made, and where we plan on heading. We strive for a minimum of full round robins and double elimination tournaments.</p>
+
+			<p>When teams started to travel great distances to attend our tournaments, we started getting asked, "Can you bring this to our region?" We collectively doubled down on our effort and we spread to four regions. We now host a minimum of 13 tournaments a year, creating an annual season of dodgeball.</p>
+
+			<p>We provide photos for every event and we provide the best dodgeball videos out there for the players. We want to keep pushing the envelope of the sport by providing more to the players.</p>
+		</div>
+{% endblock %}

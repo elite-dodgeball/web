@@ -1,0 +1,18 @@
+<md-list>
+	<md-list-item ng-repeat="player in ngModel track by $index">
+		<md-checkbox ng-model="player.isAttending" aria-label="Attending" ng-change="toggleAttending(player)"></md-checkbox>
+		<span>[[ player.player.name ]]</span>
+		<md-icon class="md-secondary" aria-label="Captain" ng-click="toggleCaptain(player)" ng-disabled="player.isAttending !== true" ng-class="{'md-accent': player.isCaptain}">
+			star
+			<md-tooltip md-direction="top" md-autohide>
+				[[ player.isCaptain ? 'Captain' : 'Make captain' ]]
+			</md-tooltip>
+		</md-icon>
+		<md-icon class="md-secondary" aria-label="Referee" ng-click="toggleReferee(player)" ng-disabled="player.isAttending !== true || player.player.can_referee !== true" ng-class="{'md-accent': player.isReferee}">
+			flag
+			<md-tooltip md-direction="top" md-autohide>
+				[[ player.isReferee ? 'Referee' : 'Appoint referee' ]]
+			</md-tooltip>
+		</md-icon>
+	</md-list-item>
+</md-list>

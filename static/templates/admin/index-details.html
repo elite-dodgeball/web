@@ -1,0 +1,140 @@
+{% extends "admin/index.html" %}
+{% block sidebar %}
+	{{ block.super }}
+	<div class="helper">
+		<h2>How to do Things</h2>
+
+		<h3>How to Add an Event</h3>
+		<ol>
+			<li>
+				<a href="client/event/add/">Add a new Event</a> or make sure <a href="client/event/">it exists</a>
+				<ul>
+					<li>Just leave the <strong>Count points</strong> attribute checked</li>
+					<li>
+						Each region has a predetermined color for the <a href="/schedule/">Schedule</a>
+						<ul>
+							<li>North: <span class="region north">#04139A</span></li>
+							<li>East: <span class="region east">#00BA21</span></li>
+							<li>South: <span class="region south">#FF9300</span></li>
+							<li>West: <span class="region west">#FF2600</span></li>
+							<li>Use the eyedropper tool in the color picker on the color blocks</li>
+						</ul>
+				</ul>
+			</li>
+			<li>
+				<a href="client/division/add/">Add each division</a> as a <a href="client/division/">Division object</a>
+				<ul>
+					<li>Match the <strong>Event id</strong> attribute to the Event from step one</li>
+					<li>The <strong>Count points</strong> attribute determines if the results are included in total point tallies</li>
+					<li>For <strong>Max teams</strong>, a negative value will mean there is no limit and a zero value will effectively mean it's invite-only</li>
+					<li>You shouldn't have to touch <strong>Current teams</strong> or <strong>Open invites</strong> at all</li>
+				</ul>
+			</li>
+			<li>
+				<a href="client/eventteam/add/">Add each team</a> as an <a href="client/eventteam/">Event team object</a>
+				<ul>
+					<li>Match the <strong>Division id</strong> attribute to the Division in step two</li>
+					<li>The <strong>Place</strong> attribute can be left blank until the competition is over</li>
+				</ul>
+			</li>
+		</ol>
+
+		<h3>How to Add a Team</h3>
+		<ol>
+			<li>Every <a href="client/region/">Region object</a> should already exist</li>
+			<li>
+				<a href="client/team/add/">Add a Team object</a>
+				<ul>
+					<li>The <strong>Information</strong> isn't used at this time, but it's still required</li>
+					<li>While you can edit <strong>Wins</strong>, <strong>Losses</strong>, and <strong>Points</strong>, those attributes are automatically computed, so they're best left alone</li>
+					<li>The optimal dimensions for a <strong>Cover</strong> is 960x407, though anything with an equal ratio will do</li>
+					<li>The optimal dimensions for a <strong>Logo</strong> is 200x200, though anything with an equal ratio will do</li>
+				</ul>
+			</li>
+			<li>
+				<a href="client/player/add/">Add a Player object</a> for each person on the team
+				<ul>
+					<li>Match the <strong>Team id</strong> attribute to the Team in step two</li>
+					<li>The optimal dimensions for a <strong>Headshot</strong> is 236x236, though anything with an equal ratio will do</li>
+					<li>The <strong>Bio</strong> attribute isn't used at this time and can be left blank</li>
+				</ul>
+			</li>
+		</ol>
+
+		<h3>How to Add a Post</h3>
+		<ol>
+			<li>
+				<a href="client/post/add/">Add a Post object</a>
+				<ul>
+					<li>The optimal dimensions for a <strong>Header</strong> is 960x540, though anything with an equal ratio will do</li>
+					<li>The <strong>Blurb</strong> is the accompanying subheader text on the front page</li>
+					<li>Check the <strong>Featured</strong> attribute if you want to the post to be in the front page carousel</li>
+					<li>We use a WYSIWYG editor for the <strong>Body</strong>, but click the <strong>Source</strong> button in the top-right to get at the raw HTML</li>
+				</ul>
+			</li>
+		</ol>
+
+		<h3>How to Commentate</h3>
+		<ol>
+			<li>Avoid commentating on games you are playing in</li>
+			<li>Dig up some facts on the competing teams beforehand and try to integrate them as quick tidbits</li>
+			<li>Be descriptive in the action with location, pacing, context, etc.</li>
+			<li>
+				Make sure you know the names of all the players
+				<ul>
+					<li>Get them right when you call a play</li>
+					<li>Try to call out every player by name at least once in the video</li>
+					<li>As Richie Benaud says, "There are no teams in the world called 'we' or 'they'"</li>
+				</ul>
+			<li>
+				Try to not repeat yourself and use exciting phrasing
+				<ul>
+					<li>Keep a list of common phrases or words and their alternatives</li>
+					<li>Throw: chunk, hurl, pelt. Catch: snag, corral, snatch. Hit: kill, tag, ding.</li>
+					<li>Mark them off as you go to keep up variety</li>
+					<li>Ditch bland, ineffective adjectives like "good," "amazing," and pretty much every adverb</li>
+				</ul>
+			</li>
+			<li>
+				Don't ask superficially broad questions like "who do you think is going to win?"
+				<ul>
+					<li>Ask questions that have answers based on <strong>fact</strong></li>
+					<li>Be productively analytical with some amount of foresight, not solely opinion</li>
+					<li>If you want to editorialize, channel it through crowd reactions</li>
+				</ul>
+			</li>
+		</ol>
+
+		<h3 class="active">How to Not Ruin Things</h3>
+		<ol>
+			<li>Don't <em>ever</em> delete any objects</li>
+			<li>Upload images that look good, have proper dimensions, and <em>look good</em></li>
+			<li>
+				Practice good copywriting
+				<ul>
+					<li>Check your grammar and spelling (try <a href="http://www.hemingwayapp.com/">Hemingway</a> or <a href="https://www.grammarly.com/">Grammarly</a>)</li>
+					<li>Break up your sentences into easily consumable paragraphs</li>
+					<li>Use active wording and encourage the user to engage</li>
+					<li>Properly hyphenate your words (e.g., no-sting, round-robin, etc.)</li>
+				</ul>
+			</li>
+			<li>
+				Optimize for SEO
+				<ul>
+					<li>Link back to the site where you can</li>
+					<li>Write new posts often and share them on Twiter and Facebook</li>
+					<li>Include links to our online presence in every YouTube description</li>
+					<li>Fill out every possible field in the advanced section of a YouTube video</li>
+				</ul>
+			</li>
+		</ol>
+	</div>
+
+	<script type="text/javascript">
+		document.querySelector('.helper').addEventListener('click', function(ev) {
+			if (ev.target.nodeName === 'H3' && ev.target.nextElementSibling.nodeName === 'OL') {
+				ev.target.classList.toggle('active');
+			}
+		});
+	</script>
+{% endblock %}

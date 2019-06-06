@@ -1,0 +1,22 @@
+[
+{
+    "model": "reggie.divisioninvite",
+    "pk": 1,
+    "fields": {
+        "invite": "87b09afe-6143-4306-8eb7-c87f92dabd94",
+        "division": 1,
+        "is_claimed": true,
+        "discount": "123.00"
+    }
+},
+{
+    "model": "reggie.divisioninvite",
+    "pk": 2,
+    "fields": {
+        "invite": "87b09afe-6143-4306-8eb7-c87f92dabd94",
+        "division": 4,
+        "is_claimed": true,
+        "discount": "99.00"
+    }
+}
+]

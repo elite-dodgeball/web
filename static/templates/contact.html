@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}{{ CONTACT_TITLE }} - {% endblock %}
+{% block meta_description %}{{ CONTACT_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}contact{% endblock %}
+
+{% block twitter_title %}{{ CONTACT_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ CONTACT_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ CONTACT_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ CONTACT_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Contact</h1>
+
+		{% if saved %}
+		<h2>Message sent!</h2>
+		<p>We'll get back to you shortly, {{ form.name.value }}!</p>
+		{% else %}
+		<form id="contact" action="/contact/" method="POST">
+			{% csrf_token %}
+
+			<div class="left">
+				<label for="{{ form.name.id_for_label }}">{{ form.name.label_tag }}</label>
+				{{ form.name.errors }}
+				{{ form.name }}
+
+				<label for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
+				{{ form.email.errors }}
+				{{ form.email }}
+
+				<label for="{{ form.subject.id_for_label }}">{{ form.subject.label_tag }}</label>
+				{{ form.subject.errors }}
+				{{ form.subject }}
+			</div>
+
+			<div class="right">
+				<label for="{{ form.body.id_for_label }}">{{ form.body.label_tag }}</label>
+				{{ form.body.errors }}
+				{{ form.body }}
+			</div>
+
+			<input type="submit" value="Send" class="button" />
+		</form>
+		{% endif %}
+{% endblock %}

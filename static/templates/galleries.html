@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{% if galleries|length > 0 %}{{ GALLERIES_TITLE|safe }}{% else %}No photo galleries found{% endif %} - {% endblock %}
+{% block meta_description %}{{ GALLERIES_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}galleries{% endblock %}
+
+{% block twitter_title %}{{ GALLERIES_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ GALLERIES_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ GALLERIES_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ GALLERIES_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Galleries</h1>
+
+		<ul class="gallery-list">
+			{% for gallery in galleries %}
+			<li style="background-image: url({{ gallery.cover.path.url }});">
+				<a href="/gallery/{{ gallery.gallery.id }}/">
+					<h2>{{ gallery.gallery.title }}</h2>
+					<h3>{{ gallery.gallery.image_count }}&nbsp;{{ gallery.gallery.image_count|pluralize:"photo,photos" }}</h3>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+{% endblock %}

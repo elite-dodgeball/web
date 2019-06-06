@@ -1,0 +1,477 @@
+/**
+ * General styles
+ */
+
+html, body {
+	background: #EEE;
+	min-height: 100%;
+}
+
+h1 {
+	width: 100%;
+	line-height: 130%;
+	padding: 30px 0 0 0;
+	margin: 0 auto 10px auto;
+}
+
+h1, h2 {
+	clear: both;
+}
+
+.md-button {
+	padding: 0 10px;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+md-input-container .md-errors-spacer {
+	min-height: 0;
+}
+
+/**
+ * Content wrapper
+ */
+
+.content {
+	height: calc(100% - 40px);
+	padding: 0 5% 40px 5%;
+	background: #EEE;
+}
+
+/**
+ * Header styles
+ */
+
+md-switch.team-check-in {
+	width: 100%;
+	margin-right: 16px;
+}
+
+/**
+ * General event styles
+ */
+
+.event-thumper {
+	top: 50%;
+	left: 50%;
+	position: fixed;
+	transform: translate(-50%, -50%);
+}
+
+/**
+ * Check-in styles
+ */
+
+.md-sidenav-right h3 {
+	color: rgba(255, 255, 255, 0.87);
+}
+
+.scanner-container {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	position: fixed;
+	background: rgba(0, 0, 0, 0.25);
+	z-index: 99999;
+}
+	.scanner-container .scanner-form {
+		width: 50%;
+		margin: 0 auto;
+		display: block;
+		min-width: 640px;
+	}
+
+	.scanner-container .scanner-preview {
+		width: 100%;
+		margin: 20px auto;
+	}
+
+	.scanner-container .scanner-results {
+		width: 100%;
+		height: 200px;
+		margin: 30px 0 50px 0;
+	}
+		.scanner-container .scanner-results .scanner-results-headshot {
+			width: 33%;
+			display: inline-block;
+		}
+
+		.scanner-container .scanner-results .scanner-results-body {
+			width: 60%;
+			margin: 0 0 0 6%;
+			display: inline-block;
+			vertical-align: top;
+		}
+			.scanner-container .scanner-results .scanner-results-body .scanner-results-body-name {
+				color: #FFFFFF;
+				font-size: 18px;
+				margin: 0 0 10px 0;
+			}
+
+		.scanner-container .scanner-results .scanner-results-message {
+			color: #FF1111;
+			font-weight: bold;
+			text-align: center;
+			margin: 0 0 20px 0;
+		}
+
+		.scanner-container .scanner-results .scanner-results-button {
+			width: 45%;
+			margin: 20px 0 0 0;
+		}
+			.scanner-container .scanner-results .scanner-results-button:last-child {
+				float: right;
+			}
+
+	.scanner-container .scanner-close {
+		width: 100%;
+		display: block;
+		margin: 0 0 20px 0;
+	}
+
+/**
+ * Round-robin styles
+ */
+
+form[name="robinForm"][disabled] {
+	pointer-events: none;
+}
+
+.robin-lock {
+	top: -55px;
+	position: relative;
+	float: left;
+}
+	button.robin-lock {
+		margin-top: 12px;
+	}
+
+.team-list {
+	width: 100%;
+	overflow: hidden;
+	padding: 10px 0 0 0;
+	margin: 0 auto;
+}
+
+.team-chip {
+	width: 25%;
+	float: left;
+	padding: 0 8px;
+	box-sizing: border-box;
+}
+	.team-chip .md-item-text {
+		padding: 8px;
+		border-radius: 3px;
+		position: relative;
+		background: #FFFFFF no-repeat right center;
+		background-size: contain;
+	}
+	.team-chip.title-chip {
+		width: 14%;
+	}
+
+.div-round {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	margin: 30px auto 0 auto;
+}
+	.div-round h2 {
+		margin: 0 0 30px 0;
+		padding: 0 0 10px 0;
+		border-bottom: 1px solid #999;
+	}
+	.div-round h3 {
+		width: 100%;
+		padding: 10px 0 0 0;
+	}
+	.div-round .team-list {
+		padding: 0;
+		margin: 0 auto;
+	}
+	.div-round .md-2-line {
+		min-height: 60px;
+	}
+
+.div-court {
+	clear: both;
+	display: block;
+}
+
+.input-chip .md-block {
+	padding: 0;
+	width: 40px;
+	margin: 0 10px 0 0;
+	display: inline-block;
+}
+	.input-chip .md-errors-spacer {
+		min-height: 0;
+	}
+
+.new-chip .md-item-text {
+	padding: 5px 8px;
+}
+	.new-chip .md-block {
+		margin: 0;
+		padding: 0;
+	}
+	.new-chip .md-errors-spacer {
+		min-height: 0;
+	}
+
+.chip-list {
+	overflow: hidden;
+}
+	.chip-list .ref-chip {
+		width: 33%;
+	}
+	.chip-list .input-chip {
+		width: 50%;
+		user-select: none;
+	}
+
+/**
+ * Bracket styles
+ */
+
+.bracket {
+	display: flex;
+	margin: 18px 0;
+	overflow: auto;
+	max-width: 100%;
+	user-select: none;
+	flex-direction: row;
+	align-items: stretch;
+}
+	.bracket > .bracket-round:last-child > .bracket-game:after,
+	.bracket > .bracket-round:first-child > .bracket-game:before {
+		display: none;
+	}
+
+.bracket-round {
+	width: 250px;
+	display: flex;
+	list-style: none;
+	margin-right: 50px;
+	flex-direction: column;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+	.bracket-round > .bracket-game:after {
+		right: -29px;
+		width: 25px;
+		height: 45%;
+		content: '';
+		display: block;
+		position: absolute;
+		border-right: 2px solid #9E9E9E;
+	}
+		.bracket-round > .bracket-game:nth-child(odd):after {
+			top: 50%;
+			transform: translateY(-1px);
+			border-top: 2px solid #9E9E9E;
+		}
+
+		.bracket-round > .bracket-game:nth-child(even):after {
+			bottom: 50%;
+			transform: translateY(1px);
+			border-bottom: 2px solid #9E9E9E;
+		}
+
+		.bracket-game.bracket-game-direct:before,
+		.bracket-round > .bracket-game.bracket-game-direct:after {
+			height: 0;
+		}
+
+.bracket-game {
+	width: 100%;
+	min-height: 83px;
+	display: flex;
+	position: relative;
+	margin: 10px 0;
+	flex: 0 1 auto;
+	justify-content: center;
+	flex-direction: column;
+	align-items: flex-start;
+}
+	.bracket-game:before {
+		top: 50%;
+		left: -23px;
+		width: 25px;
+		height: 30%;
+		content: '';
+		display: block;
+		position: absolute;
+		border-left: 2px solid #9E9E9E;
+		transform: translateY(-50%);
+	}
+		.bracket-game.bracket-game-orphan:before,
+		.bracket-game.bracket-game-orphan .bracket-matchup:before {
+			display: none;
+		}
+
+		.bracket-game.bracket-game-solo:before {
+			top: 35%;
+			height: 15%;
+			transform: translateY(0);
+		}
+
+	.bracket-game.bracket-game-empty {
+		pointer-events: none;
+	}
+		.bracket-round > .bracket-game.bracket-game-empty:after {
+			display: none;
+		}
+
+	.bracket-matchup {
+		width: calc(100% - 50px);
+		display: block;
+		position: relative;
+		padding-right: 50px;
+		border: 1px solid #929292;
+	}
+		.bracket-matchup:before {
+			top: 50%;
+			left: -24px;
+			width: 23px;
+			height: 2px;
+			content: '';
+			display: block;
+			position: absolute;
+			background: #9E9E9E;
+			transform: translateY(-50%);
+		}
+		.bracket-matchup .bracket-team:first-child {
+			border-bottom: 1px solid #CCC;
+		}
+
+	.bracket-game-state {
+		top: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		width: 50px;
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+		background: #EFEFEF;
+		border-left: 1px solid #AAA;
+	}
+		.bracket-game-state md-select {
+			padding-top: 20px;
+		}
+
+	.bracket-game.bracket-game-status-0 .bracket-team {
+		opacity: 0.5;
+	}
+
+	.bracket-game.bracket-game-status-2 {
+		opacity: 0.25;
+	}
+
+.bracket-team {
+	display: flex;
+	cursor: pointer;
+	justify-content: space-between;
+}
+	.bracket-team-name {
+		width: 100%;
+		padding: 8px 5px 8px 50px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		background: #FFFFFF no-repeat left center;
+		background-size: contain;
+	}
+
+	.bracket-team-wins {
+		width: 30px;
+		margin: 0;
+		padding: 0 0 0 5px;
+		border-left: 1px solid #CCC;
+		text-align: center;
+	}
+
+/**
+ * Overlay styles
+ */
+
+form[name="overlayForm"][disabled] {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.overlay-player-list {
+	width: 50%;
+}
+
+.overlay-player-number {
+	min-width: 30px;
+	display: inline-block;
+	font-weight: bold;
+}
+
+/**
+ * Responsive styles
+ */
+
+@media all and (max-width: 1120px) {
+	.team-chip {
+		width: 33%;
+	}
+}
+
+@media all and (max-width: 1000px) {
+	.chip-list .ref-chip {
+		width: 50%;
+	}
+}
+
+@media all and (max-width: 880px) {
+	.team-list .team-chip {
+		min-height: 60px;
+	}
+	.team-chip {
+		width: 50%;
+	}
+	.team-chip.title-chip {
+		width: 20%;
+	}
+}
+
+@media all and (max-width: 800px) {
+	.div-round h2 {
+		margin: 0 0 10px 0;
+	}
+	.team-chip.title-chip {
+		width: 100%;
+	}
+	.div-round .md-2-line {
+		min-height: 50px;
+	}
+	.chip-list {
+		clear: both;
+	}
+	.overlay-player-list {
+		width: 100%;
+	}
+}
+
+@media all and (max-width: 650px) {
+	h1 {
+		margin: 0 auto;
+		padding: 20px 0 0 0;
+	}
+	.md-2-line.team-chip {
+		width: 100%;
+		min-height: 50px;
+	}
+	.scanner-container .scanner-form {
+		width: calc(100% - 30px);
+		min-width: auto;
+	}
+	.scanner-container .scanner-preview {
+		margin-top: 15px;
+	}
+}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{% if upcoming|length > 0 or passed > 0 %}{{ EVENTS_TITLE|safe }}{% else %}No events found{% endif %} - {% endblock %}
+{% block meta_description %}{{ EVENTS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}events{% endblock %}
+
+{% block twitter_title %}{{ EVENTS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ EVENTS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ EVENTS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ EVENTS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Events</h1>
+
+		{% if upcoming|length > 0 %}
+		<h2>Upcoming</h2>
+		{% for event in upcoming %}
+		<div class="events-item">
+			<h2>
+				<span style="background-image: url({{ event.header.url }});"></span>
+				<a href="/events/{{ event.id }}/">{{ event.title }}</a>
+			</h2>
+
+			<div class="events-location events-detail">{{ event.location }}</div>
+			<div class="events-datetime events-detail">{{ event.datetime|date:"F jS, Y" }}</div>
+		</div>
+		{% endfor %}
+		{% endif %}
+
+		{% if upcoming|length > 0 and passed|length > 0 %}
+		{% include "adsense.html" %}
+		{% endif %}
+
+		{% if passed|length > 0 %}
+		<h2>Passed</h2>
+		{% for event in passed %}
+		<div class="events-item">
+			<h2>
+				<span style="background-image: url({{ event.header.url }});"></span>
+				<a href="/events/{{ event.id }}/">{{ event.title }}</a>
+			</h2>
+
+			<div class="events-location events-detail">{{ event.location }}</div>
+			<div class="events-datetime events-detail">{{ event.datetime|date:"F jS, Y" }}</div>
+		</div>
+		{% endfor %}
+		{% endif %}
+{% endblock %}

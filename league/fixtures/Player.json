@@ -1,0 +1,114 @@
+[
+{
+    "model": "league.player",
+    "pk": 1,
+    "fields": {
+        "name": "Parker Smart",
+        "email_address": "parker@arushdball.com",
+        "headshot": "players/550d125e-3563-11e8-8c97-acbc32987c13.jpg",
+        "number": "1",
+        "bio": "",
+        "usad_id": null,
+        "can_referee": false,
+        "is_active": true
+    }
+},
+{
+    "model": "league.player",
+    "pk": 2,
+    "fields": {
+        "name": "Matt D",
+        "email_address": "matt@arushdball.com",
+        "headshot": "players/653e39dc-3563-11e8-9bfc-acbc32987c13.jpg",
+        "number": "88",
+        "bio": "",
+        "usad_id": null,
+        "can_referee": true,
+        "is_active": true
+    }
+},
+{
+    "model": "league.player",
+    "pk": 3,
+    "fields": {
+        "name": "Zack Clower",
+        "email_address": "zack@arushdball.com",
+        "headshot": "players/7328deb4-3563-11e8-9b4e-acbc32987c13.jpg",
+        "number": "6",
+        "bio": "",
+        "usad_id": null,
+        "can_referee": false,
+        "is_active": true
+    }
+},
+{
+    "model": "league.player",
+    "pk": 4,
+    "fields": {
+        "name": "Troy Eggeling",
+        "email_address": "troy@arushdball.com",
+        "headshot": "players/862f73ca-3563-11e8-bc4e-acbc32987c13.jpg",
+        "number": "16",
+        "bio": "",
+        "usad_id": null,
+        "can_referee": false,
+        "is_active": false
+    }
+},
+{
+    "model": "league.player",
+    "pk": 5,
+    "fields": {
+        "name": "Justin Carroll",
+        "email_address": "justin@arushdball.com",
+        "headshot": "players/a10129fe-3563-11e8-baee-acbc32987c13.jpg",
+        "number": "31",
+        "bio": "",
+        "usad_id": null,
+        "can_referee": true,
+        "is_active": true
+    }
+},
+{
+    "model": "league.player",
+    "pk": 6,
+    "fields": {
+        "name": "Chris Allbright",
+        "email_address": "chris@arushdball.com",
+        "headshot": "players/aee8cd1a-3563-11e8-96e8-acbc32987c13.jpg",
+        "number": "29",
+        "bio": "",
+        "usad_id": null,
+        "can_referee": false,
+        "is_active": true
+    }
+},
+{
+    "model": "league.player",
+    "pk": 7,
+    "fields": {
+        "name": "Tim Poon",
+        "email_address": "tim@arushdball.com",
+        "headshot": "players/c2b9209c-3563-11e8-9f07-acbc32987c13.jpg",
+        "number": "9",
+        "bio": "More text.",
+        "usad_id": "T006520318P",
+        "can_referee": false,
+        "is_active": true
+    }
+},
+{
+    "model": "league.player",
+    "pk": 8,
+    "fields": {
+        "name": "Scott Strittmatter",
+        "email_address": "scott@arushdball.com",
+        "headshot": "players/d0e0f0f6-3563-11e8-9f3f-acbc32987c13.jpg",
+        "number": "26",
+        "bio": "Something something.",
+        "usad_id": null,
+        "can_referee": false,
+        "is_active": true
+    }
+}
+]

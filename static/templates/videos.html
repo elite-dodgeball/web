@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ VIDEOS_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ VIDEOS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}videos{% endblock %}
+
+{% block twitter_title %}{{ VIDEOS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ VIDEOS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ VIDEOS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ VIDEOS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header"><input type="text" value="" id="video-search" class="float-left" placeholder="Filter videos…" />Episodes</h1>
+
+		<ul class="video-list"></ul>
+		<ol class="video-nav"></ol>
+
+		<script type="text/template" id="video-embed">
+			<div class="embed-container">
+				<iframe src="https://www.youtube.com/embed/[[youtube_id]]?showinfo=0&autoplay=1" frameborder="0"></iframe>
+			</div>
+		</script>
+
+		<script type="text/template" id="video-item">
+			<li class="video-item">
+				<div class="video-wrap" style="background-image: url([[thumbnail]]);">
+					<a href="/episodes/[[id]]/" data-yid="[[youtube_id]]">https://www.youtube.com/watch?v=[[youtube_id]]</a>
+					<span class="video-duration">[[duration]]</span>
+				</div>
+				<h2>[[title]]</h2>
+				<div class="video-description">
+					[[description]]
+				</div>
+			</li>
+		</script>
+
+		<script type="text/template" id="video-nav">
+			<li class="nav-item [[current]]"><a href="#page=[[page_num]]">[[label]]</a></li>
+		</script>
+{% endblock %}
+
+{% block scripts %}
+	<script>window.videos = {{ videos|safe }};</script>
+	<script src="{% static "js/video.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block container %}
+		<section id="splash">
+			<ul class="carousel">
+				{% for post in posts %}
+				<li><a href="/posts/{{ post.pk }}/">
+					<img src="{{ post.header.url }}" />
+					<div class="caption">
+						<h2>{{ post.title }}</h2>
+						<p>{{ post.blurb }}</p>
+					</div>
+				</a></li>
+				{% endfor %}
+			</ul>
+			<ul class="side">
+				<li class="about"><a href="/about/"><span>About Elite</span></a></li>
+				<li class="rules"><a href="/rules/"><span>Rules</span></a></li>
+				<li class="contact"><a href="/contact/"><span>Find Out More</span></a></li>
+			</ul>
+		</section>
+
+		<section id="media">
+			<h3 class="mobile-only">Recent Episodes</h3>
+			<div id="player-wrapper">
+				<div id="player" class="embed-container"><iframe src="https://www.youtube.com/embed/{{ videos.0.youtube_id }}?showinfo=0" frameborder="0" width="460" height="259"></iframe></div>
+				<ul class="thumbs">
+					{% for video in videos %}
+					<li><a href="https://www.youtube.com/watch?v={{ video.youtube_id }}"><img src="{{ video.thumbnail }}" /></a></li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div id="tweets" class="embed-container">
+				<a class="twitter-timeline" href="https://twitter.com/elitedodgeball" data-widget-id="547187272181760001">Tweets by @elitedodgeball</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+		</section>
+
+		{% include "adsense.html" %}
+
+		<section id="standings">
+			<h3 class="mobile-only">Standings for {{ season.year }}</h3>
+
+			<select id="division-select">
+				{% for division_id, division_datum in division_hash.items %}
+				<option value="{{ division_datum.division.name }}">
+					{{ division_datum.division.name }} Division
+				</option>
+				{% endfor %}
+			</select>
+
+			{% for division_id, division_datum in division_hash.items %}
+			<ul data-division-name="{{ division_datum.division.name }}">
+				{% for region_id, region_team_datum in division_datum.region_team_hash.items %}
+				<li>
+					<h3>{{ region_team_datum.region.name }}</h3>
+					<ul class="region">
+						{% for team_datum in region_team_datum.team_data %}
+						<li><a href="/teams/{{ team_datum.team.pk }}/"><img src="{{ team_datum.team.logo.url }}" />{{ team_datum.team.name }}</a><span>{{ team_datum.season_division_team.points }}<span>&nbsp;{{ team_datum.season_division_team.points|pluralize:"pt,pts" }}</span></span></li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endfor %}
+		</section>
+{% endblock %}

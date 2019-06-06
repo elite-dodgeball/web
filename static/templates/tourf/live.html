@@ -1,0 +1,214 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html lang="en-us" ng-app="TourfApp" ng-cloak>
+<head>
+	<!-- Site stuff -->
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Page stuff -->
+	<title>{{ event.title }} - Elite Dodgeball</title>
+
+	<!-- Style stuff -->
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css">
+	<link href="{% static "tourf/css/main.css" %}" rel="stylesheet" type="text/css">
+</head>
+<body ng-controller="TourfCtrl">
+	<md-content id="content">
+		<header class="live-header" layout="row" layout-align="space-between center">
+			<h1 class="event-title" flex="grow">
+				{{ event.title }}
+				<md-progress-circular ng-if="didInitialize === true && isLoading === true" md-mode="indeterminate" md-diameter="50" class="indicator md-accent"></md-progress-circular>
+			</h1>
+
+			<md-input-container class="division-select">
+				<label>View division</label>
+				<md-select ng-model="selectedDivision" ng-model-options="{trackBy: '$value.event_division.id'}">
+					<md-option ng-value="divisionDatum" ng-repeat="(eventDivisionId, divisionDatum) in eventDivisionHash">[[ divisionDatum.division.name ]]</md-option>
+				</md-select>
+			</md-input-container>
+		</header>
+
+		<span class="event-live-alert" ng-if="event.state === eventStates[1].id">
+			Live now
+		</span>
+
+		<div class="embed-container" ng-if="event.normalized_stream_link">
+			<iframe ng-src="[[ event.normalized_stream_link ]]" frameborder="0" width="1920" height="1080"></iframe>
+			<div class="stream-overlay" layout="row" ng-if="event.state === eventStates[1].id && stats.game && stats.topTeam && stats.bottomTeam">
+				<a href="/" target="_blank" class="stream-logo">
+					<img src="/static/img/logo.png" />
+				</a>
+				<div class="stream-team" style="background-image: url([[ stats.topTeam.cover ]]);">
+					<h5 class="stream-team-name">
+						[[ stats.topTeam.name ]]
+					</h5>
+					<ul class="stream-team-list" layout="row">
+						<li ng-repeat="player in stats.topTeam.players | orderBy:'-is_in' track by player.event_division_team_player_id" ng-if="player.is_playing" class="stream-team-player" ng-class="{'stream-team-player-out': player.is_in !== true}">
+							#[[ player.number ]] [[ player.name ]]
+						</li>
+					</ul>
+				</div>
+				<span class="stream-team-wins">
+					[[ stats.topTeam.wins ]]
+				</span>
+				<div class="stream-team" style="background-image: url([[ stats.bottomTeam.cover ]]);">
+					<h5 class="stream-team-name">
+						[[ stats.bottomTeam.name ]]
+					</h5>
+					<ul class="stream-team-list" layout="row">
+						<li ng-repeat="player in stats.bottomTeam.players | orderBy:'-is_in' track by player.event_division_team_player_id" ng-if="player.is_playing" class="stream-team-player" ng-class="{'stream-team-player-out': player.is_in !== true}">
+							#[[ player.number ]] [[ player.name ]]
+						</li>
+					</ul>
+				</div>
+				<span class="stream-team-wins">
+					[[ stats.bottomTeam.wins ]]
+				</span>
+				<div class="stream-status">
+					<p>Round [[ stats.game.round_number + 1 ]]</p>
+					<p>[[ stats.game.bracket_type[1] ]]</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="bracket-section" ng-if="selectedDivision.brackets.winners">
+			<h2 class="section-title">[[ selectedDivision.brackets.losers ? 'Winners' : '' ]] Bracket</h2>
+
+			<div class="bracket">
+				<ol class="bracket-round" ng-repeat="bracketRound in selectedDivision.brackets.winners">
+					<li class="bracket-game bracket-game-status-[[ roundGame.state ]]" data-game-id="[[ roundGame.id ]]" ng-repeat="roundGame in bracketRound track by $index" ng-class="makeGameClass(roundGame)">
+						<form ng-if="roundGame !== null" class="bracket-matchup">
+							<div class="bracket-team" ng-if="roundGame.state > gameStates[0].id">
+								<span class="bracket-team-name" style="background-image: url([[ roundGame.top_team.team.logo ]])">[[ roundGame.top_team.team.name ]]</span>
+								<span class="bracket-team-wins">[[ roundGame.top_wins ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state > gameStates[0].id">
+								<span class="bracket-team-name" style="background-image: url([[ roundGame.bottom_team.team.logo ]])">[[ roundGame.bottom_team.team.name ]]</span>
+								<span class="bracket-team-wins">[[ roundGame.bottom_wins ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state === gameStates[0].id">
+								<span class="bracket-team-name">#[[ roundGame.top_team.seed ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state === gameStates[0].id">
+								<span class="bracket-team-name">#[[ roundGame.bottom_team.seed ]]</span>
+							</div>
+						</form>
+					</li>
+				</ol>
+			</div>
+		</div>
+
+
+		<div class="bracket-section" ng-if="selectedDivision.brackets.losers">
+			<h2 class="section-title">Losers Bracket</h2>
+
+			<div class="bracket">
+				<ol class="bracket-round" ng-repeat="bracketRound in selectedDivision.brackets.losers">
+					<li class="bracket-game bracket-game-status-[[ roundGame.state ]]" data-game-id="[[ roundGame.id ]]" ng-repeat="roundGame in bracketRound track by $index" ng-class="makeGameClass(roundGame, bracketRound)">
+						<form ng-if="roundGame !== null" class="bracket-matchup">
+							<div class="bracket-team" ng-if="roundGame.state > gameStates[0].id">
+								<span class="bracket-team-name" style="background-image: url([[ roundGame.top_team.team.logo ]])">[[ roundGame.top_team.team.name ]]</span>
+								<span class="bracket-team-wins">[[ roundGame.top_wins ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state > gameStates[0].id">
+								<span class="bracket-team-name" style="background-image: url([[ roundGame.bottom_team.team.logo ]])">[[ roundGame.bottom_team.team.name ]]</span>
+								<span class="bracket-team-wins">[[ roundGame.bottom_wins ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state === gameStates[0].id">
+								<span class="bracket-team-name">#[[ roundGame.top_team.seed ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state === gameStates[0].id">
+								<span class="bracket-team-name">#[[ roundGame.bottom_team.seed ]]</span>
+							</div>
+						</form>
+					</li>
+				</ol>
+			</div>
+		</div>
+
+
+		<div class="bracket-section" ng-if="selectedDivision.brackets.finals">
+			<h2 class="section-title">Finals Bracket</h2>
+
+			<div class="bracket">
+				<ol class="bracket-round" ng-repeat="bracketRound in selectedDivision.brackets.finals" ng-if="selectedDivision.brackets.finals">
+					<li class="bracket-game bracket-game-status-[[ roundGame.state ]] bracket-game-direct" data-game-id="[[ roundGame.id ]]" ng-repeat="roundGame in bracketRound track by $index">
+						<form class="bracket-matchup">
+							<div class="bracket-team" ng-if="roundGame.state > gameStates[0].id">
+								<span class="bracket-team-name" style="background-image: url([[ roundGame.top_team.team.logo ]])">[[ roundGame.top_team.team.name ]]</span>
+								<span class="bracket-team-wins">[[ roundGame.top_wins ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state > gameStates[0].id">
+								<span class="bracket-team-name" style="background-image: url([[ roundGame.bottom_team.team.logo ]])">[[ roundGame.bottom_team.team.name ]]</span>
+								<span class="bracket-team-wins">[[ roundGame.bottom_wins ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state === gameStates[0].id">
+								<span class="bracket-team-name">#[[ roundGame.top_team.seed ]]</span>
+							</div>
+							<div class="bracket-team" ng-if="roundGame.state === gameStates[0].id">
+								<span class="bracket-team-name">#[[ roundGame.bottom_team.seed ]]</span>
+							</div>
+						</form>
+					</li>
+				</ol>
+			</div>
+		</div>
+
+		<div class="round-robin" ng-if="selectedDivision.rounds">
+			<h2 class="section-title">Round-robin</h2>
+
+			<md-list class="team-list">
+				<md-list-item class="md-2-line team-chip" ng-repeat="teamDatum in selectedDivision.teams | orderBy:['-points','seed'] track by $index" layout="row" layout-wrap>
+					<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
+						<h5 class="rank-title">
+							[[ $index+1 ]]. [[ teamDatum.team.name ]] ([[ teamDatum.points | number : 2 ]])
+						</h5>
+					</div>
+				</md-list-item>
+			</md-list>
+
+			<div class="div-round" ng-repeat="round in selectedDivision.rounds track by $index">
+				<h3 class="round-title">Round [[ $index + 1 ]]</h3>
+
+				<div class="div-court" ng-repeat="game in round.courts track by $index">
+					<md-list class="team-list">
+						<md-list-item class="md-2-line team-chip title-chip" layout="row" layout-wrap>
+							<h4 class="court-title">Court [[ $index + 1 ]]</h4>
+						</md-list-item>
+						<div class="chip-list">
+							<md-list-item class="md-2-line team-chip input-chip" layout="row" layout-wrap>
+								<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ game.top_team.team.logo ]])" flex>
+									<span class="team-wins">[[ game.top_wins ]]</span>
+									<span>[[ game.top_team.team.name ]]</span>
+								</div>
+							</md-list-item>
+							<md-list-item class="md-2-line team-chip input-chip" layout="row" layout-wrap>
+								<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ game.bottom_team.team.logo ]])" flex>
+									<span class="team-wins">[[ game.bottom_wins ]]</span>
+									<span>[[ game.bottom_team.team.name ]]</span>
+								</div>
+							</md-list-item>
+						</div>
+					</md-list>
+				</div>
+			</div>
+		</div>
+
+		<md-progress-circular ng-if="didInitialize !== true && isLoading === true" md-mode="indeterminate" md-diameter="150" class="thumper"></md-progress-circular>
+	</md-content>
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+	<script src="{% static "js/polyfills.js" %}"></script>
+	<script src="{% static "tourf/js/app.js" %}"></script>
+</body>
+</html>

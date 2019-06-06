@@ -1,0 +1,487 @@
+html {
+	background: #EEE;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	clear: both;
+}
+
+/*
+	GENERAL
+*/
+
+#content {
+	padding: 10px;
+	margin: 10px auto;
+	background: transparent;
+	max-width: calc(100% - 60px);
+}
+	#content .thumper {
+		top: 50%;
+		left: 50%;
+		position: fixed;
+		transform: translate(-50%, -50%);
+	}
+	#content .indicator {
+		top: 20px;
+		right: 10px;
+		position: absolute;
+	}
+
+.section-title {
+	margin: 50px 0 30px 0;
+	border-bottom: 4px solid #B3B3B3;
+	padding-bottom: 16px;
+}
+
+.event-live-alert {
+	position: fixed;
+	bottom: 18px;
+	right: 18px;
+	border: 2px solid #E62117;
+	border-radius: 3px;
+	padding: 4px 8px;
+	background: #EEE;
+	color: #E62117;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 100%;
+	text-transform: uppercase;
+	z-index: 99999;
+}
+
+/*
+	HEADER
+*/
+
+.live-header {
+	width: 100%;
+	padding: 0 0 16px 0;
+}
+
+.event-title {
+	line-height: 130%;
+	margin: 0 auto;
+}
+
+/*
+	STREAM OVERLAY
+*/
+.stream-overlay {
+	left: 50%;
+	bottom: 20px;
+	width: 100%;
+	height: 40px;
+	max-width: 580px;
+	position: absolute;
+	border-radius: 2px;
+	border: 1px solid #6B6B6B;
+	background: linear-gradient(to bottom, #45484d 0%, #000000 100%);
+	box-shadow: 3px 3px 8px 1px rgba(30, 30, 30, 0.4);
+	transform: translateX(-50%);
+}
+
+.stream-logo {
+	width: 16%;
+	display: block;
+	text-align: center;
+	border-right: 1px solid #AAA;
+}
+	.stream-logo img {
+		top: 10%;
+		height: 80%;
+		position: relative;
+	}
+
+.stream-team {
+	width: 20%;
+	position: relative;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+	.stream-team .stream-team-name {
+		height: 100%;
+		width: 100%;
+		text-align: right;
+		text-transform: uppercase;
+		font-family: Lato, Helvetica, Arial, sans-serif;
+		font-size: 3vh;
+		color: #FBFBFB;
+		padding: 2px 4px 0 0;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+		background: linear-gradient(to left, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.0) 60%);
+		box-sizing: border-box;
+	}
+	.stream-team .stream-team-list {
+		left: 2px;
+		bottom: 2px;
+		width: calc(100% - 4px);
+		position: absolute;
+	}
+	.stream-team .stream-team-player {
+		height: 4px;
+		width: 16.67%;
+		overflow: hidden;
+		text-indent: -99999px;
+		margin-right: 2px;
+		background: linear-gradient(to bottom, rgba(241, 231, 103, 1.0) 0%,rgba(254, 182, 69, 1.0) 100%);
+	}
+		.stream-team-list .stream-team-player:last-child {
+			margin-right: 0;
+		}
+		.stream-team-list .stream-team-player.stream-team-player-out {
+			opacity: 0.35;
+		}
+
+.stream-team-wins {
+	width: 10%;
+	color: #FBFBFB;
+	font-size: 4vh;
+	line-height: 125%;
+	text-align: center;
+	border-right: 1px solid #666;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
+}
+
+.stream-status {
+	width: 24%;
+	font-size: 1.85vh;
+	line-height: 125%;
+	background: linear-gradient(to bottom, rgba(238, 238, 238, 1.0) 0%, rgba(204, 204, 204, 1.0) 100%);
+	box-sizing: border-box;
+	padding: 2px 0 0 6px;
+}
+
+/*
+	ROUND-ROBIN
+*/
+
+.team-list {
+	width: 100%;
+	overflow: hidden;
+	padding: 10px 0 0 0;
+	margin: 0 auto;
+}
+
+.team-chip {
+	width: 25%;
+	float: left;
+	padding: 0 8px;
+	box-sizing: border-box;
+}
+	.team-chip .md-item-text {
+		padding: 8px;
+		border-radius: 3px;
+		position: relative;
+		background: #FFFFFF no-repeat right center;
+		background-size: contain;
+	}
+	.team-chip.title-chip {
+		width: 14%;
+	}
+
+.div-round {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	margin: 30px auto 0 auto;
+}
+	.div-round .round-title {
+		margin-bottom: 10px;
+	}
+	.div-round .court-title {
+		padding: 5px 0 8px 0;
+		border-bottom: 1px solid #CACACA;
+	}
+	.div-round .rank-title {
+		width: 100%;
+		padding: 10px 0 0 0;
+	}
+	.div-round .team-list {
+		padding: 0;
+		margin: 0 auto;
+	}
+	.div-round .md-2-line,
+	md-list-item.md-2-line:before {
+		min-height: 64px;
+	}
+
+.div-court {
+	clear: both;
+	display: block;
+}
+
+.team-wins {
+	width: 36px;
+	margin: 0 10px 0 0;
+	display: inline-block;
+	font-weight: bold;
+}
+
+.chip-list {
+	overflow: hidden;
+}
+	.chip-list .ref-chip {
+		width: 33%;
+	}
+	.chip-list .input-chip {
+		width: 50%;
+	}
+
+/*
+	BRACKET
+*/
+
+.bracket {
+	display: flex;
+	margin: 18px 0;
+	overflow: auto;
+	max-width: 100%;
+	flex-direction: row;
+	align-items: stretch;
+}
+	.bracket > .bracket-round:last-child > .bracket-game:after,
+	.bracket > .bracket-round:first-child > .bracket-game:before {
+		display: none;
+	}
+
+.bracket-round {
+	width: 220px;
+	display: flex;
+	list-style: none;
+	margin-right: 50px;
+	flex-direction: column;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+	.bracket-round > .bracket-game:after {
+		right: -29px;
+		width: 25px;
+		height: 45%;
+		content: '';
+		display: block;
+		position: absolute;
+		border-right: 2px solid #9E9E9E;
+	}
+		.bracket-round > .bracket-game:nth-child(odd):after {
+			top: 50%;
+			transform: translateY(-1px);
+			border-top: 2px solid #9E9E9E;
+		}
+
+		.bracket-round > .bracket-game:nth-child(even):after {
+			bottom: 50%;
+			transform: translateY(1px);
+			border-bottom: 2px solid #9E9E9E;
+		}
+
+		.bracket-game.bracket-game-direct:before,
+		.bracket-round > .bracket-game.bracket-game-direct:after {
+			height: 0;
+		}
+
+.bracket-game {
+	width: 100%;
+	min-height: 51px;
+	display: flex;
+	position: relative;
+	margin: 10px 0;
+	flex: 0 1 auto;
+	justify-content: center;
+	flex-direction: column;
+	align-items: flex-start;
+}
+	.bracket-game:before {
+		top: 50%;
+		left: -23px;
+		width: 25px;
+		height: 30%;
+		content: '';
+		display: block;
+		position: absolute;
+		border-left: 2px solid #9E9E9E;
+		transform: translateY(-50%);
+	}
+		.bracket-game.bracket-game-orphan:before,
+		.bracket-game.bracket-game-orphan .bracket-matchup:before {
+			display: none;
+		}
+
+		.bracket-game.bracket-game-solo:before {
+			top: 35%;
+			height: 15%;
+			transform: translateY(0);
+		}
+
+	.bracket-game.bracket-game-empty {
+		pointer-events: none;
+	}
+		.bracket-round > .bracket-game.bracket-game-empty:after {
+			display: none;
+		}
+
+	.bracket-matchup {
+		width: 100%;
+		display: block;
+		position: relative;
+		border: 1px solid #000;
+	}
+		.bracket-matchup:before {
+			top: 50%;
+			left: -24px;
+			width: 23px;
+			height: 2px;
+			content: '';
+			display: block;
+			position: absolute;
+			background: #9E9E9E;
+			transform: translateY(-50%);
+		}
+		.bracket-matchup .bracket-team:first-child {
+			border-bottom: 1px solid #CCC;
+		}
+
+	.bracket-game-state {
+		top: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		width: 50px;
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+		background: #EFEFEF;
+		border-left: 1px solid #AAA;
+	}
+		.bracket-game-state md-select {
+			padding-top: 6px;
+		}
+
+	.bracket-game.bracket-game-status-0 .bracket-team {
+		opacity: 0.5;
+	}
+
+.bracket-team {
+	display: flex;
+	justify-content: space-between;
+}
+	.bracket-team-name {
+		width: 100%;
+		padding: 0 5px 0 30px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		background: #FFFFFF no-repeat left center;
+		background-size: contain;
+	}
+	.bracket-team-wins {
+		width: 30px;
+		margin: 0;
+		padding: 0 6px;
+		border-left: 1px solid #CCC;
+		text-align: center;
+	}
+
+/*
+	RESPONSIVE
+*/
+
+@media all and (max-width: 1120px) {
+	.team-chip {
+		width: 33%;
+	}
+}
+
+@media all and (max-width: 1000px) {
+	.chip-list .ref-chip {
+		width: 50%;
+	}
+}
+
+@media all and (max-width: 960px) {
+	#content {
+		margin: 10px;
+		max-width: calc(100% - 20px);
+	}
+}
+
+@media all and (max-width: 880px) {
+	.team-list .team-chip {
+		min-height: 60px;
+	}
+	.team-chip {
+		width: 50%;
+	}
+	.team-chip.title-chip {
+		width: 20%;
+	}
+}
+
+@media all and (max-width: 800px) {
+	.section-title {
+		margin: 40px 0 26px 0;
+		border-width: 3px;
+	}
+	.team-chip.title-chip {
+		width: 100%;
+	}
+	.div-round {
+		margin-top: 20px;
+	}
+		.div-round .md-2-line,
+		md-list-item.md-2-line:before {
+			min-height: 50px;
+		}
+		.div-round .round-title {
+			margin: 0 0 10px 0;
+		}
+		.div-round .court-title {
+			width: 100%;
+			padding: 8px 0 0 0;
+			border-bottom: none;
+		}
+	.chip-list {
+		clear: both;
+	}
+	.stream-overlay {
+		bottom: 10px;
+	}
+}
+
+@media all and (max-width: 650px) {
+	.live-header {
+		padding: 0 0 10px 0;
+		flex-wrap: wrap;
+	}
+		.live-header .division-select {
+			width: 100%;
+			margin: 24px 0 6px 0;
+		}
+	.section-title {
+		margin: 30px 0 22px 0;
+		border-width: 3px;
+	}
+	.div-round {
+		margin-top: 10px;
+	}
+		.div-round .round-title {
+			margin-top: 14px;
+		}
+		.div-round .court-title {
+			width: 100%;
+			padding: 10px 0 0 0;
+			border-bottom: none;
+		}
+	.md-2-line.team-chip {
+		width: 100%;
+		min-height: 52px;
+	}
+	md-list-item.md-2-line:before {
+		min-height: 52px;
+	}
+	.stream-overlay {
+		width: calc(100% - 8px);
+		bottom: 4px;
+	}
+}

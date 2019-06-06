@@ -1,0 +1,584 @@
+{% extends "base.html" %}
+
+{% block title %}{{ REGULATIONS_TITLE|safe }} - {% endblock %}
+{% block meta_description %}{{ REGULATIONS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container_class %}rules{% endblock %}
+
+{% block twitter_title %}{{ REGULATIONS_TITLE|safe }}{% endblock %}
+{% block twitter_description %}{{ REGULATIONS_DESCRIPTION|safe }}{% endblock %}
+
+{% block og_title %}{{ REGULATIONS_TITLE|safe }}{% endblock %}
+{% block og_description %}{{ REGULATIONS_DESCRIPTION|safe }}{% endblock %}
+
+{% block container %}
+		<h1 class="main-header">Regulations and Requirements</h1>
+
+		<p>For game rules, head over to the <a href="/rules/">rules page</a>.</p>
+		<p>For refereeing guidelines, head over to the <a href="/rules/referee/">referee page</a>.</p>
+
+		<h2 id="section-1">Organization Mission <a href="#section-1" class="float-right">I</a></h2>
+		<ol>
+			<li>
+				Organization Status
+				<ol>
+					<li>Elite Dodgeball, Inc. is a non-profit 501(c)(6) organization.</li>
+				</ol>
+			</li>
+			<li>
+				Organization Operation
+				<ol>
+					<li>All revenue acquired by registration from the players fund any given tournament's expenses, organization expenses, and working capital for Elite Dodgeball.</li>
+					<li>Any revenue remaining from registration fees after expenses will be used as monetary prizes for teams participating in that tournament.</li>
+					<li>The Elite Dodgeball owners and account managers will not pay registration for tournaments nor receive personal income from registration revenue from the players.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-2">Code of Conduct <a href="#section-2" class="float-right">II</a></h2>
+		<ol>
+			<li>
+				Integrity
+				<ol>
+					<li>The integrity of the sport is dependent on the honesty of the participants.</li>
+					<li>Players, coaches, referees, and spectators are morally bound to retain a high level of professionalism and respect for the game and environment on and off the court.</li>
+				</ol>
+			</li>
+			<li>
+				Drugs and Alcohol
+				<ol>
+					<li>Participants and spectators are strictly prohibited from bringing any illegal drugs or alcohol to any Elite Dodgeball sanctioned event.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-3">Disciplinary Measures <a href="#section-3" class="float-right">III</a></h2>
+		<ol>
+			<li>
+				Enforcement
+				<ol>
+					<li>Disciplinary measures are enforced for all players, coaches, ball retrievers, referees, and spectators that are participating in any given event.</li>
+				</ol>
+			</li>
+			<li>
+				Verbal Warning
+				<ol>
+					<li>A verbal warning may be given by the Head Referee(s) or Burden Referee during gameplay as a reminder to maintain gameplay continuance.</li>
+				</ol>
+			</li>
+			<li>
+				Yellow Card
+				<ol>
+					<li>A Yellow Card may be given by the Head Referee(s) or Burden Referee during gameplay only.</li>
+					<li>A Yellow Card is a tangible representation of a warning to the player or team that received it and will not result in players being ejected or deemed out during a game unless otherwise stated.</li>
+					<li>Yellow Cards given to a team are attributed specifically to that team's captain.</li>
+					<li>If no physical Yellow Card is available, the awarding referee may verbally announce it.</li>
+					<li>
+						Yellow Card offenses include the following.
+						<ol>
+							<li>Exhibiting verbal aggression or swearing to any opponent or referee.</li>
+							<li>Taunting, intimidating, or arguing with any opponent or referee.</li>
+							<li>Pinching a ball during gameplay when pinching is not allowed as determined by <a href="/rules/#section-11">Game Rules Section XI</a>.</li>
+							<li>Interference by nonactive players.</li>
+							<li>Intentional collision with an opponent during gameplay.</li>
+							<li>Intentional cheating or manipulation of a <a href="/rules/">Game Rule</a>.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Red Card
+				<ol>
+					<li>A Red Card may be given by the Head Referee(s) or Burden Referee during gameplay only.</li>
+					<li>A Red Card is a tangible representation of an immediate out for the offending player or team and results in a three-game suspension for the offending player or team.</li>
+					<li>Red Cards given to a team are attributed specifically to that team's captain.</li>
+					<li>If no physical Red Card is available, the awarding referee may verbally announce it.</li>
+					<li>
+						Red Card offenses include the following.
+						<ol>
+							<li>Two Yellow Card offenses in the same match within the same team.</li>
+							<li>Intentionally kicking a ball in an aggressive manner.</li>
+							<li>A nonactive player intentionally throwing a ball at an opponent.</li>
+							<li>Repeated intentional collision with an opponent during gameplay.</li>
+							<li>Exhibiting verbal offense to any referee or opponent that includes racial slurs or otherwise derogatory or discriminative comments.</li>
+							<li>Light physical altercations between players before, during, or after gameplay.</li>
+							<li>Spitting at an opposing player.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Ejections
+				<ol>
+					<li>An ejection results in the ejected player, coach, referee, or spectator being disqualified from continued participation in the event and must leave the venue premises immediately.</li>
+					<li>Ejections are only enforced by the Elite Dodgeball owners and regional directors.</li>
+					<li>
+						Ejection offenses include the following.
+						<ol>
+							<li>Two Red Cards in the same event.</li>
+							<li>Physical fighting.</li>
+							<li>Intentionally vandalizing the venue or equipment.</li>
+							<li>Spectators harassing and interfering with participants or gameplay.</li>
+							<li>Participants harassing spectators.</li>
+							<li>Providing illegal drugs and alcohol at the event.</li>
+							<li>Being heavily intoxicated.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Referee Eviction
+				<ol>
+					<li>Designated referees will be evicted if unable to uphold and enforce all necessary responsibilities of a designated referee as detailed in the <a href="/rules/referee/">Referee Guidelines</a>.</li>
+					<li>A referee eviction revokes the participant's eligibility for referee compensation and will not be allowed to referee any remaining gameplay for the event.</li>
+					<li>Referee evictions have no impact on the disciplinary measures of a player.</li>
+				</ol>
+			</li>
+			<li>
+				Expulsion
+				<ol>
+					<li>Expulsions are an official ban by the owners of Elite Dodgeball of any participant or spectator that poses a dangerous threat to the organization or other participants and spectators.</li>
+					<li>Participants receiving expulsion will not be allowed reentry to any sanctioned event unless approved by the owners of Elite Dodgeball.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-4">Elite Dodgeball Season Series <a href="#section-4" class="float-right">IV</a></h2>
+		<ol>
+			<li>
+				Regions
+				<ol>
+					<li>
+						The Elite Dodgeball Season Series consists of four competing regions.
+						<ol>
+							<li>North States (Blue): IL, IN, MI, WI, MN, IA, NE, MO, ND, SD, OH, KS.</li>
+							<li>South States (Orange): TX, OK, AR, LA, MS, KY, TN, NC, SC, GA, AL, FL.</li>
+							<li>East States (Green): ME, NH, MA, NY, RI, CT, NJ, PA, WV, VA, DE, MD, VT.</li>
+							<li>West States (Red): CA, AZ, OR, CO, NM, WY, MT, ID, NV, UT, WA, AK, HI.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Schedule
+				<ol>
+					<li>The Elite Dodgeball regular season will be from the months of March to July.</li>
+					<li>Each Region will play three Rounds.</li>
+					<li>Each Round will be held at a different major city within its corresponding region.</li>
+				</ol>
+			</li>
+			<li>
+				Format
+				<ol>
+					<li>Each Round will include the primary Open 8.5 Division.</li>
+					<li>Depending on the demand of the Region, each Round will include an additional Division such as Coed, Pinch, or Women's.</li>
+					<li>
+						Every Division will include a round-robin portion and a double-elimination portion.
+						<ol>
+							<li>The round-robin schedule is dependent on the number of teams, court space, and venue availability.</li>
+						</ol>
+					</li>
+					<li>
+						All matches will be best-of-three games.
+						<ol>
+							<li>Matches will not include a third game if one team has already won two games.</li>
+						</ol>
+					</li>
+					<li>
+						Seeding for the double-elimination bracket will be determined by the number of games won in round-robin.
+						<ol>
+							<li>Tiebreakers for even numbers of games won are determined by the results of the relevant head-to-head match.</li>
+							<li>Tiebreakers for even numbers of games won and even head-to-head results are determined by coin flip.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Series Points
+				<ol>
+					<li>Elite Dodgeball Season Series points will only be awarded to the teams participating in the Open 8.5 Division.</li>
+					<li>
+						Points will be awarded to teams for each Round of the Season Series in their primary region.
+						<ol>
+							<li>Traveling teams may not acquire points for their primary region's standings.</li>
+						</ol>
+					</li>
+					<li>Points will be determined by the final placement results at the end of each Round.</li>
+					<li>Multiple teams that place at the same spot in the losers bracket will receive the same amount of points.</li>
+					<li>
+						Series point totals will determine the National Championship Open 8.5 Division seeding and awards.
+						<table>
+							<thead>
+								<tr>
+									<th>Place</th>
+									<th>Points</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1<sup>st</sup></td>
+									<td>10</td>
+								</tr>
+								<tr>
+									<td>2<sup>nd</sup></td>
+									<td>9</td>
+								</tr>
+								<tr>
+									<td>3<sup>rd</sup></td>
+									<td>8</td>
+								</tr>
+								<tr>
+									<td>4<sup>th</sup></td>
+									<td>7</td>
+								</tr>
+								<tr>
+									<td>5<sup>th</sup></td>
+									<td>6</td>
+								</tr>
+								<tr>
+									<td>6<sup>th</sup></td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>7<sup>th</sup></td>
+									<td>4</td>
+								</tr>
+								<tr>
+									<td>8<sup>th</sup></td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>9<sup>th</sup></td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>10<sup>th</sup></td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<td>11<sup>th</sup> and lower</td>
+									<td>0</td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Points Eligibility
+				<ol>
+					<li>Teams must have four persistent roster players for each Round within their Region to earn points for the Open 8.5 Division.</li>
+					<li>
+						The primary Region for a team is determined by the residence of these four persistent roster players.
+						<ol>
+							<li>A team residing in one Region may not consider any other Region their primary Region.</li>
+							<li>Players residing in one region may be part of the roster of a team of a different Region but must officially state prior to the beginning of the Season Series which team will be their primary team.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-5">Team Eligibility <a href="#section-5" class="float-right">V</a></h2>
+		<ol>
+			<li>
+				Team Registration
+				<ol>
+					<li>Teams are required to submit a full roster when registering for a Division.</li>
+					<li>Teams are required to submit the full payment amount when registering for a Division.</li>
+					<li>Teams are required to state which players will be designated referees for each Division registered prior to the event.</li>
+					<li>All registered players are required to sign the Elite Dodgeball waiver prior to playing in the tournament.</li>
+					<li>
+						For the Season Series, teams must register for the Open 8.5 Division in order to compete in any other Division.
+						<ol>
+							<li>Female players may sign up for only the Women's Division and are not required to compete in the Open 8.5 Division.</li>
+						</ol>
+					</li>
+					<li>Teams are required to designate a captain and/or coach.</li>
+					<li>Players that are rostered with a team not in their primary region must state prior to the Season Series during registration which team will be their primary team.</li>
+					<li>
+						Players must be 16 years of age or older.
+						<ol>
+							<li>Players either 16 or 17 years of age must have the waiver signed by a parent or legal guardian.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Team Requirements
+				<ol>
+					<li>Teams must read, understand, and abide by the Elite Dodgeball Game Rules, Refereeing Guidelines, and Regulations and Requirements.</li>
+					<li>Teams must have team names approved by Elite Dodgeball owners or account managers prior to event registration.</li>
+					<li>Teams are encouraged to create their own Facebook Page.</li>
+					<li>Teams are encouraged to have matching jerseys for filming and photography purposes.</li>
+				</ol>
+			</li>
+			<li>
+				Event Capacity
+				<ol>
+					<li>
+						There will be no cap or restriction on the amount of team able to register for any Season Series Round or the National Championship.
+						<ol>
+							<li>Elite Dodgeball owners and account managers may cap other sanctioned events.</li>
+						</ol>
+					</li>
+					<li>Event coordinators are entitled to enforce a limited number of round-robin games dependent on the number of registered teams, venue availability, and number of courts prior to the event and the day of the event.</li>
+				</ol>
+			</li>
+			<li>
+				Payment
+				<ol>
+					<li>Division registration for each Season Series Round will cost $180.00 USD per team.</li>
+					<li>Teams must pay in full for each Division by the event's predetermined registration deadline.</li>
+					<li>Payment options and tournament information will be provided via the Elite Dodgeball website and the Facebook event page.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-6">Traveling Eligibility <a href="#section-6" class="float-right">VI</a></h2>
+		<ol>
+			<li>
+				Traveling Team
+				<ol>
+					<li>Traveling Team Eligibility only applies to the Open 8.5 Division for the Season Series.</li>
+					<li>The top four ranked teams from the Season Series and final 16 teams from the National Championship of the prior year will be considered Class A category teams.</li>
+					<li>Class A teams must pay an additional exhibition monetary fee of $200.00 USD along with the registration fee to play in an Open 8.5 Division in a non-primary Region Rounds.</li>
+					<li>Class A teams will not be eligible to receive medals, points, or monetary prizes from non-primary Region Rounds.</li>
+					<li>All exhibition monetary fees will go towards the Elite Dodgeball working capital.</li>
+				</ol>
+			</li>
+			<li>
+				Traveling Player
+				<ol>
+					<li>Traveling Player Eligibility only applies to the Open 8.5 Division for the Season Series.</li>
+					<li>
+						Players that have rostered on a top four ranked team from the prior year's Season Series, the final 16 teams from the prior year's National Championship, or the prior Round from the current Season Series will be considered Class A category players.
+						<ol>
+							<li>Current Season Series Round One: The top four ranked teams of each Region from the prior year's Season Series and the final 16 teams from the prior year's National Championship may not roster a Class A traveling player from any Region.</li>
+							<li>Current Season Series Round Two and Three: Teams in each Region that are currently ranked in the top four may not roster a Class A traveling player from any region that has rostered on a top four team from the preceding Round.</li>
+							<li>Current National Championship: The top four ranked teams from each Region may not roster a Class A player from another top four ranked team.</li>
+						</ol>
+					</li>
+					<li>Class A players that play on non-primary teams in other Regions will not be eligible for medals, points for their primary team, or monetary prizes.</li>
+				</ol>
+			</li>
+			<li>
+				Traveling Hybrid Team
+				<ol>
+					<li>A Hybrid Team is a non-primary team comprised of players from multiple other primary teams from any Region.</li>
+					<li>Hybrid Teams are prohibited from registering in any Open 8.5 Division at any Round in any Region.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-7">Showdown <a href="#section-7" class="float-right">VII</a></h2>
+		<ol>
+			<li>
+				Description
+				<ol>
+					<li>The Elite Dodgeball Showdown is a Season Series-long one-on-one competition across all four regions.</li>
+					<li>It is played in accordance to <a href="/rules/#section-18">Game Rules Section XVIII Article IV</a>.</li>
+				</ol>
+			</li>
+			<li>
+				Registration
+				<ol>
+					<li>Only registered players of the Elite Dodgeball Season Series are eligible to compete in Showdown.</li>
+					<li>Players are permitted to compete in the Showdown of their primary Region only.</li>
+					<li>Registration is first-come, first-serve for 32 participants at the start of the first Round of each Region.</li>
+					<li>The registration fee for each participant for Showdown will be $5.00 USD in cash.</li>
+				</ol>
+			</li>
+			<li>
+				Format
+				<ol>
+					<li>Matches for Showdown are best-of-five games throughout the Season Series.</li>
+					<li>The first 16 matches of each Region's Showdown bracket will take place at that Region's first Round.</li>
+					<li>The following 12 matches of each Region's Showdown bracket will take place at that Region's second Round.</li>
+					<li>The final three matches of each Region's Showdown bracket will take place at that Region's third Round.</li>
+				</ol>
+			</li>
+			<li>
+				Final Showdown
+				<ol>
+					<li>The Showdown winner of each Region will compete in the Final Showdown at the National Championship.</li>
+					<li>
+						The Final Showdown seeding will be based on the prior year's final Showdown placement.
+						<ol>
+							<li>Unseeded matchups will be North versus East and West versus South.</li>
+						</ol>
+					</li>
+					<li>
+						Final Showdown matches will be best-of-nine games in a single-elimination bracket.
+						<ol>
+							<li>A consolation match will be played to determine third and fourth place.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-8">Elite Dodgeball National Championship <a href="#section-8" class="float-right">VIII</a></h2>
+		<ol>
+			<li>
+				Description
+				<ol>
+					<li>The Elite Dodgeball National Championship is the final event of the Season Series that determines the top teams for the year.</li>
+				</ol>
+			</li>
+			<li>
+				Schedule
+				<ol>
+					<li>The National Championship will take place during Labor Day Weekend from Friday to Sunday.</li>
+					<li>The location is held in a different major city every year and will be announced halfway through the Season Series.</li>
+				</ol>
+			</li>
+			<li>
+				Format
+				<ol>
+					<li>Every Division of the National Championship will feature a round-robin portion and a double-elimination portion.</li>
+					<li>
+						Matches will be best-of-three games.
+						<ol>
+							<li>Round-robin schedules are dependent on the number of registered teams, court space, and venue availability.</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				Payment
+				<ol>
+					<li>
+						The cost for every Division for the National Championship will be dependent on the venue rental fee.
+						<ol>
+							<li>No team will earn a "free bid" to any Division.</li>
+						</ol>
+					</li>
+					<li>Teams must pay in full for each Division by the event's predetermined registration deadline.</li>
+					<li>Payment options and tournament information will be provided via the Elite Dodgeball website and the Facebook event page.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-9">Awards <a href="#section-9" class="float-right">IX</a></h2>
+		<ol>
+			<li>
+				Season Series Rounds
+				<ol>
+					<li>
+						For each Season Series Round, the first place team of every Division will earn Elite Dodgeball medals and a monetary prize.
+						<ol>
+							<li>Second place and third place teams may also receive a monetary prize depending on the number of team's registered.</li>
+						</ol>
+					</li>
+					<li>Teams will receive Season Series points dependent on the final placement of the Open 8.5 Division only.</li>
+				</ol>
+			</li>
+			<li>
+				Season Series
+				<ol>
+					<li>
+						The team with the highest point total from each Region at the end of the Season Series will receive Elite Dodgeball silver rings.
+						<ol>
+							<li>Tiebreakers will be determined by the final rankings of each Round.</li>
+							<li>Tiebreakers of the final rankings of each Round will be determined by the relevant head-to-head results of the entire Season Series.</li>
+						</ol>
+					</li>
+					<li>The top four teams of each Region ranked by total Season Series points will be considered part of the Elite 16 and are automatically eligible for the top 16 seeds for the National Championship Open 8.5 Division.</li>
+				</ol>
+			</li>
+			<li>
+				National Championship
+				<ol>
+					<li>
+						The Elite 16 teams are automatically seeded as the top 16 seeds for the National Championship Open 8.5 Division double-elimination bracket, regardless of the National Championship Open 8.5 Division round-robin results.
+						<ol>
+							<li>No other team may be substituted in for an absent Elite 16 team at the National Championship.</li>
+						</ol>
+					</li>
+					<li>
+						The first place team of every division will earn Elite Dodgeball National Championship medals and a monetary prize.
+						<ol>
+							<li>Second place and third place teams may also receive a monetary prize depending on the number of team's registered.</li>
+						</ol>
+					</li>
+					<li>The first place team of the Open 8.5 Division will also receive the Elite Dodgeball Trophy with the team's name engraved in it along with Elite Dodgeball gold rings.</li>
+				</ol>
+			</li>
+			<li>
+				Showdown
+				<ol>
+					<li>Regional Showdown winners will receive a headband of their respective Region's color.</li>
+					<li>Players in the Final Showdown will receive a monetary prize dependent on their final placement.</li>
+					<li>The winner of the Final Showdown will receive the Showdown Champion headband and will be regarded The One.</li>
+				</ol>
+			</li>
+			<li>
+				CAPS Award
+				<ol>
+					<li>CAPS stands for Camaraderie Attitude Perseverance and Sportsmanship.</li>
+					<li>The CAPS Award is given to one team from each Region at the end of the Season Series that demonstrates all qualities of teamwork, being helpful and supportive to all players and teams, and keeping a positive character.</li>
+					<li>The CAPS Award is discussed and voted on by the Elite Dodgeball President and regional directors.</li>
+				</ol>
+			</li>
+			<li>
+				MVP Award
+				<ol>
+					<li>Two MVP Awards are given at the end of the season to one female player and one male player for their overall performance at the National Championship.</li>
+					<li>The MVP Awards are voted amongst the owners, regional directors, and selected captains.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-10">Prizes and Compensation <a href="#section-10" class="float-right">X</a></h2>
+		<ol>
+			<li>
+				Enforcement
+				<ol>
+					<li>All monetary prizes and any compensation for any sanctioned event will be paid by check or, if necessary, PayPal.</li>
+					<li>Checks will be divided up evenly and distributed to each rostered player on a winning team that has earned a monetary prize.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-11">Other Events <a href="#section-11" class="float-right">XI</a></h2>
+		<ol>
+			<li>
+				Sanctioned Events
+				<ol>
+					<li>Elite Dodgeball may provide other sanctioned events throughout the year to help fundraise for the Elite Dodgeball working capital and other organizational expenses.</li>
+				</ol>
+			</li>
+			<li>
+				Elite Leagues
+				<ol>
+					<li>Official Elite Dodgeball Leagues can only be coordinated by Elite Dodgeball owners and account managers.</li>
+					<li>Any other group seeking to create an official Elite Dodgeball League must request approval by the Elite Dodgeball owners and account managers.</li>
+				</ol>
+			</li>
+		</ol>
+
+		<h2 id="section-12">Spectators <a href="#section-12" class="float-right">XII</a></h2>
+		<ol>
+			<li>People of all ages are welcomed to spectate any sanctioned event free of charge.</li>
+			<li>Spectators must abide by the rules and regulations of the venue and Elite Dodgeball gameplay.</li>
+			<li>Elite Dodgeball is not liable for any spectator.</li>
+		</ol>
+
+		<h2 id="section-13">Elite Dodgeball Copyright <a href="#section-13" class="float-right">XIII</a></h2>
+		<ol>
+			<li>
+				Brand
+				<ol>
+					<li>Elite Dodgeball participants are allowed to use the Elite Dodgeball brand freely for jerseys, social media, and any other materials.</li>
+					<li>The Elite Dodgeball brand may not be used for licensing agreements without written consent from the Elite Dodgeball owners and account managers.</li>
+				</ol>
+			</li>
+			<li>
+				Media Material
+				<ol>
+					<li>Upon signing the waiver, Elite Dodgeball participants give consent to any media material that Elite Dodgeball wishes to promote for the organization.</li>
+				</ol>
+			</li>
+		</ol>
+{% endblock %}
