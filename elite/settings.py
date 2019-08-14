@@ -122,7 +122,7 @@ DATABASES = {
 	}
 }
 
-if 'test' in sys.argv and not os.environ.get('CI'):
+if 'test' in sys.argv: # and not os.environ.get('CI'):
 	DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
