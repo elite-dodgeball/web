@@ -28,6 +28,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
 	'.elite-dodgeball.com',
+	'channels-backend',
 ]
 
 ADMINS = (
