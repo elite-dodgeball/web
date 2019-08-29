@@ -1,5 +1,5 @@
 aioredis==1.0.0
-asgiref==2.3.0
+asgiref==3.2.1
 async-timeout==2.0.1
 attrs==17.4.0
 autobahn==18.4.1
@@ -9,7 +9,7 @@ channels==2.2.0
 channels-redis==2.1.1
 chardet==3.0.4
 constantly==15.1.0
-daphne==2.1.1
+daphne==2.3.0
 Django==2.0.13
 django-anymail==2.0
 django-ckeditor==5.4.0
@@ -26,7 +26,7 @@ requests==2.21.0
 simplejson==3.13.2
 six==1.11.0
 stripe==1.79.1
-Twisted==17.9.0
+Twisted==19.7.0
 txaio==2.10.0
 urllib3==1.24.2
 zope.interface==4.5.0
