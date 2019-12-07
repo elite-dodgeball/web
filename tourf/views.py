@@ -664,10 +664,10 @@ def _normalize_game_form(form_data, game=None):
 
 @csrf_exempt
 def teams(request, team_id=None):
-	""" Team endpoints
+	""" EventDivisionTeam endpoints
 
 	:param team_id: ID of the team
-	:type team_id: str
+	:type team_id: int
 
 	"""
 	if team_id:
@@ -691,14 +691,18 @@ def teams(request, team_id=None):
 			if errors:
 				return JsonResponse({'success': False, 'message': 'Invalid team data', 'error': errors}, status=400)
 
-			# Update Team object
+			# Update EventDivisionTeam object
 
-			team.place = form_data['seed']
+			if 'seed' in form_data:
+				team.place = form_data['seed']
+
+			if 'isCheckedIn' in form_data:
+				team.is_checked_in = form_data['isCheckedIn']
 
 			try:
 				team.save()
 			except Exception as e:
-				return JsonResponse({'success': False, 'message': 'Failed to update Team object', 'error': str(e)}, status=500)
+				return JsonResponse({'success': False, 'message': 'Failed to update team object', 'error': str(e)}, status=500)
 
 			return JsonResponse({'success': True, 'data': tourf.TourfSerializer.serialize(team), 'error': errors})
 	elif request.method == 'PATCH':
@@ -721,14 +725,19 @@ def teams(request, team_id=None):
 
 		for form_team in form_data['teams']:
 			event_division_team_ids.append(form_team['eventDivisionTeamId'])
-			event_division_team_hash[form_team['eventDivisionTeamId']] = form_team['seed']
+			event_division_team_hash[form_team['eventDivisionTeamId']] = form_team
 
 		event_division_teams = list(league.EventDivisionTeam.objects.filter(pk__in=event_division_team_ids))
 
 		try:
 			with transaction.atomic():
 				for event_division_team in event_division_teams:
-					event_division_team.place = event_division_team_hash[event_division_team.pk]
+					if 'seed' in event_division_team_hash[event_division_team.pk]:
+						event_division_team.place = event_division_team_hash[event_division_team.pk]['seed']
+
+					if 'isCheckedIn' in event_division_team_hash[event_division_team.pk]:
+						event_division_team.is_checked_in = event_division_team_hash[event_division_team.pk]['isCheckedIn']
+
 					event_division_team.save()
 		except Exception as e:
 			return JsonResponse({'success': False, 'message': 'Failed to update EventDivisionTeam objects', 'error': str(e)}, status=500)
@@ -758,6 +767,112 @@ def _validate_team_form(form_data):
 
 	if 'seed' in form_data and (not isinstance(form_data['seed'], int) or form_data['seed'] < 0):
 		errors.append('seed must be a positive integer')
+
+	if 'isCheckedIn' in form_data and not isinstance(form_data['isCheckedIn'], bool):
+		errors.append('isCheckedIn must be a bool')
+
+	return errors if len(errors) > 0 else False
+
+
+@csrf_exempt
+def players(request, player_id=None):
+	""" EventDivisionTeamPlayer endpoints
+
+	:param player_id: ID of the player
+	:type player_id: int
+
+	"""
+	if player_id:
+		try:
+			player = league.EventDivisionTeamPlayer.objects.get(pk=player_id)
+		except league.EventDivisionTeamPlayer.DoesNotExist:
+			return JsonResponse({'success': False, 'message': 'That player does not exist'}, status=404)
+
+		if request.method == 'GET':
+			return JsonResponse({'success': True, 'data': tourf.TourfSerializer.serialize(player)})
+		elif request.method == 'PATCH':
+			if not request.user.is_authenticated:
+				return JsonResponse({'success': False, 'message': 'Not authorized for %s' % request.method}, status=401)
+
+			form_data = json.loads(request.body)
+
+			# Validate form_data
+
+			errors = _validate_player_form(form_data)
+
+			if errors:
+				return JsonResponse({'success': False, 'message': 'Invalid player data', 'error': errors}, status=400)
+
+			# Update EventDivisionTeamPlayer object
+
+			if 'isCheckedIn' in form_data:
+				player.is_checked_in = form_data['isCheckedIn']
+
+			try:
+				player.save()
+			except Exception as e:
+				return JsonResponse({'success': False, 'message': 'Failed to update player object', 'error': str(e)}, status=500)
+
+			return JsonResponse({'success': True, 'data': tourf.TourfSerializer.serialize(player), 'error': errors})
+	elif request.method == 'PATCH':
+		if not request.user.is_authenticated:
+			return JsonResponse({'success': False, 'message': 'Not authorized for %s' % request.method}, status=401)
+
+		form_data = json.loads(request.body)
+
+		# Validate form_data
+
+		errors = _validate_player_form(form_data)
+
+		if errors:
+			return JsonResponse({'success': False, 'message': 'Invalid player data', 'error': errors}, status=400)
+
+		# Update the EventDivisionTeamPlayer objects
+
+		event_division_team_player_ids = list()
+		event_division_team_player_hash = dict()
+
+		for form_player in form_data['players']:
+			event_division_team_player_ids.append(form_player['eventDivisionTeamPlayerId'])
+			event_division_team_player_hash[form_player['eventDivisionTeamPlayerId']] = form_player
+
+		event_division_team_players = list(league.EventDivisionTeamPlayer.objects.filter(pk__in=event_division_team_player_ids))
+
+		try:
+			with transaction.atomic():
+				for event_division_team_player in event_division_team_players:
+					if 'isCheckedIn' in event_division_team_player_hash[event_division_team_player.pk]:
+						event_division_team_player.is_checked_in = event_division_team_player_hash[event_division_team_player.pk]['isCheckedIn']
+
+					event_division_team_player.save()
+		except Exception as e:
+			return JsonResponse({'success': False, 'message': 'Failed to update EventDivisionTeamPlayer objects', 'error': str(e)}, status=500)
+
+		return JsonResponse({'success': True, 'data': tourf.TourfSerializer.serialize(event_division_team_players), 'error': errors})
+
+	return JsonResponse({'success': False, 'message': '%s not allowed' % request.method}, status=405)
+
+def _validate_player_form(form_data):
+	""" Validate player dict
+
+	"""
+	errors = list()
+
+	if 'players' in form_data:
+		if isinstance(form_data['players'], list):
+			for form_player in form_data['players']:
+				player_errors = _validate_player_form(form_player)
+
+				if player_errors:
+					errors += player_errors
+		else:
+			errors.append('players must be an array')
+
+	if 'eventDivisionTeamPlayerId' in form_data and not isinstance(form_data['eventDivisionTeamPlayerId'], int):
+		errors.append('eventDivisionTeamPlayerId must be a positive integer')
+
+	if 'isCheckedIn' in form_data and not isinstance(form_data['isCheckedIn'], bool):
+		errors.append('isCheckedIn must be a bool')
 
 	return errors if len(errors) > 0 else False
 
@@ -844,10 +959,10 @@ def robins(request, bracket_id=None):
 
 		# Flat round-robin is straightforward
 
-		if 'courtTotal' not in form_data or 'refereeCount' not in form_data:
+		if 'courtTotal' not in form_data or 'refereeCount' not in form_data or 'poolNumber' not in form_data:
 			data['round_robin']['rounds'] = tourf.make_round_robin(team_list=form_data['event_division_teams'])
 		else:
-			data['round_robin']['rounds'] = tourf.make_managed_round_robin(team_list=form_data['event_division_teams'], court_total=form_data['courtTotal'], referee_count=form_data['refereeCount'])
+			data['round_robin']['rounds'] = tourf.make_managed_round_robin(team_list=form_data['event_division_teams'], court_total=form_data['courtTotal'], referee_count=form_data['refereeCount'], pool_number=form_data['poolNumber'])
 
 		# Save the Game objects
 
@@ -1058,6 +1173,9 @@ def _validate_bracket_form(form_data):
 
 	if 'refereeCount' in form_data and (not isinstance(form_data['refereeCount'], int) or form_data['refereeCount'] < 1):
 		errors.append('refereeCount should be a positive integer')
+
+	if 'poolNumber' in form_data and (not isinstance(form_data['poolNumber'], int) or form_data['poolNumber'] < 1):
+		errors.append('poolNumber should be a positive integer')
 
 	return errors if len(errors) > 0 else False
 

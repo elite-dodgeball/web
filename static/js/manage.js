@@ -185,21 +185,43 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 	// Check-in stuff
 
 	$scope.checkin = {
+		activeRequests: 0,
 		activeTeamDatum: null,
 		showTeamPlayers: false,
 		viewTeamPlayers: function (teamDatum) {
 			$scope.checkin.activeTeamDatum = teamDatum;
 			$scope.checkin.showTeamPlayers = true;
 		},
-		checkPlayers: function () {
-			$scope.checkin.activeTeamDatum.isCheckedIn = true;
+		checkPlayers: function (playerDatum) {
+			$scope.checkin.activeTeamDatum.event_division_team.is_checked_in = true;
 
 			for (var i = 0, l = $scope.checkin.activeTeamDatum.players.length; i < l; i++) {
-				if ($scope.checkin.activeTeamDatum.players[i].isCheckedIn !== true) {
-					$scope.checkin.activeTeamDatum.isCheckedIn = false;
+				if ($scope.checkin.activeTeamDatum.players[i].event_division_team_player.is_checked_in !== true) {
+					$scope.checkin.activeTeamDatum.event_division_team.is_checked_in = false;
 					break;
 				}
 			}
+
+			$scope.checkin.updatePlayer(playerDatum);
+			$scope.checkin.updateTeam($scope.checkin.activeTeamDatum);
+		},
+		updateTeam: function (teamDatum) {
+			$scope.checkin.activeRequests++;
+
+			return $http.patch(`/tourf/teams/${teamDatum.event_division_team.id}/`, {
+				isCheckedIn: teamDatum.event_division_team.is_checked_in,
+			}).finally(function () {
+				$scope.bracket.activeRequests--;
+			});
+		},
+		updatePlayer: function (playerDatum) {
+			$scope.checkin.activeRequests++;
+
+			return $http.patch(`/tourf/players/${playerDatum.event_division_team_player.id}/`, {
+				isCheckedIn: playerDatum.event_division_team_player.is_checked_in,
+			}).finally(function () {
+				$scope.bracket.activeRequests--;
+			});
 		},
 	};
 
@@ -264,8 +286,8 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 		},
 		checkin: function () {
 			if ($scope.scanner.foundPlayer) {
-				$scope.scanner.foundPlayer.isCheckedIn = true;
-				$scope.checkin.checkPlayers();
+				$scope.scanner.foundPlayer.event_division_team_player.is_checked_in = true;
+				$scope.checkin.checkPlayers($scope.scanner.foundPlayer);
 			}
 
 			$scope.scanner.clear();
@@ -283,6 +305,8 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 				}
 			}).catch(function (error) {
 				$scope.scanner.hasError = error;
+			}).finally(function () {
+				$scope.$apply();
 			});
 		},
 		initialize: function () {
@@ -302,16 +326,25 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 	$scope.robin = {
 		courtTotal: 3,
 		refereeCount: 2,
+		poolNumber: 1,
 		isLocked: false,
 		activeRequests: 0,
 		eventPromise: null,
 		reset: function (reseed, clearRounds) {
+			var currentSeed = 1;
+
 			for (var i = 0, l = $scope.selectedDivision.teams.length; i < l; i++) {
 				$scope.selectedDivision.teams[i].points = 0;
+
 				if (reseed === true) {
-					$scope.selectedDivision.teams[i].seed = i + 1;
+					if ($scope.selectedDivision.teams[i].event_division_team.is_checked_in === true) {
+						$scope.selectedDivision.teams[i].seed = currentSeed++;
+					} else {
+						$scope.selectedDivision.teams[i].seed = l + i + 1;
+					}
 				}
 			}
+
 			if (clearRounds === true) {
 				$scope.selectedDivision.rounds = null;
 				$scope.robin.isLocked = false;
@@ -325,7 +358,8 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 				eventDivisionId: $scope.selectedDivision.event_division.id,
 				courtTotal: $scope.robin.courtTotal,
 				refereeCount: $scope.robin.refereeCount,
-				teams: $scope.selectedDivision.teams.map($scope.robin.mapTeam),
+				poolNumber: $scope.robin.poolNumber,
+				teams: $scope.selectedDivision.teams.reduce($scope.robin.reduceTeam, []),
 			}).then(function (response) {
 				$scope.robin.isLocked = true;
 				$scope.selectedDivision.rounds = transformRoundRobin(response.data.data.round_robin.rounds);
@@ -333,11 +367,14 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 				$scope.robin.activeRequests--;
 			});
 		},
-		mapTeam: function (teamDatum) {
-			return {
-				eventDivisionTeamId: teamDatum.event_division_team.id,
-				seed: teamDatum.seed,
-			};
+		reduceTeam: function (accumulator, teamDatum) {
+			if (teamDatum.event_division_team.is_checked_in === true) {
+				accumulator.push({
+					eventDivisionTeamId: teamDatum.event_division_team.id,
+					seed: teamDatum.seed,
+				});
+			}
+			return accumulator;
 		},
 		putGame: function (game) {
 			$scope.robin.activeRequests++;
@@ -690,7 +727,6 @@ angular.module('ManageApp', ['ngMaterial', 'ngMessages'], function ($interpolate
 			for (var i = 0, l = divisionDatum.teams.length; i < l; i++) {
 				divisionDatum.teams[i].seed = i + 1;
 				divisionDatum.teams[i].points = 0;
-				divisionDatum.teams[i].isCheckedIn = false;
 			}
 		}
 

@@ -43,7 +43,8 @@ function Player(el, na, se) {
 
 	this.go = function(e){
 		var a = null;
-		while (e !== na && e.nodeName !== 'LI') {
+
+		while (e && e !== na && e.nodeName !== 'LI') {
 			if (e.nodeName === 'A') {
 				a = e.href;
 			}

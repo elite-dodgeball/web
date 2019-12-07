@@ -27,6 +27,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Game',
             fields=[
+                ('group_number', models.PositiveSmallIntegerField(blank=True, default=0, null=True)),
                 ('round_number', models.PositiveSmallIntegerField(default=0)),
                 ('game_number', models.PositiveSmallIntegerField(default=0)),
                 ('state', models.PositiveSmallIntegerField(choices=[(0, 'Prep phase'), (1, 'Live game'), (2, 'Complete')], default=0)),

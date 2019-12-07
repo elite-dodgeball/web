@@ -175,11 +175,26 @@
 			<div class="div-round" ng-repeat="round in selectedDivision.rounds track by $index">
 				<h3 class="round-title">Round [[ $index + 1 ]]</h3>
 
+				<md-list class="team-list">
+					<md-list-item class="md-2-line team-chip title-chip" layout="row" layout-wrap>
+						<h3>Referees</h3>
+					</md-list-item>
+
+					<div class="chip-list">
+						<md-list-item class="md-2-line team-chip ref-chip" ng-repeat="teamDatum in round.referees track by $index" layout="row" layout-wrap>
+							<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
+								<span>[[ teamDatum.team.name ]]</span>
+							</div>
+						</md-list-item>
+					</div>
+				</md-list>
+
 				<div class="div-court" ng-repeat="game in round.courts track by $index">
 					<md-list class="team-list">
 						<md-list-item class="md-2-line team-chip title-chip" layout="row" layout-wrap>
 							<h4 class="court-title">Court [[ $index + 1 ]]</h4>
 						</md-list-item>
+
 						<div class="chip-list">
 							<md-list-item class="md-2-line team-chip input-chip" layout="row" layout-wrap>
 								<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ game.top_team.team.logo ]])" flex>

@@ -26,7 +26,7 @@
 
 		<!-- Event controls -->
 
-		<div layout="row" layout-align="space-between center" ng-show="didInitialize === true">
+		<div ng-show="didInitialize === true" layout="row" layout-align="space-between center" layout-wrap>
 			<md-input-container>
 				<label>Select division</label>
 				<md-select ng-model="selectedDivision" ng-change="onDivisionChange()" ng-model-options="{trackBy: '$value.event_division.id'}">
@@ -59,14 +59,14 @@
 					<form ng-disabled="!scanner.isEnabled" name="checkinForm" layout="row" layout-align="space-between center" layout-wrap>
 						<md-input-container>
 							<label>Select camera</label>
-							<md-select ng-model="scanner.selectedDevice" ng-disabled="!scanner.isEnabled" ng-model-options="{trackBy: '$value.id'}">
+							<md-select ng-model="scanner.selectedDevice" ng-disabled="!scanner.isEnabled || robin.isLocked" ng-model-options="{trackBy: '$value.id'}">
 								<md-option ng-value="deviceOption" ng-repeat="deviceOption in scanner.deviceOptions">
 									[[ deviceOption.name ]]
 								</md-option>
 							</md-select>
 						</md-input-container>
 
-						<md-button ng-click="scanner.start()" ng-disabled="!scanner.isEnabled" class="md-raised md-primary">Open scanner</md-button>
+						<md-button ng-click="scanner.start()" ng-disabled="!scanner.isEnabled || robin.isLocked" class="md-raised md-primary">Open scanner</md-button>
 					</form>
 
 					<md-list>
@@ -74,7 +74,7 @@
 							<img alt="[[ teamDatum.team.name ]]" ng-src="[[ teamDatum.team.logo ]]" class="md-avatar" />
 							<p>[[ teamDatum.team.name ]]</p>
 							<md-icon ng-click="checkin.viewTeamPlayers(teamDatum)" aria-label="Players" class="md-secondary">people</md-icon>
-							<md-switch ng-model="teamDatum.isCheckedIn" aria-label="Checked in" class="md-secondary"></md-switch>
+							<md-switch ng-model="teamDatum.event_division_team.is_checked_in" ng-change="checkin.updateTeam(teamDatum)" ng-disabled="robin.isLocked" aria-label="Checked in" class="md-secondary"></md-switch>
 						</md-list-item>
 					</md-list>
 				</md-content>
@@ -85,7 +85,7 @@
 			<md-tab label="Round-robin">
 				<md-content class="md-padding">
 					<md-list class="team-list">
-						<md-list-item class="md-2-line team-chip" ng-repeat="teamDatum in selectedDivision.teams | orderBy:['-points','seed'] track by $index" layout="row" layout-wrap>
+						<md-list-item ng-repeat="teamDatum in selectedDivision.teams | orderBy:['-points','seed'] track by $index" ng-class="{'team-chip-dns': teamDatum.event_division_team.is_checked_in !== true}" class="md-2-line team-chip" layout="row" layout-wrap>
 							<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
 								<h4>
 									[[ $index+1 ]]. [[ teamDatum.team.name ]] ([[ teamDatum.points | number : 2 ]])
@@ -103,6 +103,11 @@
 						<md-input-container flex="100">
 							<label>Teams to referee each round</label>
 							<input ng-model="robin.refereeCount" type="number" min="1" md-no-asterisk required />
+						</md-input-container>
+
+						<md-input-container flex="100">
+							<label>Number of pools</label>
+							<input ng-model="robin.poolNumber" type="number" min="1" md-no-asterisk required />
 						</md-input-container>
 
 						<md-button ng-click="robin.shuffleTeams()" ng-disabled="robin.isLocked" class="md-raised md-accent">Shuffle Teams</md-button>
@@ -269,7 +274,7 @@
 								<md-option ng-value="game" ng-repeat="game in round.courts track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
 							</md-optgroup>
 							<md-optgroup ng-repeat="round in selectedDivision.brackets.winners track by $index" label="Winners [[ $index + 1 ]]">
-								<md-option ng-value="game" ng-repeat="game in round track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
+								<md-option ng-if="game" ng-value="game" ng-repeat="game in round track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
 							</md-optgroup>
 							<md-optgroup ng-repeat="round in selectedDivision.brackets.losers track by $index" label="Losers [[ $index + 1 ]]">
 								<md-option ng-value="game" ng-repeat="game in round track by $index">[[ game.top_team.team.name ]] v [[ game.bottom_team.team.name ]]</md-option>
@@ -320,7 +325,7 @@
 						<p>[[ playerDatum.player.name ]]</p>
 						<md-icon ng-if="playerDatum.event_division_team_player.is_captain" aria-label="Captain" class="md-secondary">star</md-icon>
 						<md-icon ng-if="playerDatum.event_division_team_player.is_referee" aria-label="Referee" class="md-secondary">assignment_ind</md-icon>
-						<md-switch ng-model="playerDatum.isCheckedIn" ng-change="checkin.checkPlayers()" aria-label="Checked in" class="md-secondary"></md-switch>
+						<md-switch ng-model="playerDatum.event_division_team_player.is_checked_in" ng-change="checkin.checkPlayers(playerDatum)" ng-disabled="robin.isLocked" aria-label="Checked in" class="md-secondary"></md-switch>
 					</md-list-item>
 				</md-list>
 			</md-content>

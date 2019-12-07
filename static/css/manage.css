@@ -170,6 +170,10 @@ form[name="robinForm"][disabled] {
 	.team-chip.title-chip {
 		width: 14%;
 	}
+	.team-chip.team-chip-dns {
+		opacity: 0.5;
+		text-decoration: line-through;
+	}
 
 .div-round {
 	width: 100%;

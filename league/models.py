@@ -540,6 +540,7 @@ class EventDivisionTeam(models.Model):
 	season_division_team = models.ForeignKey(SeasonDivisionTeam, on_delete=models.PROTECT)
 	transaction_id = models.CharField(max_length=255, blank=True, null=True)
 	place = models.PositiveSmallIntegerField(blank=True, null=True)
+	is_checked_in = models.BooleanField(default=False)
 
 	class Meta:
 		unique_together = (
@@ -563,6 +564,7 @@ class EventDivisionTeamPlayer(models.Model):
 	season_division_team_player = models.ForeignKey(SeasonDivisionTeamPlayer, on_delete=models.PROTECT)
 	is_captain = models.BooleanField(default=False)
 	is_referee = models.BooleanField(default=False)
+	is_checked_in = models.BooleanField(default=False)
 
 	class Meta:
 		unique_together = (
@@ -670,6 +672,7 @@ class LeagueSerializer(serializer.Serializer):
 			'season_division_team_id': event_division_team.season_division_team_id,
 			'place': event_division_team.place,
 			'suffix': event_division_team.suffix,
+			'is_checked_in': event_division_team.is_checked_in,
 		} if event_division_team else None
 
 	@staticmethod
@@ -680,6 +683,7 @@ class LeagueSerializer(serializer.Serializer):
 			'season_division_team_player_id': event_division_team_player.season_division_team_player_id,
 			'is_captain': event_division_team_player.is_captain,
 			'is_referee': event_division_team_player.is_referee,
+			'is_checked_in': event_division_team_player.is_checked_in,
 		} if event_division_team_player else None
 
 	@staticmethod

@@ -12,5 +12,6 @@ urlpatterns = [
 	re_path(r'^brackets/(?P<bracket_id>[0-9a-f-]+)?', views.brackets, name='tourf_brackets'),
 	re_path(r'^robins/(?P<bracket_id>[0-9a-f-]+)?', views.robins, name='tourf_robins'),
 	re_path(r'^games/(?P<game_id>[0-9a-f-]+)?', views.games, name='tourf_games'),
-	re_path(r'^teams/(?P<team_id>[0-9a-f-]+)?', views.teams, name='tourf_teams'),
+	re_path(r'^teams/(?P<team_id>\d+)?', views.teams, name='tourf_teams'),
+	re_path(r'^players/(?P<player_id>\d+)?', views.players, name='tourf_players'),
 ]

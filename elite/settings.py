@@ -191,12 +191,14 @@ INTERNAL_IPS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.environ.get('STATICFILES_DIRS')
+
 STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, 'static'),
+	os.environ.get('STATICFILES_DIRS', os.path.join(BASE_DIR, 'static')),
 )
 
 

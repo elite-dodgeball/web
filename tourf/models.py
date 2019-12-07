@@ -87,6 +87,7 @@ class Game(models.Model):
 
 	# Game metas per bracket
 	bracket = models.ForeignKey(Bracket, on_delete=models.CASCADE, related_name='+')
+	group_number = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
 	round_number = models.PositiveSmallIntegerField(default=0)
 	game_number = models.PositiveSmallIntegerField(default=0)
 	state = models.PositiveSmallIntegerField(default=STATE_PREP, choices=STATE_CHOICES)
@@ -215,10 +216,13 @@ def make_round_robin(team_list):
 
 		team_list.insert(0, team_list.pop())
 
+	if oddity:
+		team_list.append(oddity)
+
 	return rounds
 
 
-def make_managed_round_robin(team_list, court_total, referee_count):
+def make_managed_round_robin(team_list, court_total, referee_count, pool_number):
 	""" Create managed round-robin matches
 
 	:param team_list: List of EventDivisionTeam objects to create round-robin matches with
@@ -227,6 +231,8 @@ def make_managed_round_robin(team_list, court_total, referee_count):
 	:type court_total: int
 	:param referee_count: Total number of referee teams
 	:type referee_count: int
+	:param pool_number: Total number of pool groups
+	:type pool_number: int
 	:returns: list
 
 	"""
@@ -241,9 +247,13 @@ def make_managed_round_robin(team_list, court_total, referee_count):
 
 	# Turn the original round-robin structure into a straight list of games
 
+	team_hash = {team.pk: team_index % pool_number for team_index, team in enumerate(team_list)}
+
 	for round_number in range(len(bracket)):
 		for game_number in range(len(bracket[round_number])):
-			games.append(bracket[round_number][game_number])
+			if team_hash[bracket[round_number][game_number].top_team.pk] == team_hash[bracket[round_number][game_number].bottom_team.pk]:
+				bracket[round_number][game_number].group_number = team_hash[bracket[round_number][game_number].top_team.pk]
+				games.append(bracket[round_number][game_number])
 
 	# Clear all win counts
 
@@ -542,9 +552,19 @@ class TourfSerializer(serializer.Serializer):
 		} if event_division_team else None
 
 	@staticmethod
+	def event_division_team_player(event_division_team_player):
+		return {
+			'id': event_division_team_player.pk,
+			'is_captain': event_division_team_player.is_captain,
+			'is_referee': event_division_team_player.is_referee,
+			'is_checked_in': event_division_team_player.is_checked_in,
+		} if event_division_team_player else None
+
+	@staticmethod
 	def game(game):
 		return {
 			'id': str(game.pk) if isinstance(game.pk, uuid.UUID) else game.pk,
+			'group_number': game.group_number,
 			'top_team': TourfSerializer.event_division_team(game.top_team) if isinstance(game.top_team, league.EventDivisionTeam) else game.top_team,
 			'top_wins': game.top_wins,
 			'bottom_team': TourfSerializer.event_division_team(game.bottom_team) if isinstance(game.bottom_team, league.EventDivisionTeam) else game.bottom_team,
