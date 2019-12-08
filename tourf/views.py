@@ -466,7 +466,7 @@ def games(request, game_id=None):
 
 			json_data = {
 				'games': [tourf.TourfSerializer.serialize(game)],
-				'teams': list(),
+				'teams': tourf.TourfSerializer.serialize([game.top_team, game.bottom_team]),
 			}
 
 			async_to_sync(channel_layer.group_send)('event_%s' % game.bracket.event_division.event_id, {

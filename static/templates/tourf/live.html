@@ -11,7 +11,7 @@
 
 	<!-- Style stuff -->
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/{{ ANGULAR_MATERIAL_VERSION }}/angular-material.min.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css">
@@ -162,15 +162,19 @@
 		<div class="round-robin" ng-if="selectedDivision.rounds">
 			<h2 class="section-title">Round-robin</h2>
 
-			<md-list class="team-list">
-				<md-list-item class="md-2-line team-chip" ng-repeat="teamDatum in selectedDivision.teams | orderBy:['-points','seed'] track by $index" layout="row" layout-wrap>
-					<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
-						<h5 class="rank-title">
-							[[ $index+1 ]]. [[ teamDatum.team.name ]] ([[ teamDatum.points | number : 2 ]])
-						</h5>
-					</div>
-				</md-list-item>
-			</md-list>
+			<div ng-repeat="(groupNumber, groupDatum) in selectedDivision.groupHash" class="group-block">
+				<h3 ng-show="selectedDivision.groupCount > 1" class="group-name">Group [[ groupDatum.groupName ]]</h3>
+
+				<md-list class="team-list">
+					<md-list-item ng-repeat="teamDatum in groupDatum.teams | orderBy:['-points','seed'] track by $index" class="md-2-line team-chip" layout="row" layout-wrap>
+						<div class="md-item-text md-whiteframe-z1" style="background-image: url([[ teamDatum.team.logo ]])" flex>
+							<h5 class="rank-title">
+								[[ $index+1 ]]. [[ teamDatum.team.name ]] ([[ teamDatum.points | number : 2 ]])
+							</h5>
+						</div>
+					</md-list-item>
+				</md-list>
+			</div>
 
 			<div class="div-round" ng-repeat="round in selectedDivision.rounds track by $index">
 				<h3 class="round-title">Round [[ $index + 1 ]]</h3>
@@ -217,13 +221,14 @@
 		<md-progress-circular ng-if="didInitialize !== true && isLoading === true" md-mode="indeterminate" md-diameter="150" class="thumper"></md-progress-circular>
 	</md-content>
 
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular-animate.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular-aria.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular-messages.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angular_material/{{ ANGULAR_MATERIAL_VERSION }}/angular-material.min.js"></script>
 
 	<script src="{% static "js/polyfills.js" %}"></script>
 	<script src="{% static "tourf/js/app.js" %}"></script>
+	<script src="{% static "tourf/js/utils.js" %}"></script>
 </body>
 </html>

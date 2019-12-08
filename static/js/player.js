@@ -1,6 +1,8 @@
 'use strict';
 
-function Player(el, na, se) {
+window.ELITE_DODGEBALL = window.ELITE_DODGEBALL || {};
+
+window.ELITE_DODGEBALL.Player = function Player(el, na, se) {
 	if (!el) {
 		return false;
 	}
@@ -62,4 +64,4 @@ function Player(el, na, se) {
 	};
 
 	this.go(na.querySelector('a'));
-}
+};

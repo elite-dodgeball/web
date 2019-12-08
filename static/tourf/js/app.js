@@ -136,16 +136,19 @@ angular.module('TourfApp', ['ngMaterial', 'ngMessages'], function ($interpolateP
 			divisionDatum.brackets = {};
 
 			for (var bracketType in divisionDatum.bracket) {
-				assignTeamObjects(divisionDatum.bracket[bracketType].rounds);
+				window.ELITE_DODGEBALL.assignTeamObjects(divisionDatum.bracket[bracketType].rounds, teamHash, gameHash);
 
 				if (bracketType === 'round_robin') {
-					divisionDatum.rounds = transformRoundRobin(divisionDatum.bracket[bracketType].rounds);
+					divisionDatum.rounds = window.ELITE_DODGEBALL.transformRoundRobin(divisionDatum.bracket[bracketType].rounds, matchupHash, teamHash);
+
+					window.ELITE_DODGEBALL.buildGroupHash(divisionDatum, teamHash);
+					window.ELITE_DODGEBALL.calculateDivisionPoints(divisionDatum, matchupHash, teamHash);
 				} else if (bracketType === 'winners_bracket') {
-					divisionDatum.brackets.winners = transformBracket(divisionDatum.bracket[bracketType].rounds, bracketType);
+					divisionDatum.brackets.winners = window.ELITE_DODGEBALL.transformBracket(divisionDatum.bracket[bracketType].rounds, bracketType);
 				} else if (bracketType === 'losers_bracket') {
-					divisionDatum.brackets.losers = transformBracket(divisionDatum.bracket[bracketType].rounds, bracketType);
+					divisionDatum.brackets.losers = window.ELITE_DODGEBALL.transformBracket(divisionDatum.bracket[bracketType].rounds, bracketType);
 				} else if (bracketType === 'finals_bracket') {
-					divisionDatum.brackets.finals = transformBracket(divisionDatum.bracket[bracketType].rounds, bracketType);
+					divisionDatum.brackets.finals = window.ELITE_DODGEBALL.transformBracket(divisionDatum.bracket[bracketType].rounds, bracketType);
 				}
 			}
 		}
@@ -159,28 +162,6 @@ angular.module('TourfApp', ['ngMaterial', 'ngMessages'], function ($interpolateP
 		}
 
 		$scope.event.normalized_stream_link = normalizeStreamLink($scope.event.stream_link);
-	}
-
-	function assignTeamObjects(rounds) {
-		for (var i = 0, l = rounds.length; i < l; i++) {
-			for (var j = 0, k = rounds[i].length; j < k; j++) {
-				if (rounds[i][j] === null) {
-					continue;
-				}
-
-				if (rounds[i][j].top_team && rounds[i][j].top_team.id in teamHash) {
-					teamHash[rounds[i][j].top_team.id].seed = rounds[i][j].top_team.seed;
-					rounds[i][j].top_team = teamHash[rounds[i][j].top_team.id];
-				}
-
-				if (rounds[i][j].bottom_team && rounds[i][j].bottom_team.id in teamHash) {
-					teamHash[rounds[i][j].bottom_team.id].seed = rounds[i][j].bottom_team.seed;
-					rounds[i][j].bottom_team = teamHash[rounds[i][j].bottom_team.id];
-				}
-
-				gameHash[rounds[i][j].id] = rounds[i][j];
-			}
-		}
 	}
 
 	function makeTeamHash() {
@@ -237,203 +218,6 @@ angular.module('TourfApp', ['ngMaterial', 'ngMessages'], function ($interpolateP
 		}
 	}
 
-	// Bracket rounds are delivered in reverse order
-
-	function transformBracket(rounds, bracketType) {
-		var bracket = [],
-			winnerToHash = {};
-
-		for (var i = rounds.length - 1; i >= 0; i--) {
-			bracket.push(rounds[i]);
-
-			for (var j = 0, k = rounds[i].length; j < k; j++) {
-				if (rounds[i][j] === null) {
-					continue;
-				}
-
-				// childCount
-
-				if (rounds[i][j].id in winnerToHash === true) {
-					rounds[i][j].childCount = winnerToHash[rounds[i][j].id];
-				} else {
-					rounds[i][j].childCount = 0;
-				}
-
-				// winnerToHash
-
-				if (rounds[i][j].winner_to in winnerToHash === false) {
-					winnerToHash[rounds[i][j].winner_to] = 0;
-				}
-
-				winnerToHash[rounds[i][j].winner_to]++;
-			}
-
-			if (bracketType === 'losers_bracket') {
-				if (i === 0) {
-					rounds[i].isFirstLast = true;
-				} else if (i === 1) {
-					rounds[i].isSecondLast = true;
-				}
-			}
-		}
-
-		return bracket;
-	}
-
-	// Round-robin needs to be dissected because of its referees
-
-	function transformRoundRobin(rounds) {
-		var transformedRounds = [];
-
-		for (var i = 0, l = rounds.length; i < l; i++) {
-			var transformedRound = {
-				courts: [],
-				referees: [],
-			};
-
-			for (var j = 0, k = rounds[i].length; j < k; j++) {
-				if (rounds[i][j].top_team && 'id' in rounds[i][j].top_team) {
-					teamHash[rounds[i][j].top_team.id].seed = rounds[i][j].top_team.seed;
-					rounds[i][j].top_team = teamHash[rounds[i][j].top_team.id];
-				}
-
-				if (!rounds[i][j].bottom_team) {
-					transformedRound.referees.push(rounds[i][j].top_team);
-				} else {
-					if ('id' in rounds[i][j].bottom_team) {
-						teamHash[rounds[i][j].bottom_team.id].seed = rounds[i][j].bottom_team.seed;
-						rounds[i][j].bottom_team = teamHash[rounds[i][j].bottom_team.id];
-					}
-
-					matchupHash[rounds[i][j].top_team.event_division_team.id][rounds[i][j].bottom_team.event_division_team.id] = {
-						wins: rounds[i][j].top_wins,
-						loss: rounds[i][j].bottom_wins,
-					};
-
-					matchupHash[rounds[i][j].bottom_team.event_division_team.id][rounds[i][j].top_team.event_division_team.id] = {
-						wins: rounds[i][j].bottom_wins,
-						loss: rounds[i][j].top_wins,
-					};
-
-					transformedRound.courts.push(rounds[i][j]);
-				}
-			}
-
-			transformedRounds.push(transformedRound);
-		}
-
-		calculatePoints();
-
-		return transformedRounds;
-	}
-
-	function calculatePoints() {
-		var checkSet = new Set(),
-			divisionTeamHash = {};
-
-		// Zero out the points
-
-		for (var eventDivisionTeamId in teamHash) {
-			if (teamHash[eventDivisionTeamId].event_division_team.event_division_id === $scope.selectedDivision.event_division.id) {
-				teamHash[eventDivisionTeamId].points = 0;
-				divisionTeamHash[eventDivisionTeamId] = {
-					wins: 0,
-					loss: 0,
-					id: eventDivisionTeamId,
-				};
-			}
-		}
-
-		// Calculate match points
-
-		for (var eventDivisionTeamIdA in divisionTeamHash) {
-			for (var eventDivisionTeamIdB in matchupHash[eventDivisionTeamIdA]) {
-				var game = matchupHash[eventDivisionTeamIdA][eventDivisionTeamIdB],
-					checkKey = eventDivisionTeamIdA + '|' + eventDivisionTeamIdB;
-
-				if (checkSet.has(checkKey) === true) {
-					continue;
-				}
-
-				checkSet.add(checkKey);
-				checkSet.add(eventDivisionTeamIdB + '|' + eventDivisionTeamIdA);
-
-				if (game.wins === 0 && game.loss === 0) {
-					continue;
-				}
-
-				if (game.wins > game.loss) {
-					divisionTeamHash[eventDivisionTeamIdA].wins++;
-					divisionTeamHash[eventDivisionTeamIdB].loss++;
-
-					teamHash[eventDivisionTeamIdA].points += 2;
-					teamHash[eventDivisionTeamIdB].points += 1;
-				} else if (game.loss > game.wins) {
-					divisionTeamHash[eventDivisionTeamIdA].loss++;
-					divisionTeamHash[eventDivisionTeamIdB].wins++;
-
-					teamHash[eventDivisionTeamIdA].points += 1;
-					teamHash[eventDivisionTeamIdB].points += 2;
-				}
-			}
-		}
-
-		// Detect ties
-
-		var tieHash = {};
-
-		for (eventDivisionTeamId in divisionTeamHash) {
-			if (teamHash[eventDivisionTeamId].points in tieHash === false) {
-				tieHash[teamHash[eventDivisionTeamId].points] = eventDivisionTeamId;
-			} else if (Array.isArray(tieHash[teamHash[eventDivisionTeamId].points]) === false) {
-				tieHash[teamHash[eventDivisionTeamId].points] = [tieHash[teamHash[eventDivisionTeamId].points], eventDivisionTeamId];
-			} else {
-				tieHash[teamHash[eventDivisionTeamId].points].push(eventDivisionTeamId);
-			}
-		}
-
-		for (var points in tieHash) {
-			if (Array.isArray(tieHash[points]) === false) {
-				continue;
-			}
-
-			var tieCount = tieHash[points].length;
-
-			if (tieCount === 2) {
-				game = matchupHash[tieHash[points][0]][tieHash[points][1]];
-
-				if (game.wins > game.loss) {
-					teamHash[tieHash[points][0]].points += 0.5;
-				} else if (game.loss > game.wins) {
-					teamHash[tieHash[points][1]].points += 0.5;
-				}
-			} else if (tieCount > 2) {
-				var ratioList = [],
-					spotValue = 1 / tieCount;
-
-				for (var i = 0; i < tieCount; i++) {
-					divisionTeamHash[tieHash[points][i]].ratio = divisionTeamHash[tieHash[points][i]].wins / divisionTeamHash[tieHash[points][i]].loss;
-					ratioList.push(divisionTeamHash[tieHash[points][i]]);
-				}
-
-				ratioList.sort(ratioSort);
-
-				for (i = 0; i < tieCount; i++) {
-					teamHash[ratioList[i].id].points += i * spotValue;
-				}
-			}
-		}
-
-		// TODO: Detect internal ties http://www.usatt.net/rules/stumpump/stump97/11.shtml
-	}
-
-	function ratioSort(a, b) {
-		if (a.ratio === b.ratio) {
-			return 0;
-		}
-		return a.ratio > b.ratio ? 1 : -1;
-	}
-
 	// WebSocket stuff
 
 	$scope.updater = {
@@ -479,7 +263,7 @@ angular.module('TourfApp', ['ngMaterial', 'ngMessages'], function ($interpolateP
 				games.push(angular.extend(gameHash[data[i].id], data[i]));
 			}
 
-			assignTeamObjects([games]);
+			window.ELITE_DODGEBALL.assignTeamObjects([games], teamHash, gameHash);
 		},
 		updateTeam: function (data) {
 			if (Array.isArray(data) !== true) {
@@ -512,22 +296,39 @@ angular.module('TourfApp', ['ngMaterial', 'ngMessages'], function ($interpolateP
 				}
 			}
 
-			calculatePoints();
+			// Call calculateDivisionPoints()
+
+			var updateSet = new Set();
+
+			for (var i = 0, l = data.length; i < l; i++) {
+				if (updateSet.has(teamHash[data[i].id].event_division_team.event_division_id) === true) {
+					continue;
+				}
+
+				updateSet.add(teamHash[data[i].id].event_division_team.event_division_id);
+
+				if ($scope.eventDivisionHash[teamHash[data[i].id].event_division_team.event_division_id].rounds) {
+					window.ELITE_DODGEBALL.calculateDivisionPoints($scope.eventDivisionHash[teamHash[data[i].id].event_division_team.event_division_id], matchupHash, teamHash);
+				}
+			}
 		},
 		updateRobin: function (data) {
-			assignTeamObjects(data.rounds);
-			$scope.eventDivisionHash[data.event_division_id].rounds = transformRoundRobin(data.rounds);
+			window.ELITE_DODGEBALL.assignTeamObjects(data.rounds, teamHash, gameHash);
+			$scope.eventDivisionHash[data.event_division_id].rounds = window.ELITE_DODGEBALL.transformRoundRobin(data.rounds, matchupHash, teamHash);
+
+			window.ELITE_DODGEBALL.buildGroupHash($scope.eventDivisionHash[data.event_division_id], teamHash);
+			window.ELITE_DODGEBALL.calculateDivisionPoints($scope.eventDivisionHash[data.event_division_id], matchupHash, teamHash);
 		},
 		updateBracket: function (data) {
 			for (var bracketType in data) {
-				assignTeamObjects(data[bracketType].rounds);
+				window.ELITE_DODGEBALL.assignTeamObjects(data[bracketType].rounds, teamHash, gameHash);
 
 				if (bracketType === 'winners_bracket') {
-					$scope.eventDivisionHash[data[bracketType].event_division_id].brackets.winners = transformBracket(data[bracketType].rounds, bracketType);
+					$scope.eventDivisionHash[data[bracketType].event_division_id].brackets.winners = window.ELITE_DODGEBALL.transformBracket(data[bracketType].rounds, bracketType);
 				} else if (bracketType === 'losers_bracket') {
-					$scope.eventDivisionHash[data[bracketType].event_division_id].brackets.losers = transformBracket(data[bracketType].rounds, bracketType);
+					$scope.eventDivisionHash[data[bracketType].event_division_id].brackets.losers = window.ELITE_DODGEBALL.transformBracket(data[bracketType].rounds, bracketType);
 				} else if (bracketType === 'finals_bracket') {
-					$scope.eventDivisionHash[data[bracketType].event_division_id].brackets.finals = transformBracket(data[bracketType].rounds, bracketType);
+					$scope.eventDivisionHash[data[bracketType].event_division_id].brackets.finals = window.ELITE_DODGEBALL.transformBracket(data[bracketType].rounds, bracketType);
 				}
 			}
 		},

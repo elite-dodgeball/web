@@ -16,6 +16,8 @@ def global_vars(request):
 
 	"""
 	return {
+		'ANGULAR_VERSION': '1.7.6',
+		'ANGULAR_MATERIAL_VERSION': '1.1.12',
 		'DEFAULT_TITLE': 'This isn\'t gym class anymore',
 		'DEFAULT_DESCRIPTION': 'An invitation-only dodgeball league hosting national tournaments at the highest level.',
 		'CHAMPIONS_TITLE': 'Champions',

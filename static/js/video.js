@@ -1,6 +1,8 @@
 'use strict';
 
-function Video(container, template) {
+window.ELITE_DODGEBALL = window.ELITE_DODGEBALL || {};
+
+window.ELITE_DODGEBALL.Video = function Video(container, template) {
 	var self = this;
 
 	this.getAttribute = function(el, attr){
@@ -24,9 +26,9 @@ function Video(container, template) {
 			self.loadVideo(e.target);
 		}
 	});
-}
+};
 
-function Navver(data, container, template) {
+window.ELITE_DODGEBALL.Navver = function Navver(data, container, template) {
 	var self = this,
 		page = 1,
 		per_page = 9,
@@ -115,9 +117,9 @@ function Navver(data, container, template) {
 
 	window.addEventListener('hashchange', this.hash_watch);
 	this.hash_watch();
-}
+};
 
-function VideoList(data, container, template) {
+window.ELITE_DODGEBALL.VideoList = function VideoList(data, container, template) {
 	var self = this,
 		page = 1,
 		per_page = 9,
@@ -167,9 +169,9 @@ function VideoList(data, container, template) {
 
 	window.addEventListener('hashchange', this.hash_watch);
 	this.hash_watch();
-}
+};
 
-function Search(data, input, callbacks) {
+window.ELITE_DODGEBALL.Search = function Search(data, input, callbacks) {
 	var self = this;
 
 	if (callbacks instanceof Function === true) {
@@ -211,15 +213,15 @@ function Search(data, input, callbacks) {
 	}
 
 	input.addEventListener('keydown', change);
-}
+};
 
 (function () {
 	var vlcon = document.querySelector('.video-list');
 
 	if (vlcon) {
-		var video = new Video(vlcon, document.querySelector('#video-embed').innerHTML),
-			list = new VideoList(window.videos, vlcon, document.querySelector('#video-item').innerHTML),
-			lnav = new Navver(window.videos, document.querySelector('.video-nav'), document.querySelector('#video-nav').innerHTML),
-			linp = new Search(window.videos, document.querySelector('#video-search'), [list.set_data, lnav.set_data]);
+		var video = new window.ELITE_DODGEBALL.Video(vlcon, document.querySelector('#video-embed').innerHTML),
+			list = new window.ELITE_DODGEBALL.VideoList(window.videos, vlcon, document.querySelector('#video-item').innerHTML),
+			lnav = new window.ELITE_DODGEBALL.Navver(window.videos, document.querySelector('.video-nav'), document.querySelector('#video-nav').innerHTML),
+			linp = new window.ELITE_DODGEBALL.Search(window.videos, document.querySelector('#video-search'), [list.set_data, lnav.set_data]);
 	}
 })();

@@ -54,8 +54,8 @@
 		}
 	});
 
-	var rot = new Rotator(document.querySelector('.carousel'));
-	var pla = new Player(document.getElementById('player'), document.querySelector('.thumbs'));
+	var rot = new window.ELITE_DODGEBALL.Rotator(document.querySelector('.carousel'));
+	var pla = new window.ELITE_DODGEBALL.Player(document.getElementById('player'), document.querySelector('.thumbs'));
 
 	function totalOffset(elem) {
 		var bodyRect = document.body.getBoundingClientRect(),

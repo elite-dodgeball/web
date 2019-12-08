@@ -11,7 +11,7 @@
 
 	<!-- Style stuff -->
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}" />
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/{{ ANGULAR_MATERIAL_VERSION }}/angular-material.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link href="{% static "css/main.css" %}" rel="stylesheet" type="text/css">
@@ -150,11 +150,11 @@
 	</md-content>
 
 	<script src="https://checkout.stripe.com/checkout.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/{{ ANGULAR_VERSION }}/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/{{ ANGULAR_MATERIAL_VERSION }}/angular-material.min.js"></script>
 
 	<script src="{% static "reggie/js/app.js" %}"></script>
 

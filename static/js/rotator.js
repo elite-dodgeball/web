@@ -1,6 +1,8 @@
 'use strict';
 
-function Rotator(el) {
+window.ELITE_DODGEBALL = window.ELITE_DODGEBALL || {};
+
+window.ELITE_DODGEBALL.Rotator = function Rotator(el) {
 	if (!el) {
 		return false;
 	}
@@ -68,4 +70,4 @@ function Rotator(el) {
 		el.style.left = '-' + self.page + '00%';
 	}
 	update();
-}
+};

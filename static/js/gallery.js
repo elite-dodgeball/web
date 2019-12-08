@@ -1,6 +1,8 @@
 'use strict';
 
-function Popper(list) {
+window.ELITE_DODGEBALL = window.ELITE_DODGEBALL || {};
+
+window.ELITE_DODGEBALL.Popper = function Popper(list) {
 	var self = this,
 		by_id = {},
 		total = list.length,
@@ -132,10 +134,10 @@ function Popper(list) {
 	for (var i = 0; i < total; i++) {
 		by_id[this.hashParse(list[i].id)] = list[i]
 	}
-}
+};
 
 (function () {
-	var pop = new Popper(document.querySelectorAll('#container .image-list a'));
+	var pop = new window.ELITE_DODGEBALL.Popper(document.querySelectorAll('#container .image-list a'));
 
 	window.addEventListener('hashchange', pop.hashWatch);
 
