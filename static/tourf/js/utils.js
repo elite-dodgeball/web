@@ -6,6 +6,12 @@ window.ELITE_DODGEBALL.CONSTANTS = window.ELITE_DODGEBALL.CONSTANTS || {};
 window.ELITE_DODGEBALL.CONSTANTS.WIN_VALUE = 2;
 window.ELITE_DODGEBALL.CONSTANTS.LOSS_VALUE = 1;
 
+/**
+ * Turn an API bracket response into a display bracket.
+ * @param {Array} rounds
+ * @param {string} bracketType - `winners_bracket`, `losers_bracket`, `finals_bracket`
+ * @returns {Array}
+ */
 window.ELITE_DODGEBALL.transformBracket = function transformBracket(rounds, bracketType) {
 	var bracket = [],
 		winnerToHash = {};
@@ -47,6 +53,13 @@ window.ELITE_DODGEBALL.transformBracket = function transformBracket(rounds, brac
 	return bracket;
 };
 
+/**
+ * Turn an API round-robin response into a display round-robin.
+ * @param {Array} rounds
+ * @param {Object} matchupHash
+ * @param {Object} teamHash
+ * @returns {Array}
+ */
 window.ELITE_DODGEBALL.transformRoundRobin = function transformRoundRobin(rounds, matchupHash, teamHash) {
 	var transformedRounds = [];
 
@@ -90,6 +103,12 @@ window.ELITE_DODGEBALL.transformRoundRobin = function transformRoundRobin(rounds
 	return transformedRounds;
 };
 
+/**
+ * Set the `top_team` and `bottom_team` attributes of games.
+ * @param {Array} rounds
+ * @param {Object} teamHash
+ * @param {Object} [gameHash]
+ */
 window.ELITE_DODGEBALL.assignTeamObjects = function assignTeamObjects(rounds, teamHash, gameHash) {
 	for (var i = 0, l = rounds.length; i < l; i++) {
 		for (var j = 0, k = rounds[i].length; j < k; j++) {
@@ -114,6 +133,11 @@ window.ELITE_DODGEBALL.assignTeamObjects = function assignTeamObjects(rounds, te
 	}
 };
 
+/**
+ * Assign round-robin games to their respective `groupNumber`.
+ * @param {Object} divisionDatum
+ * @param {Object} teamHash
+ */
 window.ELITE_DODGEBALL.buildGroupHash = function buildGroupHash(divisionDatum, teamHash) {
 	// reset divisionDatum
 
@@ -161,6 +185,13 @@ window.ELITE_DODGEBALL.buildGroupHash = function buildGroupHash(divisionDatum, t
 	}
 };
 
+/**
+ * Calculate round-robin points for a `divisionDatum`.
+ * @param {Object} divisionDatum
+ * @param {Object} matchupHash
+ * @param {Object} teamHash
+ * @returns {Object}
+ */
 window.ELITE_DODGEBALL.calculateDivisionPoints = function calculateDivisionPoints(divisionDatum, matchupHash, teamHash) {
 	var divisionTeamHash = {};
 
@@ -223,6 +254,13 @@ window.ELITE_DODGEBALL.calculateDivisionPoints = function calculateDivisionPoint
 	return divisionTeamHash;
 };
 
+/**
+ * Calculate round-robin points for a `groupDatum`.
+ * @param {Object} groupDatum
+ * @param {Object} matchupHash
+ * @param {Object} teamHash
+ * @returns {Object}
+ */
 window.ELITE_DODGEBALL.calculateGroupPoints = function calculateGroupPoints(groupDatum, matchupHash, teamHash) {
 	var checkSet = new Set(),
 		groupTeamHash = {};
@@ -382,6 +420,12 @@ window.ELITE_DODGEBALL.calculateGroupPoints = function calculateGroupPoints(grou
 	return groupTeamHash;
 };
 
+/**
+ * Detect ties in a set of games.
+ * @param {Object} trackingHash
+ * @param {Object} teamHash
+ * @returns {Object}
+ */
 window.ELITE_DODGEBALL.buildTieHash = function buildTieHash(trackingHash, teamHash) {
 	var tieHash = {};
 
@@ -398,6 +442,12 @@ window.ELITE_DODGEBALL.buildTieHash = function buildTieHash(trackingHash, teamHa
 	return tieHash;
 };
 
+/**
+ * Normalize a ratio of `wins` and `loss`.
+ * @param {number} wins
+ * @param {number} loss
+ * @returns {number}
+ */
 window.ELITE_DODGEBALL.makeRatio = (function () {
 	const SHIFT_VALUE = 1000;
 
@@ -412,16 +462,41 @@ window.ELITE_DODGEBALL.makeRatio = (function () {
 	};
 })();
 
+/**
+ * Sort by `ratio` attribute.
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {number}
+ */
 window.ELITE_DODGEBALL.ratioSort = function ratioSort(a, b) {
 	if (a.ratio === b.ratio) {
-		return 0;
+		return window.ELITE_DODGEBALL.idSort(a, b);
 	}
 	return a.ratio > b.ratio ? 1 : -1;
 };
 
+/**
+ * Sort by `points` attribute.
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {number}
+ */
 window.ELITE_DODGEBALL.pointSort = function pointSort(a, b) {
 	if (a.points === b.points) {
-		return 0;
+		return window.ELITE_DODGEBALL.idSort(a, b);
 	}
 	return a.points > b.points ? 1 : -1;
+};
+
+/**
+ * Sort by `id` attribute.
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {number}
+ */
+window.ELITE_DODGEBALL.idSort = function idSort(a, b) {
+	if (a.id === b.id) {
+		return 0;
+	}
+	return a.id > b.id ? 1 : -1;
 };
